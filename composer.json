@@ -1,0 +1,42 @@
+{
+    "name": "hiqdev/hi3a",
+    "description": "HiQDev triple-A server",
+    "keywords": ["hi3a","aaa","authenticatin","authorization","audit","yii2"],
+    "homepage": "http://hiqdev.com/hi3a",
+    "type": "project",
+    "license": "Proprietary",
+    "support": {
+        "issues": "https://hiqdev.com/hi3a/issues",
+        "forum": "http://hiqdev.com/forum",
+        "wiki": "http://wiki.hiqdev.com/hi3a/",
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-swiftmailer": "*",
+        "hiqdev/yii2-oauth2-server": "*@dev"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/hiqdev/yii2-oauth2-server"
+        }
+    ],
+    "require-dev": {
+        "yiisoft/yii2-codeception": "*",
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-faker": "*"
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    }
+}
