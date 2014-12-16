@@ -7,8 +7,8 @@
     "license": "Proprietary",
     "support": {
         "issues": "https://hiqdev.com/hi3a/issues",
-        "forum": "http://hiqdev.com/forum",
-        "wiki": "http://wiki.hiqdev.com/hi3a/",
+        "forum": "http://forum.hiqdev.com/hi3a",
+        "wiki": "http://wiki.hiqdev.com/hi3a"
     },
     "minimum-stability": "stable",
     "require": {
