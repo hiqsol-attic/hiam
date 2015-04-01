@@ -1,7 +1,7 @@
---- OAUTH create.sql
+--- hi3a create.sql
 
 -----------------------------------------------------------------
---- CLIENT: client, subclient
+--- OAUTH2
 -----------------------------------------------------------------
 
 CREATE TABLE oauth_client (
@@ -58,4 +58,45 @@ CREATE TABLE oauth_authorization_code (
     scope               text                NULL
 );
 SELECT * INTO del_oauth_authorization_code FROM oauth_authorization_code LIMIT 0;
+
+-----------------------------------------------------------------
+--- RBAC
+-----------------------------------------------------------------
+
+CREATE TABLE "rbac_rule" (
+    "name"              varchar(64)         NOT NULL,
+    "data"              text                NULL,
+    "created_at"        integer             NULL,
+    "updated_at"        integer             NULL,
+    PRIMARY KEY ("name")
+);
+
+CREATE TABLE "rbac_item" (
+   "name"                 varchar(64)       NOT NULL,
+   "type"                 integer           NOT NULL,
+   "description"          text              NULL,
+   "rule_name"            varchar(64)       NULL,
+   "data"                 text              NULL,
+   "created_at"           integer           NULL,
+   "updated_at"           integer           NULL,
+   PRIMARY KEY ("name"),
+   FOREIGN KEY ("rule_name") REFERENCES "rbac_rule" ("name") ON DELETE SET NULL ON UPDATE CASCADE
+);
+CREATE INDEX rbac_item_type_idx on "rbac_item" ("type");
+
+CREATE TABLE "rbac_item_child" (
+   "parent"               varchar(64)       NOT NULL,
+   "child"                varchar(64)       NOT NULL,
+   PRIMARY KEY ("parent","child"),
+   FOREIGN KEY ("parent") REFERENCES "rbac_item" ("name") ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY ("child") REFERENCES "rbac_item" ("name") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE "rbac_assignment" (
+   "item_name"            varchar(64)       NOT NULL,
+   "user_id"              varchar(64)       NOT NULL,
+   "created_at"           integer,
+   PRIMARY KEY ("item_name","user_id"),
+   FOREIGN KEY ("item_name") REFERENCES "rbac_item" ("name") ON DELETE CASCADE ON UPDATE CASCADE
+);
 

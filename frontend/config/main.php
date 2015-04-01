@@ -7,8 +7,6 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
-function d ($a) { die(var_dump($a)); }
-
 return [
     'id' => 'hi3a',
     'basePath' => dirname(__DIR__),
@@ -16,6 +14,13 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'site',
     'components' => [
+        'request' => [
+            'class' => 'frontend\components\MyRequest',
+        ],
+        'user' => [
+            'identityClass' => 'common\models\User',
+            'enableAutoLogin' => true,
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -25,9 +30,11 @@ return [
                 'oauth2/<action:\w+>'   => 'oauth2/oauth2/<action>',
             ],
         ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+        'view' => [
+            'theme' => [
+                'pathMap' => ['@app/views' => '@app/themes/adminlte'],
+                'baseUrl' => '@web/themes/adminlte',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -37,13 +44,6 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
-        ],
-        'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'pgsql:host=localhost;port=5432;dbname=old_mrdp',
-            'username' => 'sol',
-            'password' => 'cnhju45l',
-            'charset' => 'utf8',
         ],
         'dump' => [
             'class' => 'hiqdev\hiphp\Dump',
