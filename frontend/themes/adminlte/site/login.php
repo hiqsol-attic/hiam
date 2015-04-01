@@ -10,6 +10,12 @@ use yii\widgets\ActiveForm;
 
 $this->blocks['bodyClass'] = 'login-page';
 $this->title = 'Sign in';
+$this->registerCss(<<<'CSS'
+    .checkbox label {
+        padding-left: 0px;
+    }
+CSS
+);
 ?>
 
 <div class="login-box-body">
@@ -26,7 +32,7 @@ $this->title = 'Sign in';
         <div class="row">
             <div class="col-xs-8">
                 <div class="checkbox icheck">
-                    <?= $form->field($model, 'rememberMe')->checkbox([])->label(false); ?> Remember Me
+                    <?= $form->field($model, 'rememberMe')->checkbox([])->label(false); ?>
                 </div>
             </div><!-- /.col -->
             <div class="col-xs-4">
