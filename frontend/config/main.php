@@ -11,6 +11,7 @@ return [
     'id' => 'hi3a',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'name' => 'HiPanel',
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'site',
     'components' => [

@@ -19,7 +19,7 @@ use yii\filters\AccessControl;
 class SiteController extends Controller
 {
 
-    public $defaultAction = 'index';
+    public $defaultAction = 'login';
 
     /** @inheritdoc */
     public function actions()
@@ -84,7 +84,7 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionSignup()
+    public function actionRegister()
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
@@ -95,7 +95,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('signup', [
+        return $this->render('register', [
             'model' => $model,
         ]);
     }
@@ -135,5 +135,13 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionLockscreen() {
+        return $this->render('lockscreen', []);
+    }
+
+    public function actionRecovery() {
+        return $this->render('recovery', []);
     }
 }
