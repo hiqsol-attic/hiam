@@ -41,7 +41,7 @@ class SiteController extends Controller
 
     public function actionLogin () {
         if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect('/site/lockscreen');
         }
 
         $model = new LoginForm();
@@ -138,6 +138,10 @@ class SiteController extends Controller
     }
 
     public function actionLockscreen() {
+        if (\Yii::$app->user->isGuest) {
+            return $this->redirect('/site/login');
+        }
+
         return $this->render('lockscreen', []);
     }
 
