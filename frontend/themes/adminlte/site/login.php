@@ -20,13 +20,13 @@ $this->title = 'Sign in';
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            <?= $form->field($model, 'password')->textInput(['placeholder' => 'Password', 'class' => 'form-control'])->label(false); ?>
+            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password', 'class' => 'form-control'])->label(false); ?>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
             <div class="col-xs-8">
-                <div class="icheck">
-                        <?= $form->field($model, 'rememberMe')->checkbox([])->label(false); ?> Remember Me
+                <div class="checkbox icheck">
+                    <?= $form->field($model, 'rememberMe')->checkbox([])->label(false); ?> Remember Me
                 </div>
             </div><!-- /.col -->
             <div class="col-xs-4">
