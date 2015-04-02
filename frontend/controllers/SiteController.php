@@ -10,8 +10,8 @@ use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+//use yii\filters\VerbFilter;
 
 /**
  * Site controller
@@ -19,7 +19,30 @@ use yii\filters\AccessControl;
 class SiteController extends Controller
 {
 
-    public $defaultAction = 'login';
+    public $defaultAction = 'lockscreen';
+
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['lockscreen', 'logout', 'login', 'register', 'recover'],
+                'rules' => [
+                    // allow unauthenticated users
+                    [
+                        'actions' => ['login', 'register', 'recover'],
+                        'roles' => ['?'],
+                        'allow' => true,
+                    ],
+                    // allow authenticated users
+                    [
+                        'actions' => ['lockscreen', 'logout'],
+                        'roles' => ['@'],
+                        'allow' => true,
+                    ],
+                ],
+            ],
+        ];
+    }
 
     /** @inheritdoc */
     public function actions()
@@ -138,10 +161,6 @@ class SiteController extends Controller
     }
 
     public function actionLockscreen() {
-        if (\Yii::$app->user->isGuest) {
-            return $this->redirect('/site/login');
-        }
-
         return $this->render('lockscreen', []);
     }
 
