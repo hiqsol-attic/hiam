@@ -11,6 +11,7 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 //use yii\filters\VerbFilter;
 
 /**
@@ -58,6 +59,10 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionLockscreen() {
+        return $this->render('lockscreen', []);
+    }
+
     public function actionIndex () {
         return $this->render('index');
     }
@@ -77,11 +82,31 @@ class SiteController extends Controller
         }
     }
 
-    public function actionLogout()
-    {
+    public function actionLogout () {
         Yii::$app->user->logout();
+        $back = Yii::$app->request->value('back');
 
-        return $this->goHome();
+        return $back ? $this->redirect($back) : $this->goHome();
+    }
+
+    public function actionRecovery() {
+        return $this->render('recovery', []);
+    }
+
+    public function actionRegister()
+    {
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->render('register', [
+            'model' => $model,
+        ]);
     }
 
     public function actionContact()
@@ -105,22 +130,6 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
-    }
-
-    public function actionRegister()
-    {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('register', [
-            'model' => $model,
-        ]);
     }
 
     public function actionRequestPasswordReset()
@@ -160,11 +169,4 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionLockscreen() {
-        return $this->render('lockscreen', []);
-    }
-
-    public function actionRecovery() {
-        return $this->render('recovery', []);
-    }
 }
