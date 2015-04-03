@@ -7,9 +7,10 @@ use yii\web\Request;
 
 class MyRequest extends Request {
 
-    public function value ($name) {
+    public function value ($name, $default = null) {
         $params = $this->getBodyParams();
-        return isset($params[$name]) ? $params[$name] : $this->get();
+        $value = isset($params[$name]) ? $params[$name] : $this->get($name);
+        return $value ?: $default;
     }
 
 };
