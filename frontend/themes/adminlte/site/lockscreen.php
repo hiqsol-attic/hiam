@@ -35,6 +35,6 @@ $this->title = 'Lockscreen';
     <b><?= Html::a('Or logout and sign in as a different user', ['/site/logout']); ?></b>
 </div>
 <div class='lockscreen-footer text-center'>
-    Copyright &copy; 2014-2015 <b><a href="http://almsaeedstudio.com" class='text-black'><?= Yii::$app->name; ?></a></b><br>
+    Copyright &copy; 2014-2015 <b><a href="http://hipanel.com" class='text-black'><?= Yii::$app->name; ?></a></b><br>
     All rights reserved
 </div>
