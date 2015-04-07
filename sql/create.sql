@@ -5,9 +5,7 @@
 -----------------------------------------------------------------
 
 CREATE TABLE oauth_client (
-    obj_id              integer             NOT NULL,
-    type_id             integer             NOT NULL,
-    state_id            integer             NOT NULL,
+    id                  serial              NOT NULL,
     client_id           text                NOT NULL,
     client_secret       text                NOT NULL,
     redirect_uri        text                NULL,
@@ -16,9 +14,8 @@ CREATE TABLE oauth_client (
 );
 SELECT * INTO del_oauth_client FROM oauth_client LIMIT 0;
 
-CREATE SEQUENCE "oauth_access_token_id_seq" START 1000000;
 CREATE TABLE oauth_access_token (
-    id                  integer             NOT NULL DEFAULT nextval('oauth_access_token_id_seq'),
+    id                  serial              NOT NULL,
     access_token        text                NOT NULL,
     client_id           text                NOT NULL,
     user_id             integer             NOT NULL,
@@ -27,9 +24,8 @@ CREATE TABLE oauth_access_token (
 );
 SELECT * INTO del_oauth_access_token FROM oauth_access_token LIMIT 0;
 
-CREATE SEQUENCE "oauth_refresh_token_id_seq" START 1000000;
 CREATE TABLE oauth_refresh_token (
-    id                  integer             NOT NULL DEFAULT nextval('oauth_refresh_token_id_seq'),
+    id                  serial              NOT NULL,
     refresh_token       text                NOT NULL,
     client_id           text                NOT NULL,
     user_id             integer             NOT NULL,
