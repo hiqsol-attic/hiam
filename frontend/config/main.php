@@ -26,10 +26,6 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
-            'rules' => [
-                'site/<action:\w+>'     => 'site/<action>',
-                'oauth2/<action:\w+>'   => 'oauth2/oauth2/<action>',
-            ],
         ],
         'view' => [
             'theme' => [
@@ -46,16 +42,13 @@ return [
                 ],
             ],
         ],
-        'dump' => [
-            'class' => 'hiqdev\hiphp\Dump',
-        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
     ],
     'modules' => [
         'oauth2' => [
-            'class' => 'hiqdev\yii2\oauth2server\Module',
+            'class' => 'filsh\yii2\oauth2server\Module',
             'options' => [
                 'enforce_state'     => false,
                 'access_lifetime'   => 3600 * 24,
@@ -63,12 +56,21 @@ return [
             'storageMap' => [
                 'user_credentials'  => 'common\models\User',
             ],
-            'storageConfig' => [
-                'scope_table'           => 'oauth_scope',
-                'client_table'          => 'oauth_client',
-                'access_token_table'    => 'oauth_access_token',
-                'refresh_token_table'   => 'oauth_refresh_token',
-                'code_table'            => 'oauth_authorization_code',
+            'grantTypes' => [
+///             'client_credentials' => [
+///                 'class' => '\OAuth2\GrantType\ClientCredentials',
+///                 'allow_public_clients' => false
+///             ],
+                'authorization_code' => [
+                    'class' => '\OAuth2\GrantType\AuthorizationCode'
+                ],
+                'user_credentials' => [
+                'class' => '\OAuth2\GrantType\UserCredentials'
+                ],
+                'refresh_token' => [
+                    'class' => '\OAuth2\GrantType\RefreshToken',
+                    'always_issue_new_refresh_token' => true,
+                ]
             ],
         ],
     ],

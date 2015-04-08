@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 use OAuth2\Storage\UserCredentialsInterface;
-use hiqdev\yii2\oauth2server\models\OauthAccessToken;
+use filsh\yii2\oauth2server\models\OauthAccessTokens;
 
 /**
  * User model
@@ -122,7 +122,7 @@ die(var_dump($user->toArray()));
      * @inheritdoc
      */
     public static function findIdentityByAccessToken ($access_token, $type = null) {
-        $token = OauthAccessToken::findOne(compact('access_token'));
+        $token = OauthAccessTokens::findOne(compact('access_token'));
         return static::findByUsername($token->user_id);
     }
 

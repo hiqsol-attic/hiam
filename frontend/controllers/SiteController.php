@@ -26,11 +26,11 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['lockscreen', 'logout', 'login', 'register', 'recover'],
+                'only' => ['lockscreen', 'logout', 'login', 'signup', 'recover'],
                 'rules' => [
                     // allow unauthenticated users
                     [
-                        'actions' => ['login', 'register', 'recover'],
+                        'actions' => ['login', 'signup', 'recover'],
                         'roles' => ['?'],
                         'allow' => true,
                     ],
@@ -93,7 +93,7 @@ class SiteController extends Controller
         return $this->render('recovery', []);
     }
 
-    public function actionRegister()
+    public function actionSignup()
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
@@ -104,7 +104,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('register', [
+        return $this->render('signup', [
             'model' => $model,
         ]);
     }

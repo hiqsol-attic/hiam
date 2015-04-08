@@ -9,11 +9,11 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
         'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'pgsql:host=localhost;port=5432;dbname=old_mrdp',
-            'username' => 'sol',
-            'password' => 'cnhju45l',
-            'charset' => 'utf8',
+            'class'         => 'yii\db\Connection',
+            'dsn'           => 'pgsql:host=localhost;port=5432;dbname=mrdp',
+            'username'      => 'sol',
+            'password'      => 'cnhju45l',
+            'charset'       => 'utf8',
         ],
         'authManager' => [
             'class'             => 'common\rbac\HiDbManager',
