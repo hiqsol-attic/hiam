@@ -11,8 +11,6 @@ return [
         'db' => [
             'class'         => 'yii\db\Connection',
             'dsn'           => 'pgsql:host=localhost;port=5432;dbname=mrdp',
-            'username'      => 'sol',
-            'password'      => 'cnhju45l',
             'charset'       => 'utf8',
         ],
         'authManager' => [

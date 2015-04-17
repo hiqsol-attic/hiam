@@ -16,21 +16,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <p class="login-box-msg">Please fill out the following fields to signup:</p>
 
-    <form action="../../index.html" method="post">
+    <?php $form = ActiveForm::begin(['id' => 'form-signup']) ?>
         <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="Full name"/>
+            <?= $form->field($model, 'first_name')->textInput(['placeholder' => 'First Name','class'=>'form-control', 'autofocus' => 'autofocus'])->label(false) ?>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="Email"/>
+            <?= $form->field($model, 'last_name')->textInput(['placeholder' => 'Last Name','class'=>'form-control'])->label(false) ?>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <?= $form->field($model, 'email')->textInput(['placeholder' => 'Email', 'class' => 'form-control'])->label(false) ?>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Password"/>
+            <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'Password','class'=>'form-control'])->label(false) ?>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Retype password"/>
+            <?= $form->field($model, 'password_retype')->passwordInput(['placeholder'=>'Retype password', 'class'=>'form-control'])->label(false) ?>
             <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
         </div>
         <div class="row">
@@ -42,16 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div><!-- /.col -->
             <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Signup</button>
             </div><!-- /.col -->
         </div>
-    </form>
+    <?php ActiveForm::end(); ?>
 
-    <div class="social-auth-links text-center">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using Facebook</a>
-        <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign up using Google+</a>
-    </div>
-
-    <?= Html::a('I already have a membership', ['/site/login']); ?>
+    <?= Html::a('I already have a membership', ['/site/confirm']); ?>
 </div><!-- /.form-box -->

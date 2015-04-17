@@ -2,7 +2,6 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -14,6 +13,10 @@ use yii\filters\AccessControl;
 use yii\helpers\Url;
 //use yii\filters\VerbFilter;
 
+use common\models\User;
+use common\models\RemoteUser;
+use common\models\LoginForm;
+
 /**
  * Site controller
  */
@@ -22,21 +25,23 @@ class SiteController extends Controller
 
     public $defaultAction = 'lockscreen';
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['lockscreen', 'logout', 'login', 'signup', 'recover'],
+                'only' => ['login', 'signup', 'recovery', 'remote-proceed', 'lockscreen'],
+                'denyCallback' => [$this, 'denyCallback'],
                 'rules' => [
-                    // allow unauthenticated users
+                    // ? - guest
                     [
-                        'actions' => ['login', 'signup', 'recover'],
+                        'actions' => ['login', 'confirm', 'signup', 'recovery', 'remote-proceed'],
                         'roles' => ['?'],
                         'allow' => true,
                     ],
-                    // allow authenticated users
+                    // @ - authenticated
                     [
-                        'actions' => ['lockscreen', 'logout'],
+                        'actions' => ['lockscreen'],
                         'roles' => ['@'],
                         'allow' => true,
                     ],
@@ -45,10 +50,19 @@ class SiteController extends Controller
         ];
     }
 
+    public function denyCallback ()
+    {
+        return $this->redirect([Yii::$app->user->getIsGuest() ? 'login' : 'lockscreen']);
+    }
+
     /** @inheritdoc */
     public function actions()
     {
         return [
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'successCallback'],
+            ],
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
@@ -59,31 +73,106 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionLockscreen() {
-        return $this->render('lockscreen', []);
+    public function successCallback ($client)
+    {
+        $user = User::findIdentityByAuthClient($client);
+        if ($user) {
+            Yii::$app->user->login($user, 3600 * 24 * 30);
+            return;
+        };
+        return;
+    }
+
+    public function actionLockscreen()
+    {
+        return $this->render('lockscreen');
     }
 
     public function actionIndex () {
         return $this->render('index');
     }
 
-    public function actionLogin () {
-        if (!\Yii::$app->user->isGuest) {
-            return $this->redirect('/site/lockscreen');
-        }
-
+    protected function doLogin ($view,$username = null)
+    {
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+            $model->username = $username;
+            return $this->render($view, compact('model'));
         }
     }
 
-    public function actionLogout () {
+    public function actionLogin ($confirm = false)
+    {
+        $client = Yii::$app->authClientCollection->getActiveClient();
+        if ($client) {
+            return $this->redirect(['remote-proceed']);
+        };
+
+        return $this->doLogin('login');
+    }
+
+    public function actionConfirm ()
+    {
+        $client = Yii::$app->authClientCollection->getActiveClient();
+        if (!$client) {
+            return $this->redirect(['login']);
+        };
+
+        $email = $client->getUserAttributes()['email'];
+        $user = User::findOne(['email' => $email]);
+
+        $res = $this->doLogin('confirm',$user ? $user->email : null);
+        $user = Yii::$app->getUser()->getIdentity();
+        if ($user) {
+            RemoteUser::set($client,$user);
+        };
+        return $res;
+    }
+
+    public function actionRemoteProceed ()
+    {
+        $client = Yii::$app->authClientCollection->getActiveClient();
+        if (!$client) {
+            return $this->redirect(['login']);
+        };
+        $email = $client->getUserAttributes()['email'];
+        $user = User::findByEmail($email);
+        if ($user) {
+            return $this->redirect(['confirm']);
+        };
+        return $this->redirect(['signup']);
+        #return $this->render('remoteProceed');
+    }
+
+    public function actionSignup ()
+    {
+        $client = Yii::$app->authClientCollection->getActiveClient();
+
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    if ($client) {
+                        RemoteUser::set($client,$user);
+                    };
+                    return $this->goHome();
+                }
+            }
+        } else {
+            if ($client) {
+                $model->load([$model->formName() => $client->getUserAttributes()]);
+            };
+        };
+
+        return $this->render('signup', compact('model'));
+    }
+
+    public function actionLogout ()
+    {
         Yii::$app->user->logout();
+        Yii::$app->getSession()->destroy();
         $back = Yii::$app->request->value('back');
 
         return $back ? $this->redirect($back) : $this->goHome();
@@ -91,22 +180,6 @@ class SiteController extends Controller
 
     public function actionRecovery() {
         return $this->render('recovery', []);
-    }
-
-    public function actionSignup()
-    {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
     }
 
     public function actionContact()
@@ -150,7 +223,7 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionResetPassword($token)
+    public function actionResetPassword ($token)
     {
         try {
             $model = new ResetPasswordForm($token);

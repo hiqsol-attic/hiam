@@ -3,7 +3,9 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\web\Response;
 use yii\helpers\ArrayHelper;
+use yii\filters\ContentNegotiator;
 use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
 
 class OauthController extends \yii\web\Controller
@@ -16,22 +18,22 @@ class OauthController extends \yii\web\Controller
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
-/*
             'contentNegotiator' => [
                 'class' => ContentNegotiator::className(),
-                'only' => ['token','resource'],
+                'only' => ['resource'],
                 'formats' => [
                     'application/json' => Response::FORMAT_JSON,
-                    'application/xml' => Response::FORMAT_XML,
+//                  'application/xml' => Response::FORMAT_XML,
                 ],
             ],
+/*
             'exceptionFilter' => [
                 'class' => ErrorToExceptionFilter::className()
             ],
 */
         ]);
     }
-    
+
     public function getModule()
     {
         return Yii::$app->getModule('oauth2');
@@ -75,7 +77,7 @@ class OauthController extends \yii\web\Controller
         $class = Yii::$app->getUser()->identityClass;
         return $class::findIdentityByAccessToken($access_token);
     }
-    
+
     public function actionToken()
     {
         $response = $this->getServer()->handleTokenRequest($this->getRequest());
@@ -87,13 +89,13 @@ class OauthController extends \yii\web\Controller
         return $response->send();
     }
 
-    protected function _actionResource()
+    public function actionResource()
     {
         $ok = $this->getServer()->verifyResourceRequest($this->request);
         if (!$ok) return $this->getServer()->getResponse()->send();
         $access_token = $this->getRequestValue($this->getTokenParamName());
         $user = $this->findUser($access_token);
-        
+
         if (!is_object($user)) { /// TODO fix error returning
             return ['error' => 'no user'];
         };

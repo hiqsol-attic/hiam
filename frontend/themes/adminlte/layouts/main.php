@@ -40,7 +40,7 @@ JS
 <body class="login-page">
 <div class="login-box">
     <div class="login-logo">
-        <?= Html::a('Hi<b>Panel</b>', ['/']); ?>
+        <?= Html::a('<b>AH</b>names', ['/']); ?>
     </div>
     <!-- /.login-logo -->
     <?= $content; ?>
