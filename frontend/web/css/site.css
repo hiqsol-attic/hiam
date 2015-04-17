@@ -89,3 +89,106 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+
+
+/** -- Social buttons -- **/
+
+/** yandex button **/
+
+.btn-yandex {
+    color: #000;
+    background-color: #ffd630;
+    border-color: rgba(191,153,0, 0.2);
+}
+.btn-yandex:hover,
+.btn-yandex:focus,
+.btn-yandex.focus,
+.btn-yandex:active,
+.btn-yandex.active,
+.open > .dropdown-toggle.btn-yandex,
+:not(.btn-yandex i) {
+    color: #d83933;
+    background-color: #ffdb4c;
+    border-color: rgba(191,153,0, 0.2);
+}
+.btn-yandex:active,
+.btn-yandex.active,
+.open > .dropdown-toggle.btn-yandex {
+    background-image: none;
+}
+.btn-yandex.disabled,
+.btn-yandex[disabled],
+fieldset[disabled] .btn-yandex,
+.btn-yandex.disabled:hover,
+.btn-yandex[disabled]:hover,
+fieldset[disabled] .btn-yandex:hover,
+.btn-yandex.disabled:focus,
+.btn-yandex[disabled]:focus,
+fieldset[disabled] .btn-yandex:focus,
+.btn-yandex.disabled.focus,
+.btn-yandex[disabled].focus,
+fieldset[disabled] .btn-yandex.focus,
+.btn-yandex.disabled:active,
+.btn-yandex[disabled]:active,
+fieldset[disabled] .btn-yandex:active,
+.btn-yandex.disabled.active,
+.btn-yandex[disabled].active,
+fieldset[disabled] .btn-yandex.active {
+    background-color: #ffd630;
+    border-color: rgba(191,153,0, 0.2);
+}
+.btn-yandex .badge {
+    color: #d83933;
+    background-color: #ffffff;
+}
+.btn-yandex i {
+    color: #d83933;
+}
+
+/* windows button */
+
+.btn-windows {
+    color: #ffffff;
+    background-color: #2672ec;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+.btn-windows:hover,
+.btn-windows:focus,
+.btn-windows.focus,
+.btn-windows:active,
+.btn-windows.active,
+.open > .dropdown-toggle.btn-windows {
+    color: #ffffff;
+    background-color: #5a94f1;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+.btn-windows:active,
+.btn-windows.active,
+.open > .dropdown-toggle.btn-windows {
+    background-image: none;
+}
+.btn-windows.disabled,
+.btn-windows[disabled],
+fieldset[disabled] .btn-windows,
+.btn-windows.disabled:hover,
+.btn-windows[disabled]:hover,
+fieldset[disabled] .btn-windows:hover,
+.btn-windows.disabled:focus,
+.btn-windows[disabled]:focus,
+fieldset[disabled] .btn-windows:focus,
+.btn-windows.disabled.focus,
+.btn-windows[disabled].focus,
+fieldset[disabled] .btn-windows.focus,
+.btn-windows.disabled:active,
+.btn-windows[disabled]:active,
+fieldset[disabled] .btn-windows:active,
+.btn-windows.disabled.active,
+.btn-windows[disabled].active,
+fieldset[disabled] .btn-windows.active {
+    background-color: #2672ec;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+.btn-windows .badge {
+    color: #2672ec;
+    background-color: #ffffff;
+}

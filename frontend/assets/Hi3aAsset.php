@@ -27,6 +27,6 @@ class Hi3aAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
 //        'yii\bootstrap\BootstrapPluginAsset',
-//        'frontend\assets\AppAsset',
+        'frontend\assets\AppAsset',
     ];
 }

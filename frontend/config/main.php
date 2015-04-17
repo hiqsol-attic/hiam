@@ -59,7 +59,7 @@ return [
                     'clientId'      => $params['vkontakte_client_id'],
                     'clientSecret'  => $params['vkontakte_client_secret'],
                 ],
-/* TODO icons and css for these
+
                 'yandex' => [
                     'class'             => 'yii\authclient\clients\YandexOAuth',
                     'clientId'          => $params['yandex_client_id'],
@@ -70,7 +70,7 @@ return [
                     'clientId'          => $params['live_client_id'],
                     'clientSecret'      => $params['live_client_secret'],
                 ],
-*/
+
             ],
         ],
         'urlManager' => [

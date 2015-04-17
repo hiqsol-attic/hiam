@@ -5,6 +5,7 @@
  * @copyright Copyright (c) 2014-2015 HiQDev
  */
 
+use frontend\assets\PictonicAsset;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\authclient\widgets\AuthChoice;
@@ -12,6 +13,50 @@ use yii\authclient\widgets\AuthChoice;
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $model \frontend\models\ResetPasswordForm */
+PictonicAsset::register($this);
+$this->registerCss(<<<'CSS'
+.social-button-login > a:nth-child(n+3){
+    display:none;
+}​
+
+.social-button-login:hover > a:nth-child(n+1) {
+    display:block;
+}
+CSS
+);
+
+
+// Social Pictonic associative
+$buttonOptions = [
+    'facebook' => [
+        'icon' => 'icon-facebook',
+        'buttonSocialClass' => 'btn-facebook',
+    ],
+    'google' => [
+        'icon' => 'icon-google',
+        'buttonSocialClass' => 'btn-google-plus',
+    ],
+    'github' => [
+        'icon' => 'icon-github-01',
+        'buttonSocialClass' => 'btn-github',
+    ],
+    'linkedin' => [
+        'icon' => 'icon-linkedin',
+        'buttonSocialClass' => 'btn-linkedin',
+    ],
+    'vk' => [
+        'icon' => 'icon-rus-vk-02',
+        'buttonSocialClass' => 'btn-vk',
+    ],
+    'yandex' => [
+        'icon' => 'icon-rus-yandex-01',
+        'buttonSocialClass' => 'btn-yandex',
+    ],
+    'windows' => [
+        'icon' => 'fa fa-windows',
+        'buttonSocialClass' => 'btn-windows',
+    ],
+];
 
 $this->blocks['bodyClass'] = 'login-page';
 $this->title = 'Sign in';
@@ -50,11 +95,17 @@ CSS
         'baseAuthUrl' => ['site/auth'],
         'options' => ['class' => 'social-auth-links text-center'],
     ]); ?>
-        <p>-- OR sign in using social services --</p>
+        <p>-- OR SIGN IN WITH --</p>
+    <div class="social-button-login">
+        <div class="row">
         <?php foreach ($authAuthChoice->getClients() as $name => $client): ?>
-            <?php $text = "<i class=\"fa fa-$name\"></i>&nbsp;" ?>
-            <?php $authAuthChoice->clientLink($client,$text,['class' => "btn btn-flat btn-social btn-$name"]) ?>
+            <div class="col-md-6 col-xs-12" style="margin-bottom: 0.5em">
+            <?php $text = sprintf("<i class='%s'></i>&nbsp;%s", $buttonOptions[$name]['icon'], $client->getTitle()); ?>
+            <?php $authAuthChoice->clientLink($client,$text,['class' => "btn btn-block btn-social " . $buttonOptions[$name]['buttonSocialClass']]); ?>
+            </div>
         <?php endforeach ?>
+        </div>
+    </div>
     <?php AuthChoice::end(); ?>
 
     <?= Html::a('I forgot my password', ['/site/recovery']); ?><br>
