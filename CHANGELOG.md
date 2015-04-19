@@ -8,7 +8,7 @@ Hi3a changelog
 
 ### 0.0.1-alpha 2015-04-19
 
-- social services integrated
+- social login
 - basic functional
 - inited
 
