@@ -116,7 +116,7 @@ return [
                     'class' => 'OAuth2\GrantType\AuthorizationCode'
                 ],
                 'user_credentials' => [
-                'class' => 'OAuth2\GrantType\UserCredentials'
+                    'class' => 'OAuth2\GrantType\UserCredentials'
                 ],
                 'refresh_token' => [
                     'class' => 'OAuth2\GrantType\RefreshToken',
