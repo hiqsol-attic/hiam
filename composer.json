@@ -1,41 +1,52 @@
 {
-    "name": "hiqdev/hi3a",
+    "name": "hiqdev/hiam",
     "type": "project",
-    "description": "AAA server providing OAuth2, ABAC and logging",
-    "keywords": ["hi3a","aaa","oauth2","abac","authentication","authorization","audit","hipanel","yii2"],
-    "homepage": "http://hiqdev.com/hi3a",
+    "description": "Identity and Access Management server providing OAuth2, ABAC and logging",
+    "keywords": [
+        "iam",
+        "aaa",
+        "oauth2",
+        "abac",
+        "authentication",
+        "authorization",
+        "audit",
+        "yii2"
+    ],
+    "homepage": "https://hiqdev.com/hiam",
+    "license": "BSD-3-Clause",
     "support": {
-        "email":  "support@hiqdev.com",
+        "email": "support@hiqdev.com",
         "source": "https://github.com/hiqdev/hi3a",
         "issues": "https://github.com/hiqdev/hi3a/issues",
-        "wiki":   "https://github.com/hiqdev/hi3a/wiki",
-        "forum":  "https://forum.hiqdev.com/hi3a"
+        "wiki": "https://github.com/hiqdev/hi3a/wiki",
+        "forum": "https://forum.hiqdev.com/hi3a"
     },
-    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Andrii Vasyliev",
+            "role": "Project lead",
             "email": "sol@hiqdev.com",
-            "homepage": "https://hipanel.com/",
-            "role": "Project lead"
+            "homepage": "https://hipanel.com/"
         },
         {
             "name": "Dmitry Naumenko",
+            "role": "Lead backend developer",
             "email": "silverfire@hiqdev.com",
-            "role": "Lead backend developer"
+            "homepage": "http://silverfire.me/"
         },
         {
             "name": "Andrey Klochok",
+            "role": "Lead frontend developer",
             "email": "tafid@hiqdev.com",
-            "role": "Lead frontend developer"
+            "homepage": "https://hiqdev.com/"
         },
         {
             "name": "Yuriy Myronchuk",
+            "role": "QA Lead",
             "email": "bladeroot@hiqdev.com",
-            "role": "QA Lead"
+            "homepage": "https://hiqdev.com/"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "*",
@@ -52,8 +63,10 @@
         "yiisoft/yii2-gii": "*",
         "yiisoft/yii2-faker": "*"
     },
-    "config": {
-        "process-timeout": 1800
+    "autoload": {
+        "psr-4": {
+            "hiam\\": ""
+        }
     },
     "extra": {
         "asset-installer-paths": {

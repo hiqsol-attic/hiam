@@ -1,0 +1,17 @@
+package:
+    name:           hiam
+    namespace:      hiam
+    label:          HIAM
+    title:          Identity and Access Management server providing OAuth2, ABAC and logging
+    type:           project
+    homepage:       https://hiqdev.com/hiam
+    keywords:       iam, aaa, oauth2, abac, authentication, authorization, audit, yii2
+    year:           2014
+    description:    |
+        - IAM - Identity and Access Management
+        - ABAC - Attribute Based Access Control
+        - Social login: Facebook, Google, VK, LinkedIn, GitHub, Live, Yandex
+        - Full activity logging with searching and reporting
+
+require:
+    hiqdev/hidev-config-php:    "*@dev"
