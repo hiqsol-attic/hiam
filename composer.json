@@ -4,7 +4,6 @@
     "description": "Identity and Access Management server providing OAuth2, ABAC and logging",
     "keywords": [
         "iam",
-        "aaa",
         "oauth2",
         "abac",
         "authentication",
