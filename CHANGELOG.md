@@ -3,17 +3,16 @@ hiqdev/hiam changelog
 
 ## 0.0.2 Under development
 
-- splitting api from site
-- separate themes
+- Renamed to hiam
 
 ## 0.0.1-alpha 2015-04-19
 
-- social login
-- basic functional
+- Added social login
+- Added basic functional
 
 ## v0.1.0 2014-12-13
 
-- inited
+- Inited
 
-## Development started
+## Development started 2014-12-13
 

@@ -3,21 +3,24 @@ hiqdev/hiam commits history
 
 ## 0.0.2 Under development
 
-- splitting api from site
-- separate themes
+- Renamed to hiam
+    - 0b15b69 2015-08-02 + roadmap (sol@hiqdev.com)
+    - 3414550 2015-08-02 * README: deprecated (sol@hiqdev.com)
+    - b39c135 2015-08-02 renaming to hiam (sol@hiqdev.com)
+    - b3fe9f1 2015-08-01 hideved (sol@hiqdev.com)
     - 1808803 2015-07-16 fixed migration for hi3a_remote_user table (sol@hiqdev.com)
     - 628f67e 2015-04-19 doc (sol@hiqdev.com)
 
 ## 0.0.1-alpha 2015-04-19
 
-- social login
+- Added social login
     - 0db89ac 2015-04-19 preparing 0.0.1-alpha (sol@hiqdev.com)
     - 247fcae 2015-04-17 Add PictonicAsset, do social button on login page (andreyklochok@gmail.com)
     - 74bc4b5 2015-04-17 doc (sol@hiqdev.com)
     - 86520da 2015-04-17 doc (sol@hiqdev.com)
     - 9e6f3fd 2015-04-17 doc (sol@hiqdev.com)
     - 8613a09 2015-04-17 finishing social login (sol@hiqdev.com)
-- basic functional
+- Added basic functional
     - 76b2d5c 2015-04-08 * composer.json a bit (sol@hiqdev.com)
     - 10463ca 2015-04-08 Update README (sol@hiqdev.com)
     - 1f59733 2015-04-08 * README and LICENSE (sol@hiqdev.com)
@@ -37,8 +40,8 @@ hiqdev/hiam commits history
 
 ## v0.1.0 2014-12-13
 
-- inited
+- Inited
     - 96ca12f 2014-12-13 INITED (andrii.vasyliev@gmail.com)
 
-## Development started
+## Development started 2014-12-13
 
