@@ -3,7 +3,7 @@ hiqdev/hiam changelog
 
 ## 0.0.2 Under development
 
-- Renamed to hiam
+- Changed: renamed to hiam
 
 ## 0.0.1-alpha 2015-04-19
 
@@ -12,7 +12,7 @@ hiqdev/hiam changelog
 
 ## v0.1.0 2014-12-13
 
-- Inited
+- Added: inited
 
 ## Development started 2014-12-13
 

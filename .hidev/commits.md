@@ -3,7 +3,8 @@ hiqdev/hiam commits history
 
 ## 0.0.2 Under development
 
-- Renamed to hiam
+- Changed: renamed to hiam
+    - 6306a57 2015-08-02 - require-dev and user hiqdev/yii2-hiam-authclient (sol@hiqdev.com)
     - 0b15b69 2015-08-02 + roadmap (sol@hiqdev.com)
     - 3414550 2015-08-02 * README: deprecated (sol@hiqdev.com)
     - b39c135 2015-08-02 renaming to hiam (sol@hiqdev.com)
@@ -40,7 +41,7 @@ hiqdev/hiam commits history
 
 ## v0.1.0 2014-12-13
 
-- Inited
+- Added: inited
     - 96ca12f 2014-12-13 INITED (andrii.vasyliev@gmail.com)
 
 ## Development started 2014-12-13
