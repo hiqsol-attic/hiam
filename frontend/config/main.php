@@ -8,7 +8,7 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'hi3a',
+    'id' => 'hiam',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'name' => 'AHnames',
@@ -23,7 +23,7 @@ return [
             'enableAutoLogin' => true,
         ],
         'authClientCollection' => [
-            'class' => 'hi3a\authclient\Collection',
+            'class' => 'hiam\authclient\Collection',
             'clients' => [
                 'facebook' => [
                     'class'         => 'yii\authclient\clients\Facebook',
