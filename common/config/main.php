@@ -1,6 +1,6 @@
 <?php
 
-function d ($a) { die(var_dump($a)); }
+function d ($a) { print "<pre>";die(var_dump($a)); }
 
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',

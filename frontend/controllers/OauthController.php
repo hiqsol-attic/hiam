@@ -106,6 +106,11 @@ class OauthController extends \yii\web\Controller
         return $user->getAttributes();
     }
 
+    static protected $authorizedClients = [
+        'sol-hipanel-master'  => 1,
+        'hipanel.ahnames.com' => 1,
+    ];
+
     public function actionAuthorize () {
         $request = $this->getRequest();
         $response = $this->getResponse();
@@ -119,9 +124,9 @@ class OauthController extends \yii\web\Controller
             return $this->redirect(['/site/login']);
         };
 
-        if ($this->getRequestValue('client_id') === 'sol-hipanel-master') {
+        if (self::$authorizedClients[$this->getRequestValue('client_id')]) {
             $is_authorized = true;
-        };
+        }
 
         if (!$is_authorized && empty($_POST)) {
             return $this->render('Authorize',[
