@@ -30,31 +30,24 @@ CSS
 $buttonOptions = [
     'facebook' => [
         'icon' => 'icon-facebook',
-        'buttonSocialClass' => 'btn-facebook',
     ],
     'google' => [
         'icon' => 'icon-google',
-        'buttonSocialClass' => 'btn-google-plus',
     ],
     'github' => [
         'icon' => 'icon-github-01',
-        'buttonSocialClass' => 'btn-github',
     ],
     'linkedin' => [
         'icon' => 'icon-linkedin',
-        'buttonSocialClass' => 'btn-linkedin',
     ],
     'vk' => [
         'icon' => 'icon-rus-vk-02',
-        'buttonSocialClass' => 'btn-vk',
     ],
     'yandex' => [
         'icon' => 'icon-rus-yandex-01',
-        'buttonSocialClass' => 'btn-yandex',
     ],
     'windows' => [
         'icon' => 'fa fa-windows',
-        'buttonSocialClass' => 'btn-windows',
     ],
 ];
 
@@ -101,7 +94,7 @@ CSS
         <?php foreach ($authAuthChoice->getClients() as $name => $client): ?>
             <div class="col-md-6 col-xs-12" style="margin-bottom: 0.5em">
             <?php $text = sprintf("<i class='%s'></i>&nbsp;%s", $buttonOptions[$name]['icon'], $client->getTitle()); ?>
-            <?php $authAuthChoice->clientLink($client,$text,['class' => "btn btn-block btn-social " . $buttonOptions[$name]['buttonSocialClass']]); ?>
+            <?php $authAuthChoice->clientLink($client,$text,['class' => "btn btn-block btn-social btn-$name"]) ?>
             </div>
         <?php endforeach ?>
         </div>
