@@ -12,11 +12,21 @@ Identity and Access Management server providing OAuth2, ABAC and logging
 
 ## Installation
 
-The preferred way to install this project is through [composer](http://getcomposer.org/download/).
+The preferred way to install this yii2-extension is through [composer](http://getcomposer.org/download/).
+
+Either run
 
 ```
-php composer.phar create-project "hiqdev/hiam:*" directory2install
+php composer.phar require "hiqdev/hiam"
 ```
+
+or add
+
+```json
+"hiqdev/hiam": "*"
+```
+
+to the require section of your composer.json.
 
 ## Licence
 
