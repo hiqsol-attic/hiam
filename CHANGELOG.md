@@ -3,7 +3,8 @@ hiqdev/hiam changelog
 
 ## 0.0.2 Under development
 
-- Changed: php-cs-fixed
+- Fixed google social button
+- Fixed: small fixes for production
 - Changed: renamed to hiam
 
 ## 0.0.1-alpha 2015-04-19

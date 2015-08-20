@@ -3,7 +3,11 @@ hiqdev/hiam commits history
 
 ## 0.0.2 Under development
 
-- Changed: php-cs-fixed
+- Fixed google social button
+    - 085b676 2015-08-17 fixed google social button, simplified buttonOptions (sol@hiqdev.com)
+- Fixed: small fixes for production
+    - f7758c1 2015-08-15 + require-dev (sol@hiqdev.com)
+    - ebd104b 2015-08-15 preparing for production (sol@hiqdev.com)
     - 36be032 2015-08-08 + .php_cs (sol@hiqdev.com)
 - Changed: renamed to hiam
     - a5b4f43 2015-08-10 still renaming to hiam (sol@hiqdev.com)
