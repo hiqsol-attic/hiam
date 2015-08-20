@@ -64,7 +64,7 @@
     },
     "autoload": {
         "psr-4": {
-            "hiam\\": ""
+            "hiam\\": "src"
         }
     },
     "extra": {
