@@ -3,6 +3,7 @@ hiqdev/hiam changelog
 
 ## 0.0.2 Under development
 
+- Changed: moved to src and turned to yii2-extension
 - Fixed google social button
 - Fixed: small fixes for production
 - Changed: renamed to hiam

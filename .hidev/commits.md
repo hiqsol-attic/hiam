@@ -3,6 +3,8 @@ hiqdev/hiam commits history
 
 ## 0.0.2 Under development
 
+- Changed: moved to src and turned to yii2-extension
+    - 061457a 2015-08-20 moved to src (sol@hiqdev.com)
     - d2841a0 2015-08-20 turned to yii2-extension (sol@hiqdev.com)
 - Fixed google social button
     - 085b676 2015-08-17 fixed google social button, simplified buttonOptions (sol@hiqdev.com)

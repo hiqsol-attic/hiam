@@ -30,7 +30,7 @@ to the require section of your composer.json.
 
 ## Configuration
 
-Configured at your project frontend/config/params_local.php
+Configure at your project''s frontend/config/params_local.php
 
 ```php
 return [
