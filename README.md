@@ -28,6 +28,16 @@ or add
 
 to the require section of your composer.json.
 
+## Configuration
+
+Configured at your project frontend/config/params_local.php
+
+```php
+return [
+    'op'    => 'value',
+];
+```
+
 ## Licence
 
 [BSD-3-Clause](http://choosealicense.com/licenses/bsd-3-clause)
