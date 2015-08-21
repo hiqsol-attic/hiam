@@ -53,6 +53,7 @@
         "yiisoft/yii2-swiftmailer": "*",
         "filsh/yii2-oauth2-server": "*@dev",
         "hiqdev/yii2-hiam-authclient": "*@dev",
+        "hiqdev/yii2-theme-adminlte": "*@dev",
         "cebe/yii2-gravatar": "*",
         "bower-asset/admin-lte": "2.*"
     },
