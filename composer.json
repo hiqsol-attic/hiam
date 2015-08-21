@@ -1,5 +1,5 @@
 {
-    "name": "hiqdev/hiam",
+    "name": "hiqdev/hiam-core",
     "type": "project",
     "description": "Identity and Access Management server providing OAuth2, ABAC and logging",
     "keywords": [
@@ -11,7 +11,7 @@
         "audit",
         "yii2"
     ],
-    "homepage": "https://github.com/hiqdev/hiam",
+    "homepage": "https://github.com/hiqdev/hiam-core",
     "license": "BSD-3-Clause",
     "support": {
         "email": "support@hiqdev.com",

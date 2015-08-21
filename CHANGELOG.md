@@ -1,5 +1,5 @@
-hiqdev/hiam changelog
----------------------
+hiqdev/hiam-core changelog
+--------------------------
 
 ## 0.0.2 Under development
 

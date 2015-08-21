@@ -1,5 +1,5 @@
 package:
-    name:           hiam
+    name:           hiam-core
     namespace:      hiam
     label:          HIAM
     title:          Identity and Access Management server providing OAuth2, ABAC and logging

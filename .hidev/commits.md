@@ -1,5 +1,5 @@
-hiqdev/hiam commits history
----------------------------
+hiqdev/hiam-core commits history
+--------------------------------
 
 ## 0.0.2 Under development
 

@@ -7,8 +7,8 @@ Identity and Access Management server providing OAuth2, ABAC and logging
 - Full activity logging with searching and reporting
 
 
-[![Latest Stable Version](https://poser.pugx.org/hiqdev/hiam/v/stable.png)](https://packagist.org/packages/hiqdev/hiam)
-[![Total Downloads](https://poser.pugx.org/hiqdev/hiam/downloads.png)](https://packagist.org/packages/hiqdev/hiam)
+[![Latest Stable Version](https://poser.pugx.org/hiqdev/hiam-core/v/stable.png)](https://packagist.org/packages/hiqdev/hiam-core)
+[![Total Downloads](https://poser.pugx.org/hiqdev/hiam-core/downloads.png)](https://packagist.org/packages/hiqdev/hiam-core)
 
 ## Installation
 
@@ -17,13 +17,13 @@ The preferred way to install this yii2-extension is through [composer](http://ge
 Either run
 
 ```
-php composer.phar require "hiqdev/hiam"
+php composer.phar require "hiqdev/hiam-core"
 ```
 
 or add
 
 ```json
-"hiqdev/hiam": "*"
+"hiqdev/hiam-core": "*"
 ```
 
 to the require section of your composer.json.
