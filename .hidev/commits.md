@@ -3,6 +3,9 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Fixed assets and theme
+    - 541a18c 2015-08-21 fixed AppAsset (sol@hiqdev.com)
+    - 83e2bc1 2015-08-21 + require hiqdev/yii2-theme-adminlte (sol@hiqdev.com)
 - Changed: renamed to hiam-core, moved to src and turned to yii2-extension
     - 29db7fa 2015-08-21 improved configs (sol@hiqdev.com)
     - 4d2bb96 2015-08-21 + basically working (sol@hiqdev.com)
