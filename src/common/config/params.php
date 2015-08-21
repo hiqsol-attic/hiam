@@ -1,6 +1,8 @@
 <?php
+
 return [
-    'adminEmail' => 'admin@hiqdev.com',
-    'supportEmail' => 'support@hiqdev.com',
+    'db_name'                       => 'mrdp',
+    'db_user'                       => 'sol',
+    'db_password'                   => '****',
     'user.passwordResetTokenExpire' => 3600,
 ];

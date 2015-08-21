@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tofid
- * Date: 01.04.15
- * Time: 17:02
- */
 
 namespace hiam\frontend\assets;
 
