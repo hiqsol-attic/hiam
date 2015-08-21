@@ -4,6 +4,7 @@ hiqdev/hiam-core commits history
 ## 0.0.2 Under development
 
 - Changed: renamed to hiam-core, moved to src and turned to yii2-extension
+    - e1ff7a1 2015-08-21 renamed to hiam-core (sol@hiqdev.com)
     - fe0bc44 2015-08-21 renamed to hiam-core (sol@hiqdev.com)
     - 0250205 2015-08-20 fixed namespace (sol@hiqdev.com)
     - aa9e0b6 2015-08-20 * init: added  parameter (sol@hiqdev.com)
