@@ -15,9 +15,9 @@
     "license": "BSD-3-Clause",
     "support": {
         "email": "support@hiqdev.com",
-        "source": "https://github.com/hiqdev/hiam",
-        "issues": "https://github.com/hiqdev/hiam/issues",
-        "wiki": "https://github.com/hiqdev/hiam/wiki",
+        "source": "https://github.com/hiqdev/hiam-core",
+        "issues": "https://github.com/hiqdev/hiam-core/issues",
+        "wiki": "https://github.com/hiqdev/hiam-core/wiki",
         "forum": "https://forum.hiqdev.com/hiam"
     },
     "authors": [
