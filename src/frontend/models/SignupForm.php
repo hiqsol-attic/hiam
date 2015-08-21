@@ -1,15 +1,10 @@
 <?php
-/**
- * @link    http://hiqdev.com/hi3a
- * @license http://hiqdev.com/hi3a/license
- * @copyright Copyright (c) 2014-2015 HiQDev
- */
 
-namespace frontend\models;
+namespace hiam\frontend\models;
 
 use Yii;
-use common\models\User;
-use common\models\Contact;
+use hiam\common\models\User;
+use hiam\common\models\Contact;
 
 /**
  * Signup form

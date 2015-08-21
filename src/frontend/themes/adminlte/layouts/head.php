@@ -4,9 +4,10 @@
  * Head layout.
  */
 
-use frontend\assets\Hi3aAsset;
+use hiam\frontend\assets\Hi3aAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
 ?>
 <title><?= Html::encode($this->title); ?></title>
 <?= Html::csrfMetaTags(); ?>

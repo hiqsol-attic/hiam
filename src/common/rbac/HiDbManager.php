@@ -1,7 +1,8 @@
 <?php
 
-namespace common\rbac;
+namespace hiam\common\rbac;
 
+use hiam\common\models\User;
 use Yii;
 use yii\rbac\DbManager;
 use yii\rbac\Rule;
@@ -10,7 +11,6 @@ use yii\rbac\Role;
 use yii\rbac\Permission;
 use yii\rbac\Assignment;
 use yii\base\InvalidParamException;
-use common\models\User;
 
 /**
  * hi3a RBAC DB Manager

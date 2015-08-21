@@ -6,7 +6,7 @@
  * Time: 17:02
  */
 
-namespace frontend\assets;
+namespace hiam\frontend\assets;
 
 use yii\web\AssetBundle;
 
@@ -26,7 +26,7 @@ class Hi3aAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
-//        'yii\bootstrap\BootstrapPluginAsset',
-        'frontend\assets\AppAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
+        'hiam\frontend\assets\AppAsset',
     ];
 }

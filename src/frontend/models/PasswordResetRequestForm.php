@@ -1,7 +1,8 @@
 <?php
-namespace frontend\models;
 
-use common\models\User;
+namespace hiam\frontend\models;
+
+use hiam\common\models\User;
 use yii\base\Model;
 
 /**

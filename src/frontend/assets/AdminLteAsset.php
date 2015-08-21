@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tofid
- * Date: 03.03.15
- * Time: 18:34
- */
 
-namespace frontend\assets;
+namespace hiam\frontend\assets;
 
 use yii\web\AssetBundle;
 

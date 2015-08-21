@@ -9,12 +9,12 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
-    'controllerNamespace' => 'backend\controllers',
+    'controllerNamespace' => 'hiam\backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'hiam\common\models\User',
             'enableAutoLogin' => true,
         ],
         'log' => [

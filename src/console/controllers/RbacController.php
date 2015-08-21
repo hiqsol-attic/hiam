@@ -1,5 +1,6 @@
 <?php
-namespace console\controllers;
+
+namespace hiam\console\controllers;
 
 use Yii;
 use yii\helpers\Console;

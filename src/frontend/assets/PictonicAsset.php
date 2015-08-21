@@ -1,11 +1,6 @@
 <?php
-/**
- * @link http://hiqdev.com/...
- * @copyright Copyright (c) 2015 HiQDev
- * @license http://hiqdev.com/.../license
- */
 
-namespace frontend\assets;
+namespace hiam\frontend\assets;
 
 use yii\web\AssetBundle;
 

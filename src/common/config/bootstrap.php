@@ -1,5 +1,8 @@
 <?php
-Yii::setAlias('common', dirname(__DIR__));
-Yii::setAlias('frontend', dirname(dirname(__DIR__)) . '/frontend');
-Yii::setAlias('backend', dirname(dirname(__DIR__)) . '/backend');
-Yii::setAlias('console', dirname(dirname(__DIR__)) . '/console');
+
+Yii::setAlias('hiam',     dirname(dirname(__DIR__)));
+Yii::setAlias('project',  dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))));
+Yii::setAlias('common',   '@project/common');
+Yii::setAlias('frontend', '@project/frontend');
+Yii::setAlias('backend',  '@project/backend');
+Yii::setAlias('console',  '@project/console');

@@ -1,18 +1,13 @@
 <?php
-/**
- * @link    http://hiqdev.com/hi3a
- * @license http://hiqdev.com/hi3a/license
- * @copyright Copyright (c) 2014-2015 HiQDev
- */
 
-namespace common\models;
+namespace hiam\common\models;
 
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
 
-use common\models\RemoteUser;
+use hiam\common\models\RemoteUser;
 
 use OAuth2\Storage\UserCredentialsInterface;
 use filsh\yii2\oauth2server\models\OauthAccessTokens;

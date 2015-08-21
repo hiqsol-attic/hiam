@@ -1,5 +1,6 @@
 <?php
-namespace common\models;
+
+namespace hiam\common\models;
 
 use Yii;
 use yii\base\Model;

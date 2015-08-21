@@ -1,11 +1,10 @@
 <?php
 
-namespace frontend\components;
+namespace hiam\web;
 
 use Yii;
-use yii\web\Request;
 
-class MyRequest extends Request {
+class Request extends \yii\web\Request {
 
     public function value ($name, $default = null) {
         $params = $this->getBodyParams();

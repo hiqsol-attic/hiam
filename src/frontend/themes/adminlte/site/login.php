@@ -1,11 +1,6 @@
 <?php
-/**
- * @link    http://hiqdev.com/hi3a
- * @license http://hiqdev.com/hi3a/license
- * @copyright Copyright (c) 2014-2015 HiQDev
- */
 
-use frontend\assets\PictonicAsset;
+use hiam\frontend\assets\PictonicAsset;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\authclient\widgets\AuthChoice;

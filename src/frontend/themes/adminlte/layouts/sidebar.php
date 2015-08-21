@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tofid
- * Date: 03.03.15
- * Time: 18:13
- */
 
-use frontend\components\widgets\Menu;
+use hiam\frontend\components\widgets\Menu;
 use Yii;
+
 ?>
 
 <aside class="main-sidebar">

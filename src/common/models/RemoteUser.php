@@ -1,11 +1,6 @@
 <?php
-/**
- * @link    http://hiqdev.com/hi3a
- * @license http://hiqdev.com/hi3a/license
- * @copyright Copyright (c) 2014-2015 HiQDev
- */
 
-namespace common\models;
+namespace hiam\common\models;
 
 /**
  * RemoteUser model

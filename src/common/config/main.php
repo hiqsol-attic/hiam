@@ -2,8 +2,14 @@
 
 function d ($a) { print "<pre>";die(var_dump($a)); }
 
+$params = array_merge(
+    require(Yii::getAlias('@hiam/common/config/params.php')),
+    require(Yii::getAlias('@project/common/config/params.php')),
+    require(Yii::getAlias('@project/common/config/params-local.php'))
+);
+
 return [
-    'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'vendorPath' => '@project/vendor',
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -14,7 +20,7 @@ return [
             'charset'       => 'utf8',
         ],
         'authManager' => [
-            'class'             => 'common\rbac\HiDbManager',
+            'class'             => 'hiam\common\rbac\HiDbManager',
             'itemTable'         => '{{%rbac_item}}',
             'itemChildTable'    => '{{%rbac_item_child}}',
             'assignmentTable'   => '{{%rbac_assignment}}',
