@@ -8,7 +8,6 @@ class Hi3aAsset extends AssetBundle
 {
     public $sourcePath = '@bower/admin-lte';
     public $css = [
-        'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',
         'plugins/iCheck/square/blue.css',
         'dist/css/AdminLTE.css',
     ];
