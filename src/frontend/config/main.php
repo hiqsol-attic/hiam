@@ -14,9 +14,10 @@ return [
     'name'        => 'AHnames',
     'basePath'    => dirname(__DIR__),
     'runtimePath' => '@project/frontend/runtime',
-    'bootstrap'   => ['log'],
+    'bootstrap'   => ['log', 'pluginManager'],
     'controllerNamespace' => 'hiam\frontend\controllers',
     'defaultRoute' => 'site',
+    'layout'       => 'mini',
     'components' => [
         'request' => [
             'class' => 'hiam\web\Request',
@@ -82,10 +83,7 @@ return [
             'enableStrictParsing' => false,
         ],
         'view' => [
-            'theme' => [
-                'pathMap' => ['@app/views' => '@app/themes/adminlte'],
-                'baseUrl' => '@web/themes/adminlte',
-            ],
+            'class' => 'hiqdev\thememanager\View',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -98,6 +96,23 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+        ],
+        'pluginManager' => [
+            'class' => 'hiqdev\pluginmanager\PluginManager',
+        ],
+        'themeManager' => [
+            'class'  => 'hiqdev\thememanager\ThemeManager',
+            'assets' => [
+                'hiam\frontend\assets\AppAsset',
+            ],
+        ],
+        'menuManager' => [
+            'class' => 'hiqdev\menumanager\MenuManager',
+            'items' => [
+                'breadcrumbs' => [
+                    'saveToView' => 'breadcrumbs',
+                ],
+            ],
         ],
     ],
     'modules' => [
