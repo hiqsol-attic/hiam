@@ -1,6 +1,6 @@
 {
     "name": "hiqdev/hiam-core",
-    "type": "project",
+    "type": "yii2-extension",
     "description": "Identity and Access Management server providing OAuth2, ABAC and logging",
     "keywords": [
         "iam",
