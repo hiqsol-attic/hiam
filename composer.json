@@ -54,9 +54,7 @@
         "filsh/yii2-oauth2-server": "*@dev",
         "hiqdev/yii2-hiam-authclient": "*@dev",
         "hiqdev/yii2-theme-adminlte": "*@dev",
-        "hiqdev/yii2-asset-icheck": "~1.0",
-        "cebe/yii2-gravatar": "*",
-        "bower-asset/admin-lte": "2.*"
+        "hiqdev/yii2-asset-icheck": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
