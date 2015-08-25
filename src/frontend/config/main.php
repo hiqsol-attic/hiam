@@ -69,12 +69,13 @@ return [
                     'clientId'     => $params['yandex_client_id'],
                     'clientSecret' => $params['yandex_client_secret'],
                 ],
+/*
                 'windows' => [
                     'class'        => 'yii\authclient\clients\Live',
                     'clientId'     => $params['live_client_id'],
                     'clientSecret' => $params['live_client_secret'],
                 ],
-
+*/
             ],
         ],
         'urlManager' => [
