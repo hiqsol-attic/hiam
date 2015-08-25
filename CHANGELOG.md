@@ -3,6 +3,7 @@ hiqdev/hiam-core changelog
 
 ## 0.0.2 Under development
 
+- Fixed requires
 - Added use of yii2-asset-icheck
 - Added use of plugin/theme/menu managers
 - Changed to yii2-extension

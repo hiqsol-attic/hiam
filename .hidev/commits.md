@@ -3,6 +3,8 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Fixed requires
+    - 4c55df6 2015-08-25 - require cebe/yii2-gravatar and bower-asset/admin-lte (sol@hiqdev.com)
 - Added use of yii2-asset-icheck
     - fad6a51 2015-08-25 + used yii2-asset-icheck (sol@hiqdev.com)
 - Added use of plugin/theme/menu managers
