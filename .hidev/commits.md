@@ -3,6 +3,8 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Changed: renamed table hi3a_remote_user -> hiam_remote_user
+    - 1d8fadd 2015-08-25 renamed hi3a_remote_user -> hiam_remote_user (sol@hiqdev.com)
 - Fixed requires
     - 4c55df6 2015-08-25 - require cebe/yii2-gravatar and bower-asset/admin-lte (sol@hiqdev.com)
 - Added use of yii2-asset-icheck
