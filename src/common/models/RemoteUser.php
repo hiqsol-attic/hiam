@@ -16,7 +16,7 @@ class RemoteUser extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%hi3a_remote_user}}';
+        return '{{%hiam_remote_user}}';
     }
 
     /**
