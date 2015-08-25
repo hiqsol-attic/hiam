@@ -3,6 +3,8 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Removed WindowsLive login
+    - 11e9923 2015-08-25 disabled windows live login (sol@hiqdev.com)
 - Changed: renamed table hi3a_remote_user -> hiam_remote_user
     - 1d8fadd 2015-08-25 renamed hi3a_remote_user -> hiam_remote_user (sol@hiqdev.com)
 - Fixed requires

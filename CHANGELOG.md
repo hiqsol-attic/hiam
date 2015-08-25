@@ -3,6 +3,7 @@ hiqdev/hiam-core changelog
 
 ## 0.0.2 Under development
 
+- Removed WindowsLive login
 - Changed: renamed table hi3a_remote_user -> hiam_remote_user
 - Fixed requires
 - Added use of yii2-asset-icheck
