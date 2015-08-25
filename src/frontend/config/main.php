@@ -104,6 +104,7 @@ return [
             'class'  => 'hiqdev\thememanager\ThemeManager',
             'assets' => [
                 'hiam\frontend\assets\AppAsset',
+                'hiqdev\assets\icheck\iCheckAsset',
             ],
         ],
         'menuManager' => [
