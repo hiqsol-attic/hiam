@@ -1,40 +1,18 @@
 # vendor dirs
 vendor
 
-# composer itself is not needed
+# composer lock files
 composer.lock
-composer.phar
-
-# runtime dir
-runtime
 
 # hidev composer.json
 .hidev/composer.json
 
 # IDE & OS files
 .*.swp
-
-# IDE project files
 .idea
 nbproject
 .buildpath
 .project
 .settings
-
-# windows thumbnail cache
 Thumbs.db
-
-# Mac DS_Store Files
 .DS_Store
-
-# yii console command
-/yii
-
-# composer vendor dir
-/vendor
-
-# phpunit itself is not needed
-phpunit.phar
-
-# local phpunit config
-/phpunit.xml

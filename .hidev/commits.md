@@ -3,6 +3,14 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Added use of yii2-asset-icheck
+    - fad6a51 2015-08-25 + used yii2-asset-icheck (sol@hiqdev.com)
+- Added use of plugin/theme/menu managers
+    - c990aed 2015-08-22 + use of plugin/theme/menuManagers (sol@hiqdev.com)
+    - 769fefa 2015-08-22 + poweredByName/Url params (sol@hiqdev.com)
+- Changed to yii2-extension
+    - 8019689 2015-08-22 fixed to yii2-extension (sol@hiqdev.com)
+    - bf79d47 2015-08-22 + Plugin.php with version finding (sol@hiqdev.com)
 - Fixed assets and theme
     - 541a18c 2015-08-21 fixed AppAsset (sol@hiqdev.com)
     - 83e2bc1 2015-08-21 + require hiqdev/yii2-theme-adminlte (sol@hiqdev.com)

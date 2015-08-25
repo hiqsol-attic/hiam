@@ -3,6 +3,9 @@ hiqdev/hiam-core changelog
 
 ## 0.0.2 Under development
 
+- Added use of yii2-asset-icheck
+- Added use of plugin/theme/menu managers
+- Changed to yii2-extension
 - Fixed assets and theme
 - Changed: renamed to hiam-core, moved to src and turned to yii2-extension
 - Fixed google social button
