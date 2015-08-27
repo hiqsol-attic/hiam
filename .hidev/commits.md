@@ -36,6 +36,7 @@ hiqdev/hiam-core commits history
     - ebd104b 2015-08-15 preparing for production (sol@hiqdev.com)
     - 36be032 2015-08-08 + .php_cs (sol@hiqdev.com)
 - Changed: renamed to hiam
+    - d355b05 2015-08-27 fixed common\models\User to hiam\common\models\User (sol@hiqdev.com)
     - a5b4f43 2015-08-10 still renaming to hiam (sol@hiqdev.com)
     - 6306a57 2015-08-02 - require-dev and user hiqdev/yii2-hiam-authclient (sol@hiqdev.com)
     - 0b15b69 2015-08-02 + roadmap (sol@hiqdev.com)
