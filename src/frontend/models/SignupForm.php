@@ -29,7 +29,7 @@ class SignupForm extends \yii\base\Model
 /* TODO TODO login
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\hiam\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 */
 
@@ -38,7 +38,7 @@ class SignupForm extends \yii\base\Model
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\hiam\common\models\User', 'message' => 'This email address has already been taken.'],
 
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'string'],
@@ -78,7 +78,7 @@ class SignupForm extends \yii\base\Model
             $contact = Contact::findOne($user->id);
             $contact->load([$contact->formName() => $this->getAttributes()]);
             $contact->save();
-            
+
             return $user;
         }
 
