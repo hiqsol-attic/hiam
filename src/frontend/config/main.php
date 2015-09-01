@@ -20,7 +20,8 @@ return [
     'layout'       => 'mini',
     'components' => [
         'request' => [
-            'class' => 'hiam\web\Request',
+            'class'               => 'hiam\web\Request',
+            'cookieValidationKey' => $params['cookieValidationKey'],
         ],
         'user' => [
             'identityClass'   => 'hiam\common\models\User',

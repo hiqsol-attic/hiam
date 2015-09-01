@@ -1,9 +1,11 @@
 <?php
 $params = array_merge(
-    require(__DIR__ . '/../../common/config/params.php'),
-    require(__DIR__ . '/../../common/config/params-local.php'),
-    require(__DIR__ . '/params.php'),
-    require(__DIR__ . '/params-local.php')
+    require(Yii::getAlias('@hiam/common/config/params.php')),
+    require(Yii::getAlias('@project/common/config/params.php')),
+    require(Yii::getAlias('@project/common/config/params-local.php')),
+    require(Yii::getAlias('@hiam/backend/config/params.php')),
+    require(Yii::getAlias('@project/backend/config/params.php')),
+    require(Yii::getAlias('@project/backend/config/params-local.php'))
 );
 
 return [
@@ -13,6 +15,10 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        'request' => [
+            'class'               => 'hiam\web\Request',
+            'cookieValidationKey' => $params['cookieValidationKey'],
+        ],
         'user' => [
             'identityClass' => 'hiam\common\models\User',
             'enableAutoLogin' => true,
