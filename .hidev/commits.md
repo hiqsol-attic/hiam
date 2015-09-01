@@ -3,6 +3,9 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Changed environments
+    - ea81c9e 2015-09-01 improved environments (sol@hiqdev.com)
+    - d5915f2 2015-09-01 + cookieValidationKey param at common/config/main.php (sol@hiqdev.com)
 - Removed WindowsLive login
     - 11e9923 2015-08-25 disabled windows live login (sol@hiqdev.com)
 - Changed: renamed table hi3a_remote_user -> hiam_remote_user
