@@ -3,7 +3,8 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
-- Changed environments
+- Changed configuring
+    - 6facf19 2015-09-01 fixed cookieValidationKey configuring for request (sol@hiqdev.com)
     - ea81c9e 2015-09-01 improved environments (sol@hiqdev.com)
     - d5915f2 2015-09-01 + cookieValidationKey param at common/config/main.php (sol@hiqdev.com)
 - Removed WindowsLive login
