@@ -14,6 +14,9 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'request' => [
+            'cookieValidationKey' => $params['cookieValidationKey'],
+        ],
         'db' => [
             'class'         => 'yii\db\Connection',
             'dsn'           => 'pgsql:host=localhost;port=5432;dbname=' . $params['db_name'],
