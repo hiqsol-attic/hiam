@@ -10,6 +10,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => 'HIAM backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'hiam\backend\controllers',
     'bootstrap' => ['log'],

@@ -11,7 +11,7 @@ $params = array_merge(
 
 return [
     'id'          => 'hiam',
-    'name'        => 'AHnames',
+    'name'        => 'HIAM',
     'basePath'    => dirname(__DIR__),
     'runtimePath' => '@project/frontend/runtime',
     'bootstrap'   => ['log', 'pluginManager'],
@@ -22,10 +22,6 @@ return [
         'request' => [
             'class'               => 'hiam\web\Request',
             'cookieValidationKey' => $params['cookieValidationKey'],
-        ],
-        'user' => [
-            'identityClass'   => 'hiam\common\models\User',
-            'enableAutoLogin' => true,
         ],
         'authClientCollection' => [
             'class' => 'hiam\authclient\Collection',

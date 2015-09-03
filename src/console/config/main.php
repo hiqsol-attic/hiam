@@ -1,16 +1,21 @@
 <?php
+
 $params = array_merge(
-    require(__DIR__ . '/../../common/config/params.php'),
-    require(__DIR__ . '/../../common/config/params-local.php'),
-    require(__DIR__ . '/params.php'),
-    require(__DIR__ . '/params-local.php')
+    require(Yii::getAlias('@hiam/common/config/params.php')),
+    require(Yii::getAlias('@project/common/config/params.php')),
+    require(Yii::getAlias('@project/common/config/params-local.php')),
+    require(Yii::getAlias('@hiam/console/config/params.php')),
+    require(Yii::getAlias('@project/console/config/params.php')),
+    require(Yii::getAlias('@project/console/config/params-local.php'))
 );
 
 return [
-    'id' => 'hi3ac',
+    'id' => 'hiamc',
+    'name' => 'HIAM console',
     'basePath' => dirname(__DIR__),
+    'runtimePath' => '@project/console/runtime',
     'bootstrap' => ['log'],
-    'controllerNamespace' => 'console\controllers',
+    'controllerNamespace' => 'hiam\console\controllers',
 /*
     'modules' => [
         'gii' => 'yii\gii\Module',

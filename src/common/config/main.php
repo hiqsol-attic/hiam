@@ -21,6 +21,11 @@ $config = [
             'username'      => $params['db_user'],
             'password'      => $params['db_password'],
         ],
+        'user' => [
+            'class'           => 'yii\web\User',
+            'identityClass'   => 'hiam\common\models\User',
+            'enableAutoLogin' => true,
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
