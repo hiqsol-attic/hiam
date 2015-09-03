@@ -3,6 +3,8 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Fixed LoginForm to get user with configured identityClass
+    - 915b59b 2015-09-03 fixed LoginForm to get user with configured identityClass (sol@hiqdev.com)
 - Fixed ./yii to work, migration got working
     - 91807d3 2015-09-03 fixed ./yii to work (sol@hiqdev.com)
     - 7ad0852 2015-09-03 removed console/runtime (sol@hiqdev.com)
