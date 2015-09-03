@@ -3,6 +3,9 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Fixed ./yii to work, migration got working
+    - 91807d3 2015-09-03 fixed ./yii to work (sol@hiqdev.com)
+    - 7ad0852 2015-09-03 removed console/runtime (sol@hiqdev.com)
 - Changed configuring
     - 6facf19 2015-09-01 fixed cookieValidationKey configuring for request (sol@hiqdev.com)
     - ea81c9e 2015-09-01 improved environments (sol@hiqdev.com)
