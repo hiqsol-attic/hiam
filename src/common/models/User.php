@@ -33,14 +33,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
     public function getUserDetails ($username) {
         $data = $this->findByUsername($username)->toArray();
         $conv = [
-            'user_id'       => 'obj_id',
+            'user_id'       => 'id',
             'username'      => 'login',
         ];
         foreach ($conv as $k => $v) $data[$k] = $data[$v];
         return $data;
-die(var_dump($user->toArray()));
-        $res  = $user->toArray();
-        die(var_dump($user));
     }
 
     public function checkUserCredentials ($username,$password) {
@@ -101,7 +98,13 @@ die(var_dump($user->toArray()));
 */
 
     public function attributes () {
-        return array_merge(parent::attributes(),['id','type','state','seller','username']);
+        // return array_unique(array_merge(parent::attributes(),['id','type','state','seller','username']));
+        foreach (self::rules() as $ds) {
+            $d = reset($ds);
+            $ds = is_array($d) ? $d : [$d];
+            foreach ($ds as $k) $attributes[$k] = $k;
+        };
+        return array_values($attributes);
     }
 
     /**
@@ -110,14 +113,29 @@ die(var_dump($user->toArray()));
     public function rules ()
     {
         return [
-            ['login', 'filter', 'filter' => 'trim'],
-            ['login', 'string', 'min' => 2, 'max' => 64],
+            ['obj_id',          'integer'],
 
-            ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'email'],
+            ['id',              'integer'],
+            ['id',              'required'],
 
-            ['password', 'filter', 'filter' => 'trim'],
-            ['password', 'string', 'min' => 2, 'max' => 64],
+            ['login',           'filter', 'filter' => 'trim'],
+            ['login',           'string', 'min' => 2, 'max' => 64],
+
+            ['email',           'filter', 'filter' => 'trim'],
+            ['email',           'email'],
+
+            ['password',        'filter', 'filter' => 'trim'],
+            ['password',        'string', 'min' => 2, 'max' => 64],
+
+            ['seller_id',       'integer'],
+            ['seller_id',       'required'],
+
+            ['referer_id',      'integer'],
+            ['type_id',         'integer'],
+            ['state_id',        'integer'],
+
+            [['type','state'],  'string', 'min' => 2, 'max' => 10],
+            ['username',        'string', 'min' => 2, 'max' => 10],
         ];
     }
 
@@ -231,7 +249,7 @@ die(var_dump($user->toArray()));
         //die(var_dump( Yii::$app->security->validatePassword($password, $this->password_hash)));
         //return Yii::$app->security->validatePassword($password, $this->password_hash);
         $model = static::findByUsername($this->login,$password);
-        return (bool)$model->obj_id;
+        return (bool)$model->id;
     }
 
     /**

@@ -71,7 +71,7 @@ d($q);
         $remote = new RemoteUser([
             'provider'  => RemoteUser::toProvider($client->getId()),
             'remoteid'  => $client->getUserAttributes()['id'],
-            'client_id' => $user->obj_id,
+            'client_id' => $user->id,
         ]);
         if (!$remote->save()) {
             throw new InvalidCallException('failed set RemoteUser');
