@@ -3,6 +3,8 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Fixed attributes() at User model
+    - eac80d8 2015-09-05 fixed User attributes() (sol@hiqdev.com)
 - Fixed LoginForm to get user with configured identityClass
     - 915b59b 2015-09-03 fixed LoginForm to get user with configured identityClass (sol@hiqdev.com)
 - Fixed ./yii to work, migration got working

@@ -3,6 +3,7 @@ hiqdev/hiam-core changelog
 
 ## 0.0.2 Under development
 
+- Fixed attributes() at User model
 - Fixed LoginForm to get user with configured identityClass
 - Fixed ./yii to work, migration got working
 - Changed configuring
