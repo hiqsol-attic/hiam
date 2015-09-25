@@ -16,7 +16,7 @@ $config = [
         ],
         'db' => [
             'class'         => 'yii\db\Connection',
-            'dsn'           => 'pgsql:host=localhost;port=5432;dbname=' . $params['db_name'],
+            'dsn'           => 'pgsql:dbname=' . $params['db_name'],
             'charset'       => 'utf8',
             'username'      => $params['db_user'],
             'password'      => $params['db_password'],
