@@ -2,21 +2,19 @@
 
 namespace hiam\frontend\controllers;
 
-use Yii;
+use hiam\common\models\User;
+use hiam\common\models\RemoteUser;
+use hiam\common\models\LoginForm;
 use hiam\frontend\models\PasswordResetRequestForm;
 use hiam\frontend\models\ResetPasswordForm;
 use hiam\frontend\models\SignupForm;
 use hiam\frontend\models\ContactForm;
+use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
-//use yii\filters\VerbFilter;
-
-use hiam\common\models\User;
-use hiam\common\models\RemoteUser;
-use hiam\common\models\LoginForm;
 
 /**
  * Site controller
@@ -31,12 +29,12 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['login', 'signup', 'recovery', 'remote-proceed', 'lockscreen'],
+                'only' => ['login', 'signup', 'request-password-reset', 'remote-proceed', 'lockscreen'],
                 'denyCallback' => [$this, 'denyCallback'],
                 'rules' => [
                     // ? - guest
                     [
-                        'actions' => ['login', 'confirm', 'signup', 'recovery', 'remote-proceed'],
+                        'actions' => ['login', 'confirm', 'signup', 'request-password-reset', 'remote-proceed'],
                         'roles' => ['?'],
                         'allow' => true,
                     ],
@@ -144,7 +142,6 @@ class SiteController extends Controller
             return $this->redirect(['confirm']);
         };
         return $this->redirect(['signup']);
-        #return $this->render('remoteProceed');
     }
 
     public function actionSignup ()
@@ -177,10 +174,6 @@ class SiteController extends Controller
         $back = Yii::$app->request->value('back');
 
         return $back ? $this->redirect($back) : $this->goHome();
-    }
-
-    public function actionRecovery() {
-        return $this->render('recovery', []);
     }
 
     public function actionContact()
