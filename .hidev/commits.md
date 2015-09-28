@@ -3,6 +3,23 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Changed: redone pictonic with use of with yii2-asset-pictonic
+    - 8c1a440 2015-09-28 + require yii2-asset-pictonic (sol@hiqdev.com)
+- Removed templates to yii2-theme-adminlte
+    - 7ddb9b0 2015-09-28 renamed recovery to request-password-reset to be yii2 canonical (sol@hiqdev.com)
+    - 05148ae 2015-09-28 all templates moved to yii2-theme-adminlte (sol@hiqdev.com)
+    - 878ebdb 2015-09-28 + STATUS consts (sol@hiqdev.com)
+    - 843a31b 2015-09-28 templates for error, requestPasswordResetToken and resetPassword moved to yii2-theme-adminlte (sol@hiqdev.com)
+    - e17d7c5 2015-09-28 removed remoteProceed: not needed anymore (sol@hiqdev.com)
+    - 390b8e0 2015-09-28 moved confirm to yii2-theme-adminlte (sol@hiqdev.com)
+    - 5333f83 2015-09-28 removed contact: no contact page for HIAM, should be redirection to parent site (sol@hiqdev.com)
+    - 403adf0 2015-09-28 removed junk old-signup (sol@hiqdev.com)
+    - 30cf4af 2015-09-28 removed index: no index page for HIAM (sol@hiqdev.com)
+    - d9a0284 2015-09-28 redone about: made more shy (sol@hiqdev.com)
+    - ca89463 2015-09-27 + basic about page (sol@hiqdev.com)
+    - db32fa1 2015-09-27 ~ signup page template moved to yii2-theme-adminlte (sol@hiqdev.com)
+- Changed DB dsn to connect locally
+    - 440b7c5 2015-09-25 * DB dsn: - host & port to connect locally (sol@hiqdev.com)
 - Fixed attributes() at User model
     - eac80d8 2015-09-05 fixed User attributes() (sol@hiqdev.com)
 - Fixed LoginForm to get user with configured identityClass

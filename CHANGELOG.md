@@ -3,6 +3,9 @@ hiqdev/hiam-core changelog
 
 ## 0.0.2 Under development
 
+- Changed: redone pictonic with use of with yii2-asset-pictonic
+- Removed templates to yii2-theme-adminlte
+- Changed DB dsn to connect locally
 - Fixed attributes() at User model
 - Fixed LoginForm to get user with configured identityClass
 - Fixed ./yii to work, migration got working

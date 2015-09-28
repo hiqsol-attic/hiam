@@ -9,6 +9,7 @@ Identity and Access Management server providing OAuth2, ABAC and logging
 
 [![Latest Stable Version](https://poser.pugx.org/hiqdev/hiam-core/v/stable.png)](https://packagist.org/packages/hiqdev/hiam-core)
 [![Total Downloads](https://poser.pugx.org/hiqdev/hiam-core/downloads.png)](https://packagist.org/packages/hiqdev/hiam-core)
+[![Dependency Status](https://www.versioneye.com/php/hiqdev:hiam-core/dev-master/badge.svg)](https://www.versioneye.com/php/hiqdev:hiam-core/dev-master)
 
 ## Installation
 
