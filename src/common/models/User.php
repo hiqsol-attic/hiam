@@ -30,6 +30,9 @@ use filsh\yii2\oauth2server\models\OauthAccessTokens;
 class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCredentialsInterface
 {
 
+    const STATUS_ACTIVE  = 'ok';
+    const STATUS_DELETED = 'deleted';
+
     public function getUserDetails ($username) {
         $data = $this->findByUsername($username)->toArray();
         $conv = [
