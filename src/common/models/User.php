@@ -6,9 +6,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
-
 use hiam\common\models\RemoteUser;
-
 use OAuth2\Storage\UserCredentialsInterface;
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
 
@@ -17,7 +15,7 @@ use filsh\yii2\oauth2server\models\OauthAccessTokens;
  *
  * @property integer $id
  * @property string $username
- * @property string $password_hash
+ * @property string $password
  * @property string $password_reset_token
  * @property string $email
  * @property string $auth_key
@@ -25,7 +23,7 @@ use filsh\yii2\oauth2server\models\OauthAccessTokens;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- * @property string $password write-only password
+ * @property string $new_password write-only password
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCredentialsInterface
 {
