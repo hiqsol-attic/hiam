@@ -119,8 +119,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
             ['id',              'integer'],
             ['id',              'required'],
 
-            ['login',           'filter', 'filter' => 'trim'],
-            ['login',           'string', 'min' => 2, 'max' => 64],
+            [['login','seller'],'filter', 'filter' => 'trim'],
+            [['login','seller'],'string', 'min' => 2, 'max' => 64],
 
             ['email',           'filter', 'filter' => 'trim'],
             ['email',           'email'],
