@@ -50,7 +50,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
         $query = static::find()
             ->select    (['c.obj_id AS id','c.obj_id','c.login','c.type_id','c.state_id','c.seller_id',
                         'r.login AS seller','y.name AS type','z.name AS state','c.login AS username',
-                        'coalesce(c.email,k.email) AS email'])
+                        'coalesce(c.email,k.email) AS email', 'k.name'])
             ->from      ('client        c')
             ->innerJoin ('client        r',"r.obj_id=c.seller_id")
             ->innerJoin ('ref           y',"y.obj_id=c.type_id")
@@ -122,6 +122,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
             [['login','seller'],'filter', 'filter' => 'trim'],
             [['login','seller'],'string', 'min' => 2, 'max' => 64],
 
+            ['name',            'filter', 'filter' => 'trim'],
+
             ['email',           'filter', 'filter' => 'trim'],
             ['email',           'email'],
 
@@ -134,6 +136,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
             ['referer_id',      'integer'],
             ['type_id',         'integer'],
             ['state_id',        'integer'],
+
 
             [['type','state'],  'string', 'min' => 2, 'max' => 10],
             ['username',        'string', 'min' => 2, 'max' => 10],
