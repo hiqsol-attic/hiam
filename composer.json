@@ -52,8 +52,8 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "filsh/yii2-oauth2-server": "*",
-        "hiqdev/yii2-hiam-authclient": "*@dev",
-        "hiqdev/yii2-theme-adminlte": "*@dev",
+        "hiqdev/yii2-hiam-authclient": "*",
+        "hiqdev/yii2-theme-adminlte": "*",
         "hiqdev/yii2-asset-icheck": "*"
     },
     "require-dev": {
