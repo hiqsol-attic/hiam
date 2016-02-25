@@ -54,13 +54,8 @@
         "filsh/yii2-oauth2-server": "*",
         "hiqdev/yii2-hiam-authclient": "*",
         "hiqdev/yii2-theme-adminlte": "*",
-        "hiqdev/yii2-asset-icheck": "*"
-    },
-    "require-dev": {
-        "yiisoft/yii2-codeception": "*",
-        "yiisoft/yii2-debug": "*",
-        "yiisoft/yii2-gii": "*",
-        "yiisoft/yii2-faker": "*"
+        "hiqdev/yii2-asset-icheck": "*",
+        "hiqdev/composer-extension-plugin": "*"
     },
     "autoload": {
         "psr-4": {
@@ -68,9 +63,6 @@
         }
     },
     "extra": {
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
-        }
+        "yii2-extraconfig": "src/yii2-extraconfig.php"
     }
 }
