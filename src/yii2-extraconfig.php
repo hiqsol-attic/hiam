@@ -1,24 +1,46 @@
 <?php
 
-$params = array_merge(
-    require(Yii::getAlias('@hiam/common/config/params.php')),
-    require(Yii::getAlias('@project/common/config/params.php')),
-    require(Yii::getAlias('@project/common/config/params-local.php')),
-    require(Yii::getAlias('@hiam/frontend/config/params.php')),
-    require(Yii::getAlias('@project/frontend/config/params.php')),
-    require(Yii::getAlias('@project/frontend/config/params-local.php'))
-);
-
 return [
     'id'          => 'hiam',
     'name'        => 'HIAM',
     'basePath'    => dirname(__DIR__),
-    'runtimePath' => '@project/frontend/runtime',
-    'bootstrap'   => ['log', 'pluginManager'],
-    'controllerNamespace' => 'hiam\frontend\controllers',
+    'vendorPath'  => '@vendor',
+    'runtimePath' => '@vendor/../runtime',
+    'bootstrap'   => ['log'],
+    'controllerNamespace' => 'hiam\controllers',
     'defaultRoute' => 'site',
     'layout'       => 'mini',
     'components' => [
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
+        'db' => [
+            'class'         => 'yii\db\Connection',
+            'dsn'           => 'pgsql:dbname=' . $params['db_name'],
+            'charset'       => 'utf8',
+            'username'      => $params['db_user'],
+            'password'      => $params['db_password'],
+        ],
+        'user' => [
+            'class'           => 'yii\web\User',
+            'identityClass'   => 'hiam\common\models\User',
+            'enableAutoLogin' => true,
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@hiam/common/mail',
+            // send all mails to a file by default. You have to set
+            // 'useFileTransport' to false and configure a transport
+            // for the mailer to send real emails.
+            'useFileTransport' => true,
+        ],
+        'authManager' => [
+            'class'             => 'hiam\common\rbac\HiDbManager',
+            'itemTable'         => '{{%rbac_item}}',
+            'itemChildTable'    => '{{%rbac_item_child}}',
+            'assignmentTable'   => '{{%rbac_assignment}}',
+            'ruleTable'         => '{{%rbac_rule}}',
+        ],
         'request' => [
             'class'               => 'hiam\web\Request',
             'cookieValidationKey' => $params['cookieValidationKey'],
@@ -95,13 +117,10 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'pluginManager' => [
-            'class' => 'hiqdev\pluginmanager\PluginManager',
-        ],
         'themeManager' => [
             'class'  => 'hiqdev\thememanager\ThemeManager',
             'assets' => [
-                'hiam\frontend\assets\AppAsset',
+                'hiam\assets\AppAsset',
                 'hiqdev\assets\icheck\iCheckAsset',
             ],
         ],
@@ -142,5 +161,4 @@ return [
             ],
         ],
     ],
-    'params' => $params,
 ];

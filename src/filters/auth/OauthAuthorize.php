@@ -1,6 +1,6 @@
 <?php
 
-namespace hiam\frontend\filters\auth;
+namespace hiam\filters\auth;
 
 use yii\filters\auth\AuthMethod;
 

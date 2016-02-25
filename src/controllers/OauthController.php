@@ -1,6 +1,6 @@
 <?php
 
-namespace hiam\frontend\controllers;
+namespace hiam\controllers;
 
 use Yii;
 use yii\web\Response;

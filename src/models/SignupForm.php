@@ -1,6 +1,6 @@
 <?php
 
-namespace hiam\frontend\models;
+namespace hiam\models;
 
 use Yii;
 use hiam\common\models\User;

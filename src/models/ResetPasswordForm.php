@@ -1,6 +1,6 @@
 <?php
 
-namespace hiam\frontend\models;
+namespace hiam\models;
 
 use hiam\common\models\User;
 use yii\base\InvalidParamException;

@@ -1,6 +1,6 @@
 <?php
 
-use hiam\frontend\components\widgets\Menu;
+use hiam\components\widgets\Menu;
 use Yii;
 
 ?>
@@ -174,3 +174,6 @@ use Yii;
     </section>
     <!-- /.sidebar -->
 </aside>
+/**
+ *  
+ */

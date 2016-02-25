@@ -1,6 +1,6 @@
 <?php
 
-namespace hiam\frontend\widgets;
+namespace hiam\widgets;
 
 /**
  * Alert widget renders a message from session flash. All flash messages are displayed

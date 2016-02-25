@@ -3,7 +3,7 @@
 /**
  * Theme main layout.
  *
- * @var frontend\components\View $this View
+ * @var components\View $this View
  * @var string $content Content
  */
 

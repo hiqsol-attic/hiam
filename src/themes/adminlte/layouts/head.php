@@ -4,7 +4,7 @@
  * Head layout.
  */
 
-use hiam\frontend\assets\Hi3aAsset;
+use hiam\assets\Hi3aAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace hiam\frontend\controllers;
+namespace hiam\controllers;
 
 use hiam\common\models\User;
 use hiam\common\models\RemoteUser;
 use hiam\common\models\LoginForm;
-use hiam\frontend\models\PasswordResetRequestForm;
-use hiam\frontend\models\ResetPasswordForm;
-use hiam\frontend\models\SignupForm;
-use hiam\frontend\models\ContactForm;
+use hiam\models\PasswordResetRequestForm;
+use hiam\models\ResetPasswordForm;
+use hiam\models\SignupForm;
+use hiam\models\ContactForm;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
