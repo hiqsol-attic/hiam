@@ -171,7 +171,8 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
         Yii::$app->getSession()->destroy();
-        $back = Yii::$app->request->value('back');
+        $post = Yii::$app->request->post('back');
+        $back = isset($post) ? $post : Yii::$app->request->get('back');
 
         return $back ? $this->redirect($back) : $this->goHome();
     }
