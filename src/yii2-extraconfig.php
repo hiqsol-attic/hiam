@@ -63,7 +63,6 @@ return [
             'errorAction' => 'site/error',
         ],
         'themeManager' => [
-            'class'  => 'hiqdev\thememanager\ThemeManager',
             'assets' => [
                 'hiam\assets\AppAsset',
                 'hiqdev\assets\icheck\iCheckAsset',
