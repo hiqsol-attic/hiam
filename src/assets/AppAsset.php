@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $sourcePath = '@hiam/frontend/assets/AppAssetFiles';
+    public $sourcePath = '@hiam/assets/AppAssetFiles';
     public $baseUrl = '@web';
     public $css = [
         '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',

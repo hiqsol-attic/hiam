@@ -6,7 +6,7 @@ return [
     'basePath'    => dirname(__DIR__),
     'vendorPath'  => dirname(__DIR__, 3),
     'runtimePath' => dirname(__DIR__, 4) . '/runtime',
-    'bootstrap'   => ['log'],
+    'bootstrap'   => ['log', 'themeManager'],
     'controllerNamespace' => 'hiam\controllers',
     'defaultRoute' => 'site',
     'layout'       => 'mini',
@@ -63,6 +63,7 @@ return [
             'errorAction' => 'site/error',
         ],
         'themeManager' => [
+            'theme'  => 'adminlte',
             'assets' => [
                 'hiam\assets\AppAsset',
                 'hiqdev\assets\icheck\iCheckAsset',
