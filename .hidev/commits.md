@@ -3,6 +3,23 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+    - 180d39d 2016-03-19 fixed to show login page (sol@hiqdev.com)
+    - bea1ec8 2016-02-29 simplifying extra config (sol@hiqdev.com)
+    - 93d2d52 2016-02-29 - use of YII_DEBUG constant in extra config (sol@hiqdev.com)
+    - 3204b25 2016-02-29 - use of `@vendor` (sol@hiqdev.com)
+    - 755d2e5 2016-02-25 - params from extra config (sol@hiqdev.com)
+    - c9522f4 2016-02-25 - web/Request (sol@hiqdev.com)
+    - 323153c 2016-02-25 + yii2-extraconfig (sol@hiqdev.com)
+    - 3fbabc1 2016-02-25 great renaming NOT FINISHED (sol@hiqdev.com)
+    - 69c4b9a 2016-02-25 removed pictonic files (sol@hiqdev.com)
+    - a136ee9 2016-02-25 removed pictonic files (sol@hiqdev.com)
+    - ebfd4e9 2016-02-20 trying minii (sol@hiqdev.com)
+    - 827a904 2016-02-20 trying (sol@hiqdev.com)
+    - 19ca189 2016-02-17 + `name` attribute to User model (sol@hiqdev.com)
+    - b7b57dc 2016-02-17 + seller to User model (sol@hiqdev.com)
+    - f8e3b49 2016-02-17 changed filsh/yii2-oauth2-server require version to * (sol@hiqdev.com)
+    - c5b0379 2015-09-30 adding password reset not finished (sol@hiqdev.com)
+    - 71a8633 2015-09-28 - require yii2-asset-pictonic (sol@hiqdev.com)
 - Changed: redone pictonic with use of with yii2-asset-pictonic
     - 8c1a440 2015-09-28 + require yii2-asset-pictonic (sol@hiqdev.com)
 - Removed templates to yii2-theme-adminlte

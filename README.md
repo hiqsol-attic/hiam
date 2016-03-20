@@ -1,15 +1,21 @@
-Identity and Access Management server providing OAuth2, ABAC and logging
-------------------------------------------------------------------------
+HIAM
+====
+
+**Identity and Access Management server providing OAuth2, ABAC and logging**
+
+[![Latest Stable Version](https://poser.pugx.org/hiqdev/hiam-core/v/stable)](https://packagist.org/packages/hiqdev/hiam-core)
+[![Total Downloads](https://poser.pugx.org/hiqdev/hiam-core/downloads)](https://packagist.org/packages/hiqdev/hiam-core)
+[![Build Status](https://img.shields.io/travis/hiqdev/hiam-core.svg)](https://travis-ci.org/hiqdev/hiam-core)
+[![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/hiqdev/hiam-core.svg)](https://scrutinizer-ci.com/g/hiqdev/hiam-core/)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/hiqdev/hiam-core.svg)](https://scrutinizer-ci.com/g/hiqdev/hiam-core/)
+[![Dependency Status](https://www.versioneye.com/php/hiqdev:hiam-core/dev-master/badge.svg)](https://www.versioneye.com/php/hiqdev:hiam-core/dev-master)
 
 - IAM - Identity and Access Management
 - ABAC - Attribute Based Access Control
 - Social login: Facebook, Google, VK, LinkedIn, GitHub, Live, Yandex
 - Full activity logging with searching and reporting
 
-
-[![Latest Stable Version](https://poser.pugx.org/hiqdev/hiam-core/v/stable.png)](https://packagist.org/packages/hiqdev/hiam-core)
-[![Total Downloads](https://poser.pugx.org/hiqdev/hiam-core/downloads.png)](https://packagist.org/packages/hiqdev/hiam-core)
-[![Dependency Status](https://www.versioneye.com/php/hiqdev:hiam-core/dev-master/badge.svg)](https://www.versioneye.com/php/hiqdev:hiam-core/dev-master)
+For the moment it is in earyly stage of development.
 
 ## Installation
 
@@ -17,7 +23,7 @@ The preferred way to install this yii2-extension is through [composer](http://ge
 
 Either run
 
-```
+```sh
 php composer.phar require "hiqdev/hiam-core"
 ```
 
@@ -39,8 +45,9 @@ return [
 ];
 ```
 
-## Licence
+## License
 
-[BSD-3-Clause](http://choosealicense.com/licenses/bsd-3-clause)
+This project is released under the terms of the BSD-3-Clause [license](LICENSE).
+Read more [here](http://choosealicense.com/licenses/bsd-3-clause).
 
-Copyright © 2014-2015, HiQDev (https://hiqdev.com/)
+Copyright © 2014-2016, HiQDev (http://hiqdev.com/)
