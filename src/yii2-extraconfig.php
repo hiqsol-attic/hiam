@@ -5,7 +5,7 @@ return [
     'name'        => 'HIAM',
     'basePath'    => dirname(__DIR__),
     'vendorPath'  => dirname(dirname(dirname(__DIR__))),
-    'runtimePath' => dirname(dirname(dirname(dirname(__DIR__)))),
+    'runtimePath' => dirname(dirname(dirname(dirname(__DIR__)))) . '/runtime',
     'bootstrap'   => ['log', 'themeManager'],
     'controllerNamespace' => 'hiam\controllers',
     'defaultRoute' => 'site',
