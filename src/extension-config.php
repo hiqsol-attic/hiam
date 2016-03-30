@@ -106,4 +106,7 @@ return [
             ],
         ],
     ],
+    'params' => [
+        'adminEmail' => 'admin@hiqdev.com',
+    ],
 ];
