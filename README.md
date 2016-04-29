@@ -1,7 +1,7 @@
 HIAM
 ====
 
-**Identity and Access Management server providing OAuth2, ABAC and logging**
+**Identity and Access Management server providing OAuth2, RBAC and logging**
 
 [![Latest Stable Version](https://poser.pugx.org/hiqdev/hiam-core/v/stable)](https://packagist.org/packages/hiqdev/hiam-core)
 [![Total Downloads](https://poser.pugx.org/hiqdev/hiam-core/downloads)](https://packagist.org/packages/hiqdev/hiam-core)
@@ -10,12 +10,21 @@ HIAM
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/hiqdev/hiam-core.svg)](https://scrutinizer-ci.com/g/hiqdev/hiam-core/)
 [![Dependency Status](https://www.versioneye.com/php/hiqdev:hiam-core/dev-master/badge.svg)](https://www.versioneye.com/php/hiqdev:hiam-core/dev-master)
 
-- IAM - Identity and Access Management
-- ABAC - Attribute Based Access Control
+HIAM is Identity and Access Management server.
+
+Provides:
+
+- OAuth2 server
+- RBAC - Role Based Access Control
 - Social login: Facebook, Google, VK, LinkedIn, GitHub, Live, Yandex
 - Full activity logging with searching and reporting
 
 For the moment it is in earyly stage of development.
+
+Based on:
+
+- yiisoft/yii2
+- bshaffer/oauth2-server-php
 
 ## Installation
 

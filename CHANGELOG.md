@@ -3,7 +3,7 @@ hiqdev/hiam-core changelog
 
 ## 0.0.2 Under development
 
-- Changed: redone pictonic with use of with yii2-asset-pictonic
+- Changed: redone to `hisite`
 - Removed templates to yii2-theme-adminlte
 - Changed DB dsn to connect locally
 - Fixed attributes() at User model
@@ -11,7 +11,7 @@ hiqdev/hiam-core changelog
 - Fixed ./yii to work, migration got working
 - Changed configuring
 - Removed WindowsLive login
-- Changed: renamed table hi3a_remote_user -> hiam_remote_user
+- Changed: renamed table `hi3a_remote_user` -> `hiam_remote_user`
 - Fixed requires
 - Added use of yii2-asset-icheck
 - Added use of plugin/theme/menu managers

@@ -3,9 +3,18 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
+- Changed: redone to `hisite`
+    - 32ff0fe 2016-04-29 redone with local hidev and plugins (sol@hiqdev.com)
+    - 41e9d8c 2016-04-29 redone `extension-config.php` to `hisite-config.php` (sol@hiqdev.com)
+    - 283674d 2016-03-30 removed unused files (sol@hiqdev.com)
+    - cd75600 2016-03-30 removed unused files (sol@hiqdev.com)
+    - ec9f62a 2016-03-30 redoing to `extension-config` <- `yii2-extraconfig` (sol@hiqdev.com)
+    - e96c55b 2016-03-21 fixed `dirname` php5 compatibility (sol@hiqdev.com)
+    - 6c2d255 2016-03-21 fixed `dirname` php5 compatibility (sol@hiqdev.com)
+    - 7a8ac30 2016-03-20 rehideved (sol@hiqdev.com)
     - 180d39d 2016-03-19 fixed to show login page (sol@hiqdev.com)
     - bea1ec8 2016-02-29 simplifying extra config (sol@hiqdev.com)
-    - 93d2d52 2016-02-29 - use of YII_DEBUG constant in extra config (sol@hiqdev.com)
+    - 93d2d52 2016-02-29 - use of `YII_DEBUG` constant in extra config (sol@hiqdev.com)
     - 3204b25 2016-02-29 - use of `@vendor` (sol@hiqdev.com)
     - 755d2e5 2016-02-25 - params from extra config (sol@hiqdev.com)
     - c9522f4 2016-02-25 - web/Request (sol@hiqdev.com)
@@ -20,9 +29,8 @@ hiqdev/hiam-core commits history
     - f8e3b49 2016-02-17 changed filsh/yii2-oauth2-server require version to * (sol@hiqdev.com)
     - c5b0379 2015-09-30 adding password reset not finished (sol@hiqdev.com)
     - 71a8633 2015-09-28 - require yii2-asset-pictonic (sol@hiqdev.com)
-- Changed: redone pictonic with use of with yii2-asset-pictonic
-    - 8c1a440 2015-09-28 + require yii2-asset-pictonic (sol@hiqdev.com)
 - Removed templates to yii2-theme-adminlte
+    - 8c1a440 2015-09-28 + require yii2-asset-pictonic (sol@hiqdev.com)
     - 7ddb9b0 2015-09-28 renamed recovery to request-password-reset to be yii2 canonical (sol@hiqdev.com)
     - 05148ae 2015-09-28 all templates moved to yii2-theme-adminlte (sol@hiqdev.com)
     - 878ebdb 2015-09-28 + STATUS consts (sol@hiqdev.com)
@@ -50,8 +58,8 @@ hiqdev/hiam-core commits history
     - d5915f2 2015-09-01 + cookieValidationKey param at common/config/main.php (sol@hiqdev.com)
 - Removed WindowsLive login
     - 11e9923 2015-08-25 disabled windows live login (sol@hiqdev.com)
-- Changed: renamed table hi3a_remote_user -> hiam_remote_user
-    - 1d8fadd 2015-08-25 renamed hi3a_remote_user -> hiam_remote_user (sol@hiqdev.com)
+- Changed: renamed table `hi3a_remote_user` -> `hiam_remote_user`
+    - 1d8fadd 2015-08-25 renamed `hi3a_remote_user` -> `hiam_remote_user` (sol@hiqdev.com)
 - Fixed requires
     - 4c55df6 2015-08-25 - require cebe/yii2-gravatar and bower-asset/admin-lte (sol@hiqdev.com)
 - Added use of yii2-asset-icheck
@@ -79,7 +87,7 @@ hiqdev/hiam-core commits history
 - Fixed: small fixes for production
     - f7758c1 2015-08-15 + require-dev (sol@hiqdev.com)
     - ebd104b 2015-08-15 preparing for production (sol@hiqdev.com)
-    - 36be032 2015-08-08 + .php_cs (sol@hiqdev.com)
+    - 36be032 2015-08-08 + `.php_cs` (sol@hiqdev.com)
 - Changed: renamed to hiam
     - d355b05 2015-08-27 fixed common\models\User to hiam\common\models\User (sol@hiqdev.com)
     - a5b4f43 2015-08-10 still renaming to hiam (sol@hiqdev.com)
@@ -88,7 +96,7 @@ hiqdev/hiam-core commits history
     - 3414550 2015-08-02 * README: deprecated (sol@hiqdev.com)
     - b39c135 2015-08-02 renaming to hiam (sol@hiqdev.com)
     - b3fe9f1 2015-08-01 hideved (sol@hiqdev.com)
-    - 1808803 2015-07-16 fixed migration for hi3a_remote_user table (sol@hiqdev.com)
+    - 1808803 2015-07-16 fixed migration for `hi3a_remote_user` table (sol@hiqdev.com)
     - 628f67e 2015-04-19 doc (sol@hiqdev.com)
 
 ## 0.0.1-alpha 2015-04-19
