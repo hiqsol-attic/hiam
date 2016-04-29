@@ -1,18 +1,24 @@
 package:
     type:           yii2-extension
     name:           hiam-core
-    title:          Identity and Access Management server providing OAuth2, ABAC and logging
+    title:          Identity and Access Management server providing OAuth2, RBAC and logging
     headline:       HIAM
-    keywords:       iam, oauth2, abac, authentication, authorization, audit, yii2
+    keywords:       iam, oauth2, rbac, authentication, authorization, audit, yii2
     namespace:      hiam
     description:    |
-        - IAM - Identity and Access Management
-        - ABAC - Attribute Based Access Control
+        HIAM is Identity and Access Management server.
+
+        Provides:
+
+        - OAuth2 server
+        - RBAC - Role Based Access Control
         - Social login: Facebook, Google, VK, LinkedIn, GitHub, Live, Yandex
         - Full activity logging with searching and reporting
 
         For the moment it is in earyly stage of development.
 
-require:
-    hiqdev/hidev-php:       "*"
-    hiqdev/hidev-vendor:    "*"
+        Based on:
+
+        - yiisoft/yii2
+        - bshaffer/oauth2-server-php
+

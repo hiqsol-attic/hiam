@@ -1,11 +1,11 @@
 {
     "name": "hiqdev/hiam-core",
     "type": "yii2-extension",
-    "description": "Identity and Access Management server providing OAuth2, ABAC and logging",
+    "description": "Identity and Access Management server providing OAuth2, RBAC and logging",
     "keywords": [
         "iam",
         "oauth2",
-        "abac",
+        "rbac",
         "authentication",
         "authorization",
         "audit",
@@ -48,14 +48,19 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "*",
-        "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "*",
+        "yiisoft/yii2": "2.*",
+        "yiisoft/yii2-bootstrap": "2.*",
+        "yiisoft/yii2-swiftmailer": "2.*",
         "filsh/yii2-oauth2-server": "*",
         "hiqdev/yii2-hiam-authclient": "*",
         "hiqdev/yii2-theme-adminlte": "*",
         "hiqdev/yii2-asset-icheck": "*",
-        "hiqdev/composer-extension-plugin": "*"
+        "hiqdev/composer-extension-plugin": "<2.0"
+    },
+    "require-dev": {
+        "hiqdev/hidev-php": "<2.0",
+        "hiqdev/hidev-vendor": "<2.0",
+        "hiqdev/hidev": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -63,6 +68,15 @@
         }
     },
     "extra": {
-        "extension-config": "src/extension-config.php"
-    }
+        "extension-plugin": {
+            "hisite-config": "src/hisite-config.php"
+        }
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.hiqdev.com"
+        }
+    ]
 }
