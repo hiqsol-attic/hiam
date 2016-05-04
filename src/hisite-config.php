@@ -4,8 +4,9 @@ return [
     'id'          => 'hiam',
     'name'        => 'HIAM',
     'basePath'    => dirname(__DIR__),
-    'vendorPath'  => dirname(dirname(dirname(__DIR__))),
-    'runtimePath' => dirname(dirname(dirname(dirname(__DIR__)))) . '/runtime',
+    'viewPath'    => '@hisite/views',
+    'vendorPath'  => '@vendor',
+    'runtimePath' => '@root/runtime',
     'bootstrap'   => ['log', 'themeManager'],
     'controllerNamespace' => 'hiam\controllers',
     'defaultRoute' => 'site',
@@ -105,6 +106,9 @@ return [
                 ]
             ],
         ],
+    ],
+    'aliases' => [
+        '@bower' => '@vendor/bower-asset',
     ],
     'params' => [
         'adminEmail' => 'admin@hiqdev.com',
