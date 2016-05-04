@@ -3,7 +3,8 @@ hiqdev/hiam-core commits history
 
 ## 0.0.2 Under development
 
-- Changed: redone to `hisite`
+- Changed: redone to `hisite` style
+    - 9a74e63 2016-05-04 used bootstrapped aliases: @root, @hisite, @vendor (sol@hiqdev.com)
     - d135511 2016-04-29 inited tests (sol@hiqdev.com)
     - 32ff0fe 2016-04-29 redone with local hidev and plugins (sol@hiqdev.com)
     - 41e9d8c 2016-04-29 redone `extension-config.php` to `hisite-config.php` (sol@hiqdev.com)

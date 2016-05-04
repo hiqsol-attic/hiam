@@ -3,7 +3,7 @@ hiqdev/hiam-core changelog
 
 ## 0.0.2 Under development
 
-- Changed: redone to `hisite`
+- Changed: redone to `hisite` style
 - Removed templates to yii2-theme-adminlte
 - Changed DB dsn to connect locally
 - Fixed attributes() at User model
