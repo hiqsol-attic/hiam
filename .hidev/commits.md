@@ -1,7 +1,7 @@
 hiqdev/hiam-core commits history
 --------------------------------
 
-## 0.0.2 Under development
+## 0.0.2 2016-05-04
 
 - Changed: redone to `hisite` style
     - 9a74e63 2016-05-04 used bootstrapped aliases: @root, @hisite, @vendor (sol@hiqdev.com)
@@ -29,9 +29,9 @@ hiqdev/hiam-core commits history
     - 19ca189 2016-02-17 + `name` attribute to User model (sol@hiqdev.com)
     - b7b57dc 2016-02-17 + seller to User model (sol@hiqdev.com)
     - f8e3b49 2016-02-17 changed filsh/yii2-oauth2-server require version to * (sol@hiqdev.com)
+- Removed templates to yii2-theme-adminlte
     - c5b0379 2015-09-30 adding password reset not finished (sol@hiqdev.com)
     - 71a8633 2015-09-28 - require yii2-asset-pictonic (sol@hiqdev.com)
-- Removed templates to yii2-theme-adminlte
     - 8c1a440 2015-09-28 + require yii2-asset-pictonic (sol@hiqdev.com)
     - 7ddb9b0 2015-09-28 renamed recovery to request-password-reset to be yii2 canonical (sol@hiqdev.com)
     - 05148ae 2015-09-28 all templates moved to yii2-theme-adminlte (sol@hiqdev.com)
@@ -127,10 +127,6 @@ hiqdev/hiam-core commits history
     - dfa96bc 2015-04-01 Do real form in login (andreyklochok@gmail.com)
     - f52280e 2015-04-01 Switch to AdminLTE (andreyklochok@gmail.com)
     - 57ba75c 2015-04-01 + some rbac not finished (sol@hiqdev.com)
-
-## v0.1.0 2014-12-13
-
-- Added: inited
     - 96ca12f 2014-12-13 INITED (andrii.vasyliev@gmail.com)
 
 ## Development started 2014-12-13

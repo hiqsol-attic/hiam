@@ -1,7 +1,7 @@
 hiqdev/hiam-core changelog
 --------------------------
 
-## 0.0.2 Under development
+## 0.0.2 2016-05-04
 
 - Changed: redone to `hisite` style
 - Removed templates to yii2-theme-adminlte
@@ -26,10 +26,6 @@ hiqdev/hiam-core changelog
 
 - Added social login
 - Added basic functional
-
-## v0.1.0 2014-12-13
-
-- Added: inited
 
 ## Development started 2014-12-13
 
