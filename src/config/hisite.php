@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
 $params = require __DIR__ . '/params.php';
 
 return [
@@ -102,15 +111,15 @@ return [
 ///                 'allow_public_clients' => false
 ///             ],
                 'authorization_code' => [
-                    'class' => \OAuth2\GrantType\AuthorizationCode::class
+                    'class' => \OAuth2\GrantType\AuthorizationCode::class,
                 ],
                 'user_credentials' => [
-                    'class' => \OAuth2\GrantType\UserCredentials::class
+                    'class' => \OAuth2\GrantType\UserCredentials::class,
                 ],
                 'refresh_token' => [
                     'class' => \OAuth2\GrantType\RefreshToken::class,
                     'always_issue_new_refresh_token' => true,
-                ]
+                ],
             ],
         ],
     ],
