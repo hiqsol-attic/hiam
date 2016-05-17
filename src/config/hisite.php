@@ -1,32 +1,39 @@
 <?php
 
+$params = require __DIR__ . '/params.php';
+
 return [
     'id'          => 'hiam',
     'name'        => 'HIAM',
     'basePath'    => dirname(__DIR__),
     'viewPath'    => '@hisite/views',
-    'vendorPath'  => '@vendor',
+    'vendorPath'  => '@root/vendor',
     'runtimePath' => '@root/runtime',
     'bootstrap'   => ['log', 'themeManager'],
     'controllerNamespace' => 'hiam\controllers',
     'defaultRoute' => 'site',
-    'layout'       => 'mini',
+    'layout' => 'mini',
+    'params' => $params,
+    'aliases' => [
+        '@bower' => '@vendor/bower-asset',
+        '@npm'   => '@vendor/npm-asset',
+    ],
     'components' => [
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => \yii\caching\FileCache::class,
         ],
         'db' => [
-            'class'         => 'yii\db\Connection',
-            'dsn'           => 'pgsql:dbname=hiam',
-            'charset'       => 'utf8',
+            'class'   => \yii\db\Connection::class,
+            'dsn'     => 'pgsql:dbname=hiam',
+            'charset' => 'utf8',
         ],
         'user' => [
-            'class'           => 'yii\web\User',
-            'identityClass'   => 'hiam\common\models\User',
+            'class'           => \yii\web\User::class,
+            'identityClass'   => \hiam\common\models\User::class,
             'enableAutoLogin' => true,
         ],
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+            'class' => \yii\swiftmailer\Mailer::class,
             'viewPath' => '@hiam/common/mail',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
@@ -34,14 +41,14 @@ return [
             'useFileTransport' => true,
         ],
         'authManager' => [
-            'class'             => 'hiam\common\rbac\HiDbManager',
+            'class'             => \hiam\common\rbac\HiDbManager::class,
             'itemTable'         => '{{%rbac_item}}',
             'itemChildTable'    => '{{%rbac_item_child}}',
             'assignmentTable'   => '{{%rbac_assignment}}',
             'ruleTable'         => '{{%rbac_rule}}',
         ],
         'authClientCollection' => [
-            'class' => 'hiam\authclient\Collection',
+            'class' => \hiam\authclient\Collection::class,
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -49,13 +56,13 @@ return [
             'enableStrictParsing' => false,
         ],
         'view' => [
-            'class' => 'hiqdev\thememanager\View',
+            'class' => \hiqdev\thememanager\View::class,
         ],
         'log' => [
             'traceLevel' => 0,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class' => \yii\log\FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
             ],
@@ -66,12 +73,12 @@ return [
         'themeManager' => [
             'theme'  => 'adminlte',
             'assets' => [
-                'hiam\assets\AppAsset',
-                'hiqdev\assets\icheck\iCheckAsset',
+                \hiam\assets\AppAsset::class,
+                \hiqdev\assets\icheck\iCheckAsset::class,
             ],
         ],
         'menuManager' => [
-            'class' => 'hiqdev\menumanager\MenuManager',
+            'class' => \hiqdev\menumanager\MenuManager::class,
             'items' => [
                 'breadcrumbs' => [
                     'saveToView' => 'breadcrumbs',
@@ -81,36 +88,30 @@ return [
     ],
     'modules' => [
         'oauth2' => [
-            'class' => 'filsh\yii2\oauth2server\Module',
+            'class' => \filsh\yii2\oauth2server\Module::class,
             'options' => [
                 'enforce_state'     => false,
                 'access_lifetime'   => 3600 * 24,
             ],
             'storageMap' => [
-                'user_credentials'  => 'hiam\common\models\User',
+                'user_credentials'  => \hiam\common\models\User::class,
             ],
             'grantTypes' => [
 ///             'client_credentials' => [
-///                 'class' => 'OAuth2\GrantType\ClientCredentials',
+///                 'class' => \OAuth2\GrantType\ClientCredentials::class,
 ///                 'allow_public_clients' => false
 ///             ],
                 'authorization_code' => [
-                    'class' => 'OAuth2\GrantType\AuthorizationCode'
+                    'class' => \OAuth2\GrantType\AuthorizationCode::class
                 ],
                 'user_credentials' => [
-                    'class' => 'OAuth2\GrantType\UserCredentials'
+                    'class' => \OAuth2\GrantType\UserCredentials::class
                 ],
                 'refresh_token' => [
-                    'class' => 'OAuth2\GrantType\RefreshToken',
+                    'class' => \OAuth2\GrantType\RefreshToken::class,
                     'always_issue_new_refresh_token' => true,
                 ]
             ],
         ],
-    ],
-    'aliases' => [
-        '@bower' => '@vendor/bower-asset',
-    ],
-    'params' => [
-        'adminEmail' => 'admin@hiqdev.com',
     ],
 ];
