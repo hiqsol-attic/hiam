@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hiam\common\models;
 
 use Yii;
 use yii\base\Model;
 
 /**
- * Login form
+ * Login form.
  */
 class LoginForm extends Model
 {
@@ -17,7 +26,7 @@ class LoginForm extends Model
     private $_user = false;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -38,7 +47,8 @@ class LoginForm extends Model
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
      */
-    public function validatePassword ($attribute, $params) {
+    public function validatePassword($attribute, $params)
+    {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
@@ -62,13 +72,14 @@ class LoginForm extends Model
     }
 
     /**
-     * Finds user by [[username]]
+     * Finds user by [[username]].
      *
      * @return User|null
      */
-    public function getUser () {
+    public function getUser()
+    {
         if (!$this->_user) {
-            $this->_user = call_user_func([Yii::$app->user->identityClass,'findByUsername'],$this->username);
+            $this->_user = call_user_func([Yii::$app->user->identityClass, 'findByUsername'], $this->username);
         }
 
         return $this->_user;

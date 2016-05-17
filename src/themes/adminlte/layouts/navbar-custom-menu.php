@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+
 ?>
 <ul class="nav navbar-nav">
     <!-- Messages: style can be found in dropdown.less-->

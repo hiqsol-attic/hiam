@@ -1,19 +1,28 @@
 <?php
 
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hiam\controllers;
 
-use Yii;
-use yii\web\Response;
-use yii\helpers\ArrayHelper;
-use yii\filters\ContentNegotiator;
 use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
+use Yii;
+use yii\filters\ContentNegotiator;
+use yii\helpers\ArrayHelper;
+use yii\web\Response;
 
 class OauthController extends \yii\web\Controller
 {
     public $enableCsrfValidation = false;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -55,7 +64,7 @@ class OauthController extends \yii\web\Controller
     }
 
     /**
-     * Get request parameter from POST then GET
+     * Get request parameter from POST then GET.
      * @param string $name
      * @param string $default
      * @return string
@@ -63,7 +72,7 @@ class OauthController extends \yii\web\Controller
     public function getRequestValue($name, $default = null)
     {
         $request = $this->getModule()->getRequest();
-        return isset($request->request[$name]) ? $request->request[$name] : $request->query($name,$default);
+        return isset($request->request[$name]) ? $request->request[$name] : $request->query($name, $default);
     }
 
     public function getTokenParamName()
@@ -92,7 +101,9 @@ class OauthController extends \yii\web\Controller
     public function actionResource()
     {
         $ok = $this->getServer()->verifyResourceRequest($this->request);
-        if (!$ok) return $this->getServer()->getResponse()->send();
+        if (!$ok) {
+            return $this->getServer()->getResponse()->send();
+        }
         $access_token = $this->getRequestValue($this->getTokenParamName());
         $user = $this->findUser($access_token);
 
@@ -106,12 +117,13 @@ class OauthController extends \yii\web\Controller
         return $user->getAttributes();
     }
 
-    static protected $authorizedClients = [
+    protected static $authorizedClients = [
         'sol-hipanel-master'  => 1,
         'hipanel.ahnames.com' => 1,
     ];
 
-    public function actionAuthorize () {
+    public function actionAuthorize()
+    {
         $request = $this->getRequest();
         $response = $this->getResponse();
         if (!$this->getServer()->validateAuthorizeRequest($request, $response)) {
@@ -129,7 +141,7 @@ class OauthController extends \yii\web\Controller
         }
 
         if (!$is_authorized && empty($_POST)) {
-            return $this->render('Authorize',[
+            return $this->render('Authorize', [
                 'client_id' => 'THE CLIENT_ID',
             ]);
         };
@@ -144,5 +156,4 @@ class OauthController extends \yii\web\Controller
         $this->getServer()->handleAuthorizeRequest($request, $response, $is_authorized, $id);
         return $response->send();
     }
-
 }

@@ -1,27 +1,34 @@
 <?php
 
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hiam\controllers;
 
-use hiam\common\models\User;
-use hiam\common\models\RemoteUser;
 use hiam\common\models\LoginForm;
+use hiam\common\models\RemoteUser;
+use hiam\common\models\User;
+use hiam\models\ContactForm;
 use hiam\models\PasswordResetRequestForm;
 use hiam\models\ResetPasswordForm;
 use hiam\models\SignupForm;
-use hiam\models\ContactForm;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\AccessControl;
-use yii\helpers\Url;
 
 /**
- * Site controller
+ * Site controller.
  */
 class SiteController extends Controller
 {
-
     public $defaultAction = 'lockscreen';
 
     public function behaviors()
@@ -49,12 +56,12 @@ class SiteController extends Controller
         ];
     }
 
-    public function denyCallback ()
+    public function denyCallback()
     {
         return $this->redirect([Yii::$app->user->getIsGuest() ? 'login' : 'lockscreen']);
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     public function actions()
     {
         return [
@@ -72,7 +79,7 @@ class SiteController extends Controller
         ];
     }
 
-    public function successCallback ($client)
+    public function successCallback($client)
     {
         $user = User::findIdentityByAuthClient($client);
         if ($user) {
@@ -87,11 +94,12 @@ class SiteController extends Controller
         return $this->render('lockscreen');
     }
 
-    public function actionIndex () {
+    public function actionIndex()
+    {
         return $this->render('index');
     }
 
-    protected function doLogin ($view,$username = null)
+    protected function doLogin($view, $username = null)
     {
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -102,7 +110,7 @@ class SiteController extends Controller
         }
     }
 
-    public function actionLogin ($confirm = false)
+    public function actionLogin($confirm = false)
     {
         $client = Yii::$app->authClientCollection->getActiveClient();
         if ($client) {
@@ -112,7 +120,7 @@ class SiteController extends Controller
         return $this->doLogin('login');
     }
 
-    public function actionConfirm ()
+    public function actionConfirm()
     {
         $client = Yii::$app->authClientCollection->getActiveClient();
         if (!$client) {
@@ -122,15 +130,15 @@ class SiteController extends Controller
         $email = $client->getUserAttributes()['email'];
         $user = User::findOne(['email' => $email]);
 
-        $res = $this->doLogin('confirm',$user ? $user->email : null);
+        $res = $this->doLogin('confirm', $user ? $user->email : null);
         $user = Yii::$app->getUser()->getIdentity();
         if ($user) {
-            RemoteUser::set($client,$user);
+            RemoteUser::set($client, $user);
         };
         return $res;
     }
 
-    public function actionRemoteProceed ()
+    public function actionRemoteProceed()
     {
         $client = Yii::$app->authClientCollection->getActiveClient();
         if (!$client) {
@@ -144,7 +152,7 @@ class SiteController extends Controller
         return $this->redirect(['signup']);
     }
 
-    public function actionSignup ()
+    public function actionSignup()
     {
         $client = Yii::$app->authClientCollection->getActiveClient();
 
@@ -153,7 +161,7 @@ class SiteController extends Controller
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     if ($client) {
-                        RemoteUser::set($client,$user);
+                        RemoteUser::set($client, $user);
                     };
                     return $this->goHome();
                 }
@@ -167,7 +175,7 @@ class SiteController extends Controller
         return $this->render('signup', compact('model'));
     }
 
-    public function actionLogout ()
+    public function actionLogout()
     {
         Yii::$app->user->logout();
         Yii::$app->getSession()->destroy();
@@ -218,7 +226,7 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionResetPassword ($token)
+    public function actionResetPassword($token)
     {
         try {
             $model = new ResetPasswordForm($token);
@@ -236,5 +244,4 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-
 }

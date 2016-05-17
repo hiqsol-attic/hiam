@@ -3,11 +3,9 @@
 /**
  * Theme main layout.
  *
- * @var components\View $this View
+ * @var components\View View
  * @var string $content Content
  */
-
-use Yii;
 use yii\helpers\Html;
 
 $this->registerJs(<<<'JS'

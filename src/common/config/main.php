@@ -1,6 +1,19 @@
 <?php
 
-function d ($a) { print "<pre>";die(var_dump($a)); }
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
+function d($a)
+{
+    echo '<pre>';
+    die(var_dump($a));
+}
 
 $params = array_merge(
     require(Yii::getAlias('@hiam/common/config/params.php')),

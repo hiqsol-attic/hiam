@@ -1,14 +1,22 @@
 <?php
 
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hiam\models;
 
 use hiam\common\models\User;
 use yii\base\InvalidParamException;
 use yii\base\Model;
-use Yii;
 
 /**
- * Password reset form
+ * Password reset form.
  */
 class ResetPasswordForm extends Model
 {
@@ -39,7 +47,7 @@ class ResetPasswordForm extends Model
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {

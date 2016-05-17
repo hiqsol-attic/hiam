@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hiam\common\models;
 
 /**
- * RemoteUser model
+ * RemoteUser model.
  *
  * @property string  $provider
  * @property string  $remoteid
@@ -12,7 +21,7 @@ namespace hiam\common\models;
 class RemoteUser extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -20,7 +29,7 @@ class RemoteUser extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -28,7 +37,7 @@ class RemoteUser extends \yii\db\ActiveRecord
             [['provider'],          'string'],
             [['remoteid'],          'safe'],
             [['client_id'],         'integer'],
-            [['provider','remoteid','client_id'],   'required'],
+            [['provider', 'remoteid', 'client_id'],   'required'],
         ];
     }
 
@@ -42,34 +51,39 @@ class RemoteUser extends \yii\db\ActiveRecord
         'live'      => 'w',
     ];
 
-    public static function toProvider ($name) {
-        if (strlen($name)===1) return $name;
+    public static function toProvider($name)
+    {
+        if (strlen($name) === 1) {
+            return $name;
+        }
         return static::$_providers[strtolower($name)];
     }
 
-    public static function afindOne ($condition) {
+    public static function afindOne($condition)
+    {
         $q = static::find()->andWhere($condition);
-d($q);
+        d($q);
     }
 
-    public static function isTrustedEmail ($provider,$email) {
+    public static function isTrustedEmail($provider, $email)
+    {
         static $trustedEmails = [
             '@gmail.com'    => 'google',
             '@yandex.ru'    => 'yandex',
         ];
         foreach ($trustedEmails as $d => $p) {
             $p = static::toProvider($p);
-            if ($provider === $p && substr($email,-strlen($d)) === $d) {
+            if ($provider === $p && substr($email, -strlen($d)) === $d) {
                 return true;
             };
         };
         return false;
     }
 
-    public static function set ($client, $user)
+    public static function set($client, $user)
     {
-        $remote = new RemoteUser([
-            'provider'  => RemoteUser::toProvider($client->getId()),
+        $remote = new self([
+            'provider'  => self::toProvider($client->getId()),
             'remoteid'  => $client->getUserAttributes()['id'],
             'client_id' => $user->id,
         ]);
@@ -79,5 +93,4 @@ d($q);
 
         return $user;
     }
-
 }

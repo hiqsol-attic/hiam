@@ -34,7 +34,7 @@ use Yii;
         <?= Menu::widget(
             [
                 'options' => [
-                    'class' => 'sidebar-menu'
+                    'class' => 'sidebar-menu',
                 ],
             ]
         ); ?>

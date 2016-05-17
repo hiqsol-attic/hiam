@@ -1,13 +1,21 @@
 <?php
 
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hiam\models;
 
-use Yii;
-use hiam\common\models\User;
 use hiam\common\models\Contact;
+use hiam\common\models\User;
 
 /**
- * Signup form
+ * Signup form.
  */
 class SignupForm extends \yii\base\Model
 {
@@ -21,7 +29,7 @@ class SignupForm extends \yii\base\Model
     public $password_retype;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -33,8 +41,8 @@ class SignupForm extends \yii\base\Model
             ['username', 'string', 'min' => 2, 'max' => 255],
 */
 
-            [['first_name','last_name'], 'filter', 'filter' => 'trim'],
-            [['first_name','last_name'], 'string', 'min' => 2, 'max' => 64],
+            [['first_name', 'last_name'], 'filter', 'filter' => 'trim'],
+            [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'email'],
@@ -46,7 +54,7 @@ class SignupForm extends \yii\base\Model
             ['password',        'string', 'min' => 6],
             ['password_retype', 'string', 'min' => 6],
 
-            [['first_name','last_name','email','password'],'required'],
+            [['first_name', 'last_name', 'email', 'password'], 'required'],
         ];
     }
 
@@ -55,7 +63,7 @@ class SignupForm extends \yii\base\Model
      *
      * @return User|null the saved model or null if saving fails
      */
-    public function signup ()
+    public function signup()
     {
         if ($this->validate()) {
             $user = new User();
