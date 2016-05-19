@@ -10,17 +10,16 @@
  */
 
 return [
-    'id'          => 'hiam',
-    'name'        => 'HIAM',
-    'basePath'    => dirname(__DIR__),
-    'viewPath'    => '@hisite/views',
-    'vendorPath'  => '@root/vendor',
-    'runtimePath' => '@root/runtime',
-    'bootstrap'   => ['log', 'themeManager'],
+    'id'            => 'hiam',
+    'name'          => 'HIAM',
+    'basePath'      => dirname(__DIR__),
+    'viewPath'      => '@hisite/views',
+    'vendorPath'    => '@root/vendor',
+    'runtimePath'   => '@root/runtime',
+    'bootstrap'     => ['log', 'themeManager'],
+    'defaultRoute'  => 'site',
+    'layout'        => 'mini',
     'controllerNamespace' => 'hiam\controllers',
-    'defaultRoute' => 'site',
-    'layout' => 'mini',
-    'params' => $params,
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
