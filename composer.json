@@ -55,7 +55,7 @@
         "hiqdev/yii2-hiam-authclient": "*",
         "hiqdev/yii2-theme-adminlte": "*",
         "hiqdev/yii2-asset-icheck": "*",
-        "hiqdev/composer-config-plugin": "<2.0"
+        "hiqdev/composer-config-plugin": "*"
     },
     "require-dev": {
         "hiqdev/hidev-php": "<2.0",

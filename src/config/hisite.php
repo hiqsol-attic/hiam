@@ -9,8 +9,6 @@
  * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
  */
 
-$params = require __DIR__ . '/params.php';
-
 return [
     'id'          => 'hiam',
     'name'        => 'HIAM',
