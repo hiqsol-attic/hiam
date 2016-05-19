@@ -120,6 +120,7 @@ class OauthController extends \yii\web\Controller
     protected static $authorizedClients = [
         'sol-hipanel-master'  => 1,
         'hipanel.ahnames.com' => 1,
+        'vds.spicyhost.com'   => 1,
     ];
 
     public function actionAuthorize()
