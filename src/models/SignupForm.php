@@ -11,8 +11,8 @@
 
 namespace hiam\models;
 
-use hiam\common\models\Contact;
-use hiam\common\models\User;
+use hiam\models\Contact;
+use hiam\models\User;
 
 /**
  * Signup form.
@@ -37,7 +37,7 @@ class SignupForm extends \yii\base\Model
 /* TODO TODO login
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\hiam\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => User::class, 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 */
 
@@ -46,7 +46,7 @@ class SignupForm extends \yii\base\Model
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => '\hiam\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email address has already been taken.'],
 
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'string'],

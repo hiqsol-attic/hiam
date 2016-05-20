@@ -11,7 +11,6 @@
 
 namespace hiam\models;
 
-use hiam\common\models\User;
 use yii\base\InvalidParamException;
 use yii\base\Model;
 
@@ -23,7 +22,7 @@ class ResetPasswordForm extends Model
     public $password;
 
     /**
-     * @var \hiam\common\models\User
+     * @var User
      */
     private $_user;
 

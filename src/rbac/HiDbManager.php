@@ -9,9 +9,9 @@
  * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hiam\common\rbac;
+namespace hiam\rbac;
 
-use hiam\common\models\User;
+use hiam\models\User;
 use yii\base\InvalidParamException;
 use yii\rbac\Assignment;
 use yii\rbac\DbManager;

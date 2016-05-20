@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hiam\common\models;
+namespace hiam\models;
 
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use OAuth2\Storage\UserCredentialsInterface;

@@ -35,19 +35,19 @@ return [
         ],
         'user' => [
             'class'           => \yii\web\User::class,
-            'identityClass'   => \hiam\common\models\User::class,
+            'identityClass'   => \hiam\models\User::class,
             'enableAutoLogin' => true,
         ],
         'mailer' => [
             'class' => \yii\swiftmailer\Mailer::class,
-            'viewPath' => '@hiam/common/mail',
+            'viewPath' => '@hiam/mail',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
         'authManager' => [
-            'class'             => \hiam\common\rbac\HiDbManager::class,
+            'class'             => \hiam\rbac\HiDbManager::class,
             'itemTable'         => '{{%rbac_item}}',
             'itemChildTable'    => '{{%rbac_item_child}}',
             'assignmentTable'   => '{{%rbac_assignment}}',
@@ -100,7 +100,7 @@ return [
                 'access_lifetime'   => 3600 * 24,
             ],
             'storageMap' => [
-                'user_credentials'  => \hiam\common\models\User::class,
+                'user_credentials'  => \hiam\models\User::class,
             ],
             'grantTypes' => [
 ///             'client_credentials' => [

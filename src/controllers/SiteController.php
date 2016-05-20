@@ -11,9 +11,9 @@
 
 namespace hiam\controllers;
 
-use hiam\common\models\LoginForm;
-use hiam\common\models\RemoteUser;
-use hiam\common\models\User;
+use hiam\models\LoginForm;
+use hiam\models\RemoteUser;
+use hiam\models\User;
 use hiam\models\ContactForm;
 use hiam\models\PasswordResetRequestForm;
 use hiam\models\ResetPasswordForm;

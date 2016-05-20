@@ -11,7 +11,6 @@
 
 namespace hiam\models;
 
-use hiam\common\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -31,11 +30,6 @@ class PasswordResetRequestForm extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'exist',
-                'targetClass' => 'hiam\common\models\User',
-                'filter'  => ['state' => 'ok'],
-                'message' => 'There is no user with such email.',
-            ],
         ];
     }
 

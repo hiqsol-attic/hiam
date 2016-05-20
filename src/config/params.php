@@ -13,4 +13,12 @@ return [
     'adminEmail'            => 'admin@hiqdev.com',
     'cookieValidationKey'   => '',
     'debug_allowed_ips'     => [],
+
+    'db_name'               => 'mrdp',
+    'db_user'               => 'sol',
+    'db_password'           => '****',
+    'poweredByName'         => 'HIAM',
+    'poweredByUrl'          => 'https://github.com/hiqdev/hiam-core',
+
+    'user.passwordResetTokenExpire' => 3600,
 ];
