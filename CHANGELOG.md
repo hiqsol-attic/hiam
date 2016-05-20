@@ -1,6 +1,10 @@
 hiqdev/hiam-core changelog
 --------------------------
 
+## Under development
+
+- Changed: redone with composer-config-plugin
+
 ## 0.0.2 2016-05-04
 
 - Changed: redone to `hisite` style

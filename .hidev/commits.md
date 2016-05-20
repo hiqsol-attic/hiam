@@ -1,6 +1,21 @@
 hiqdev/hiam-core commits history
 --------------------------------
 
+## Under development
+
+- Changed: redone with composer-config-plugin
+    - 018f704 2016-05-20 redone `common` to plain dirs (sol@hiqdev.com)
+    - 9d850fb 2016-05-19 fixing config assembling (sol@hiqdev.com)
+    - a61096f 2016-05-19 added vds.spicyhost.com to the list of authorized oauth clients (sol@hiqdev.com)
+    - 0d5db63 2016-05-19 fixing config assembling (sol@hiqdev.com)
+    - ca9b736 2016-05-19 redoing to composer-config-plugin (sol@hiqdev.com)
+    - 1015cc9 2016-05-17 csfixed (sol@hiqdev.com)
+    - ce4d60f 2016-05-17 removed OLD (sol@hiqdev.com)
+    - b80e0a7 2016-05-17 removed non actual codeception tests (sol@hiqdev.com)
+    - b4924bf 2016-05-17 csfixed (sol@hiqdev.com)
+    - 5847f95 2016-05-17 improved hisite config and added hidev config (sol@hiqdev.com)
+    - 4f2111f 2016-05-17 removed old style files: environments, requirements.php (sol@hiqdev.com)
+
 ## 0.0.2 2016-05-04
 
 - Changed: redone to `hisite` style
