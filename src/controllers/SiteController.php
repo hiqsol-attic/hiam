@@ -226,16 +226,16 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionResetPassword($token)
+    public function actionResetPassword($login)
     {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
+        $model = new ResetPasswordForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->getSession()->setFlash('success', 'New password was saved.');
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->resetPassword()) {
+                Yii::$app->getSession()->setFlash('success', 'New password was saved.');
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Failed reset password. Please start over.');
+            }
 
             return $this->goHome();
         }

@@ -13,6 +13,7 @@ namespace hiam\models;
 
 use Yii;
 use yii\base\Model;
+use yii\helpers\Url;
 
 /**
  * Password reset request form.
@@ -40,23 +41,14 @@ class PasswordResetRequestForm extends Model
      */
     public function sendEmail()
     {
-        /* @var $user User */
-        $user = User::findByEmail($this->email);
 
-        if ($user) {
-            if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
-                $user->generatePasswordResetToken();
-            }
+        $url = Yii::$app->params['api_url'] . '/clientRemindPassword?' . http_build_query([
+            'query'       => $this->email,
+            'confirm_url' => Url::to('site/reset-password', true),
+        ]);
 
-            if ($user->save()) {
-                return Yii::$app->mailer->compose('passwordResetToken', ['user' => $user])
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                    ->setTo($this->email)
-                    ->setSubject('Password reset for ' . Yii::$app->name)
-                    ->send();
-            }
-        }
+        $json = file_get_contents($url);
 
-        return false;
+        return true;
     }
 }

@@ -11,8 +11,10 @@
 
 namespace hiam\models;
 
+use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Model;
+use yii\helpers\Json;
 
 /**
  * Password reset form.
@@ -20,30 +22,7 @@ use yii\base\Model;
 class ResetPasswordForm extends Model
 {
     public $password;
-
-    /**
-     * @var User
-     */
-    private $_user;
-
-    /**
-     * Creates a form model given a token.
-     *
-     * @param  string                          $token
-     * @param  array                           $config name-value pairs that will be used to initialize the object properties
-     * @throws \yii\base\InvalidParamException if token is empty or not valid
-     */
-    public function __construct($token, $config = [])
-    {
-        if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException('Password reset token cannot be blank.');
-        }
-        $this->_user = User::findByPasswordResetToken($token);
-        if (!$this->_user) {
-            throw new InvalidParamException('Wrong password reset token.');
-        }
-        parent::__construct($config);
-    }
+    public $password_retype;
 
     /**
      * {@inheritdoc}
@@ -53,20 +32,28 @@ class ResetPasswordForm extends Model
         return [
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+            ['password_retype', 'required'],
+            ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+
+            ['rawBag', 'safe'],
         ];
     }
 
     /**
      * Resets password.
-     *
      * @return boolean if password was reset.
      */
     public function resetPassword()
     {
-        $user = $this->_user;
-        $user->password = $this->password;
-        $user->removePasswordResetToken();
+        $bag = Yii::$app->request->get();
+        $url = Yii::$app->params['api_url'] . '/clientSetPassword?' . http_build_query([
+            'client'        => $bag['login'],
+            'new_password'  => $this->password,
+            'confirm_data'  => $bag,
+        ]);
+        $res = Json::decode(file_get_contents($url));
 
-        return $user->save();
+        return !isset($res['_error']);
     }
 }
