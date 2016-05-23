@@ -75,9 +75,9 @@ return [
                     'clientId'     => $params['google_client_id'],
                     'clientSecret' => $params['google_client_secret'],
                     'normalizeUserAttributeMap' => [
-                        'email'      => ['emails',0,'value'],
-                        'first_name' => ['name','givenName'],
-                        'last_name'  => ['name','familyName'],
+                        'email'      => ['emails', 0, 'value'],
+                        'first_name' => ['name', 'givenName'],
+                        'last_name'  => ['name', 'familyName'],
                     ],
                 ],
             ],

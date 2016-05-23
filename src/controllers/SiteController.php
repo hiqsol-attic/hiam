@@ -11,17 +11,15 @@
 
 namespace hiam\controllers;
 
-use hiam\models\LoginForm;
-use hiam\models\RemoteUser;
-use hiam\models\User;
 use hiam\models\ContactForm;
+use hiam\models\LoginForm;
 use hiam\models\PasswordResetRequestForm;
+use hiam\models\RemoteUser;
 use hiam\models\ResetPasswordForm;
 use hiam\models\SignupForm;
+use hiam\models\User;
 use Yii;
-use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
 /**

@@ -11,10 +11,7 @@
 
 namespace hiam\models;
 
-use hiam\models\Contact;
-use hiam\models\User;
 use Yii;
-use yii\db\IntegrityException;
 
 /**
  * Signup form.

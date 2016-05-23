@@ -41,7 +41,6 @@ class PasswordResetRequestForm extends Model
      */
     public function sendEmail()
     {
-
         $url = Yii::$app->params['api_url'] . '/clientRemindPassword?' . http_build_query([
             'query'       => $this->email,
             'confirm_url' => Url::to('site/reset-password', true),
