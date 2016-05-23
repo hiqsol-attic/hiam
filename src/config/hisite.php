@@ -16,7 +16,7 @@ return [
     'viewPath'      => '@hisite/views',
     'vendorPath'    => '@root/vendor',
     'runtimePath'   => '@root/runtime',
-    'bootstrap'     => ['log', 'themeManager'],
+    'bootstrap'     => ['log', 'urlManager', 'themeManager'],
     'defaultRoute'  => 'site',
     'layout'        => 'mini',
     'controllerNamespace' => 'hiam\controllers',
@@ -25,13 +25,22 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'log' => [
+            'traceLevel' => defined('YII_DEBUG') && YII_DEBUG ? 3 : 0,
+        ],
+        'request' => [
+            'cookieValidationKey' => $params['cookieValidationKey'],
+        ],
         'cache' => [
             'class' => \yii\caching\FileCache::class,
         ],
         'db' => [
-            'class'   => \yii\db\Connection::class,
-            'dsn'     => 'pgsql:dbname=hiam',
-            'charset' => 'utf8',
+            'class'     => \yii\db\Connection::class,
+            'dsn'       => 'pgsql:dbname=hiam',
+            'charset'   => 'utf8',
+            'dsn'       => 'pgsql:dbname=' . $params['db_name'],
+            'username'  => $params['db_user'],
+            'password'  => $params['db_password'],
         ],
         'user' => [
             'class'           => \yii\web\User::class,
@@ -55,6 +64,23 @@ return [
         ],
         'authClientCollection' => [
             'class' => \hiam\authclient\Collection::class,
+            'clients' => [
+                'facebook' => [
+                    'class'        => 'yii\authclient\clients\Facebook',
+                    'clientId'     => $params['facebook_client_id'],
+                    'clientSecret' => $params['facebook_client_secret'],
+                ],
+                'google' => [
+                    'class'        => 'yii\authclient\clients\GoogleOAuth',
+                    'clientId'     => $params['google_client_id'],
+                    'clientSecret' => $params['google_client_secret'],
+                    'normalizeUserAttributeMap' => [
+                        'email'      => ['emails',0,'value'],
+                        'first_name' => ['name','givenName'],
+                        'last_name'  => ['name','familyName'],
+                    ],
+                ],
+            ],
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
