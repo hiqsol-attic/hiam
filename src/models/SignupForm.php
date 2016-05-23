@@ -13,6 +13,8 @@ namespace hiam\models;
 
 use hiam\models\Contact;
 use hiam\models\User;
+use Yii;
+use yii\db\IntegrityException;
 
 /**
  * Signup form.
@@ -41,6 +43,9 @@ class SignupForm extends \yii\base\Model
             ['username', 'string', 'min' => 2, 'max' => 255],
 */
 
+            ['seller', 'filter', 'filter' => 'trim'],
+            ['seller', 'string'],
+
             [['first_name', 'last_name'], 'filter', 'filter' => 'trim'],
             [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
 
@@ -52,9 +57,9 @@ class SignupForm extends \yii\base\Model
             ['username', 'string'],
 
             ['password',        'string', 'min' => 6],
-            ['password_retype', 'string', 'min' => 6],
+            ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
 
-            [['first_name', 'last_name', 'email', 'password'], 'required'],
+            [['first_name', 'last_name', 'email', 'password', 'password_retype'], 'required'],
         ];
     }
 
@@ -66,24 +71,21 @@ class SignupForm extends \yii\base\Model
     public function signup()
     {
         if ($this->validate()) {
-            $user = new User();
+            $user = new User(['scenario' => 'insert']);
             $user->login = $this->username ?: $this->email;
             $user->email = $this->email;
             $user->password = $this->password;
-            $seller = User::findByUsername($this->seller ?: 'ahnames');
-            if (!$seller->id) {
+            $seller = User::findByUsername($this->seller ?: Yii::$app->params['user.seller']);
+            if (!$seller->obj_id) {
                 throw new InvalidParamException('wrong seller given');
-            };
-            $user->seller_id = $seller->id;
-            //$user->setPassword($this->password);
-            //$user->generateAuthKey();
-            $user->save();
-            $user = User::findByUsername($user->login);
-            if (!$user) {
-                throw new IntegrityException('failed create user');
-            };
+            }
+            $user->seller_id = $seller->obj_id;
 
-            $contact = Contact::findOne($user->id);
+            if (!$user->save()) {
+                return null;
+            }
+
+            $contact = Contact::findOne($user->obj_id);
             $contact->load([$contact->formName() => $this->getAttributes()]);
             $contact->save();
 

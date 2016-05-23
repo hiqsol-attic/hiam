@@ -15,8 +15,9 @@ namespace hiam\models;
  * User model.
  *
  * @property integer $obj_id PK
- * @property string $first_name
- * @property string $last_name
+ * @property string  $first_name
+ * @property string  $last_name
+ * @property string  $email
  */
 class Contact extends \yii\db\ActiveRecord
 {
@@ -27,12 +28,6 @@ class Contact extends \yii\db\ActiveRecord
     {
         return '{{%contact}}';
     }
-
-/*
-    public function attributes () {
-        return array_merge(parent::attributes());
-    }
-*/
 
     /**
      * {@inheritdoc}

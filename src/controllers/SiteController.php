@@ -163,7 +163,7 @@ class SiteController extends Controller
                     if ($client) {
                         RemoteUser::set($client, $user);
                     };
-                    return $this->goHome();
+                    return $this->goBack();
                 }
             }
         } else {

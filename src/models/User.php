@@ -101,15 +101,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
     /**
      * {@inheritdoc}
      */
-/*
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-*/
-
     public function attributes()
     {
         // return array_unique(array_merge(parent::attributes(),['id','type','state','seller','username']));
@@ -120,6 +111,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
                 $attributes[$k] = $k;
             }
         };
+
         return array_values($attributes);
     }
 
@@ -129,15 +121,19 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
     public function rules()
     {
         return [
-            ['obj_id',          'integer'],
-
             ['id',              'integer'],
-            ['id',              'required'],
 
-            [['login', 'seller'], 'filter', 'filter' => 'trim'],
-            [['login', 'seller'], 'string', 'min' => 2, 'max' => 64],
+            ['obj_id',          'integer'],
+            ['obj_id',          'required', 'except' => 'insert'],
 
-            ['name',            'filter', 'filter' => 'trim'],
+            ['seller_id',       'integer'],
+            ['seller_id',       'required'],
+
+            ['seller',          'filter', 'filter' => 'trim',       'except' => 'insert'],
+            ['seller',          'string', 'min' => 2, 'max' => 64,  'except' => 'insert'],
+
+            ['login',           'filter', 'filter' => 'trim'],
+            ['login',           'string', 'min' => 2, 'max' => 64],
 
             ['email',           'filter', 'filter' => 'trim'],
             ['email',           'email'],
@@ -145,14 +141,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
             ['password',        'filter', 'filter' => 'trim'],
             ['password',        'string', 'min' => 2, 'max' => 64],
 
-            ['seller_id',       'integer'],
-            ['seller_id',       'required'],
-
             ['referer_id',      'integer'],
             ['type_id',         'integer'],
             ['state_id',        'integer'],
 
-            [['type', 'state'],  'string', 'min' => 2, 'max' => 10],
+            ['name',            'filter', 'filter' => 'trim', 'except' => 'insert'],
+
+            [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
             ['username',        'string', 'min' => 2, 'max' => 10],
         ];
     }
@@ -197,7 +192,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
         if (RemoteUser::isTrustedEmail($provider, $email)) {
             return RemoteUser::set($client, $user);
         };
-        #Yii::$app->getSession()->set('');
+
         return null;
     }
 
