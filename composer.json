@@ -49,6 +49,7 @@
     "require": {
         "php": "^5.6",
         "yiisoft/yii2": "^2.0",
+        "yiisoft/yii2-debug": "^2.0",
         "yiisoft/yii2-bootstrap": "^2.0",
         "yiisoft/yii2-swiftmailer": "^2.0",
         "filsh/yii2-oauth2-server": "*",
