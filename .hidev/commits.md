@@ -3,6 +3,10 @@ hiqdev/hiam-core commits history
 
 ## Under development
 
+- Fixed signup
+    - 06c4381 2016-05-23 fixed signup (sol@hiqdev.com)
+    - bbdb826 2016-05-23 extended configuration (sol@hiqdev.com)
+    - e233333 2016-05-23 required yii2-debug (sol@hiqdev.com)
 - Changed: redone with composer-config-plugin
     - 018f704 2016-05-20 redone `common` to plain dirs (sol@hiqdev.com)
     - 9d850fb 2016-05-19 fixing config assembling (sol@hiqdev.com)

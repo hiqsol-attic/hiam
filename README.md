@@ -19,7 +19,7 @@ Provides:
 - Social login: Facebook, Google, VK, LinkedIn, GitHub, Live, Yandex
 - Full activity logging with searching and reporting
 
-For the moment it is in earyly stage of development.
+For the moment it is in early stage of development.
 
 Based on:
 
