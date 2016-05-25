@@ -103,7 +103,9 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            $model->username = $username;
+            if ($username) {
+                $model->username = $username;
+            }
             return $this->render($view, compact('model'));
         }
     }
@@ -206,9 +208,12 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionRequestPasswordReset()
+    public function actionRequestPasswordReset($username = null)
     {
         $model = new PasswordResetRequestForm();
+        if ($username) {
+            $model->email = $username;
+        }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
                 Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');

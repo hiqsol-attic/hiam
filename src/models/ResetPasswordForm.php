@@ -34,8 +34,6 @@ class ResetPasswordForm extends Model
 
             ['password_retype', 'required'],
             ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
-
-            ['rawBag', 'safe'],
         ];
     }
 
