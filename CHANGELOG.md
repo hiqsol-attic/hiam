@@ -1,9 +1,9 @@
 hiqdev/hiam-core changelog
 --------------------------
 
-## Under development
+## dev 2016-05-23
 
-- Fixed signup
+- Fixed signup and password reminding
 - Changed: redone with composer-config-plugin
 
 ## 0.0.2 2016-05-04

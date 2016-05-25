@@ -1,9 +1,14 @@
 hiqdev/hiam-core commits history
 --------------------------------
 
-## Under development
+## dev 2016-05-23
 
-- Fixed signup
+- Fixed signup and password reminding
+    - e707293 2016-05-25 added passing username throughout forms (sol@hiqdev.com)
+    - 3f30a02 2016-05-23 fixed PHP requirement (sol@hiqdev.com)
+    - 4797571 2016-05-23 csfixed (sol@hiqdev.com)
+    - 2784d5d 2016-05-23 added default params (sol@hiqdev.com)
+    - 5726976 2016-05-23 fixed password reminding (sol@hiqdev.com)
     - 06c4381 2016-05-23 fixed signup (sol@hiqdev.com)
     - bbdb826 2016-05-23 extended configuration (sol@hiqdev.com)
     - e233333 2016-05-23 required yii2-debug (sol@hiqdev.com)
