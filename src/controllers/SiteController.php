@@ -21,6 +21,8 @@ use hiam\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * Site controller.
@@ -173,6 +175,16 @@ class SiteController extends Controller
         };
 
         return $this->render('signup', compact('model'));
+    }
+
+    public function actionSignupValidate()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $model = new SignupForm();
+        $model->load(Yii::$app->request->post());
+
+        return ActiveForm::validate($model);
     }
 
     public function actionLogout()
