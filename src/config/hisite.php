@@ -9,38 +9,85 @@
  * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
  */
 
+$authClients = [];
+
+if (isset($params['facebook_client_id']) && $params['facebook_client_id']) {
+    $authClients['facebook'] = [
+        'class'        => \yii\authclient\clients\Facebook::class,
+        'clientId'     => $params['facebook_client_id'],
+        'clientSecret' => $params['facebook_client_secret'],
+    ];
+}
+
+if (isset($params['google_client_id']) && $params['google_client_id']) {
+    $authClients['google'] = [
+        'class'        => \yii\authclient\clients\GoogleOAuth::class,
+        'clientId'     => $params['google_client_id'],
+        'clientSecret' => $params['google_client_secret'],
+        'normalizeUserAttributeMap' => [
+            'email'      => ['emails', 0, 'value'],
+            'first_name' => ['name', 'givenName'],
+            'last_name'  => ['name', 'familyName'],
+        ],
+    ];
+}
+
+if (isset($params['github_client_id']) && $params['github_client_id']) {
+    $authClients['github'] = [
+        'class'        => \yii\authclient\clients\GitHub::class,
+        'clientId'     => $params['github_client_id'],
+        'clientSecret' => $params['github_client_secret'],
+        'normalizeUserAttributeMap' => [
+            'first_name' => function ($a) {
+                return explode(' ',$a['name'])[0];
+            },
+            'last_name'  => function ($a) {
+                return explode(' ',$a['name'])[1];
+            },
+        ],
+    ];
+}
+
+if (isset($params['linkedin_client_id']) && $params['linkedin_client_id']) {
+    $authClients['linkedin'] = [
+        'class'        => \yii\authclient\clients\LinkedIn::class,
+        'clientId'     => $params['linkedin_client_id'],
+        'clientSecret' => $params['linkedin_client_secret'],
+    ];
+}
+
+if (isset($params['vk_client_id']) && $params['vk_client_id']) {
+    $authClients['vk'] = [
+        'class'        => \yii\authclient\clients\VKontakte::class,
+        'clientId'     => $params['vkontakte_client_id'],
+        'clientSecret' => $params['vkontakte_client_secret'],
+    ];
+}
+
+if (isset($params['yandex_client_id']) && $params['yandex_client_id']) {
+    $authClients['yandex'] = [
+        'class'        => \yii\authclient\clients\YandexOAuth::class,
+        'clientId'     => $params['yandex_client_id'],
+        'clientSecret' => $params['yandex_client_secret'],
+    ];
+}
+
 return [
-    'id'            => 'hiam',
-    'name'          => 'HIAM',
-    'basePath'      => dirname(__DIR__),
-    'viewPath'      => '@hisite/views',
-    'vendorPath'    => '@root/vendor',
-    'runtimePath'   => '@root/runtime',
-    'bootstrap'     => ['log', 'urlManager', 'themeManager'],
-    'defaultRoute'  => 'site',
-    'layout'        => 'mini',
+    'id' => 'hiam',
+    'name' => 'HIAM',
+    'layout' => 'mini',
     'controllerNamespace' => 'hiam\controllers',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
-        'log' => [
-            'traceLevel' => defined('YII_DEBUG') && YII_DEBUG ? 3 : 0,
-        ],
-        'request' => [
-            'cookieValidationKey' => $params['cookieValidationKey'],
-        ],
-        'cache' => [
-            'class' => \yii\caching\FileCache::class,
-        ],
         'db' => [
             'class'     => \yii\db\Connection::class,
-            'dsn'       => 'pgsql:dbname=hiam',
             'charset'   => 'utf8',
-            'dsn'       => 'pgsql:dbname=' . $params['db_name'],
-            'username'  => $params['db_user'],
-            'password'  => $params['db_password'],
+            'dsn'       => 'pgsql:dbname=' . (isset($params['db_name']) ? $params['db_name'] : 'hiam'),
+            'username'  => isset($params['db_user']) ? $params['db_user'] : '',
+            'password'  => isset($params['db_password']) ? $params['db_password'] : '',
         ],
         'user' => [
             'class'           => \yii\web\User::class,
@@ -64,85 +111,17 @@ return [
         ],
         'authClientCollection' => [
             'class' => \hiam\authclient\Collection::class,
-            'clients' => [
-                'facebook' => [
-                    'class'        => \yii\authclient\clients\Facebook::class,
-                    'clientId'     => $params['facebook_client_id'],
-                    'clientSecret' => $params['facebook_client_secret'],
-                ],
-                'google' => [
-                    'class'        => \yii\authclient\clients\GoogleOAuth::class,
-                    'clientId'     => $params['google_client_id'],
-                    'clientSecret' => $params['google_client_secret'],
-                    'normalizeUserAttributeMap' => [
-                        'email'      => ['emails', 0, 'value'],
-                        'first_name' => ['name', 'givenName'],
-                        'last_name'  => ['name', 'familyName'],
-                    ],
-                ],
-                'github' => [
-                    'class'        => \yii\authclient\clients\GitHub::class,
-                    'clientId'     => $params['github_client_id'],
-                    'clientSecret' => $params['github_client_secret'],
-                    'normalizeUserAttributeMap' => [
-                        'first_name' => function ($a) {
-                            return explode(' ',$a['name'])[0];
-                        },
-                        'last_name'  => function ($a) {
-                            return explode(' ',$a['name'])[1];
-                        },
-                    ],
-                ],
-                'linkedin' => [
-                    'class'        => \yii\authclient\clients\LinkedIn::class,
-                    'clientId'     => $params['linkedin_client_id'],
-                    'clientSecret' => $params['linkedin_client_secret'],
-                ],
-                'vk' => [
-                    'class'        => \yii\authclient\clients\VKontakte::class,
-                    'clientId'     => $params['vkontakte_client_id'],
-                    'clientSecret' => $params['vkontakte_client_secret'],
-                ],
-                'yandex' => [
-                    'class'        => \yii\authclient\clients\YandexOAuth::class,
-                    'clientId'     => $params['yandex_client_id'],
-                    'clientSecret' => $params['yandex_client_secret'],
-                ],
-            ],
+            'clients' => $authClients,
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
         ],
-        'view' => [
-            'class' => \hiqdev\thememanager\View::class,
-        ],
-        'log' => [
-            'traceLevel' => 0,
-            'targets' => [
-                [
-                    'class' => \yii\log\FileTarget::class,
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
         'themeManager' => [
-            'theme'  => 'adminlte',
             'assets' => [
                 \hiam\assets\AppAsset::class,
                 \hiqdev\assets\icheck\iCheckAsset::class,
-            ],
-        ],
-        'menuManager' => [
-            'class' => \hiqdev\menumanager\MenuManager::class,
-            'items' => [
-                'breadcrumbs' => [
-                    'saveToView' => 'breadcrumbs',
-                ],
             ],
         ],
     ],
