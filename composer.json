@@ -52,15 +52,15 @@
         "yiisoft/yii2-debug": "^2.0",
         "yiisoft/yii2-bootstrap": "^2.0",
         "yiisoft/yii2-swiftmailer": "^2.0",
-        "filsh/yii2-oauth2-server": "*",
-        "hiqdev/yii2-hiam-authclient": "*",
-        "hiqdev/yii2-theme-adminlte": "*",
-        "hiqdev/yii2-asset-icheck": "*",
-        "hiqdev/composer-config-plugin": "*"
+        "filsh/yii2-oauth2-server": "dev-master",
+        "hiqdev/yii2-hiam-authclient": "<2.0 || dev-master",
+        "hiqdev/yii2-theme-adminlte": "<2.0 || dev-master",
+        "hiqdev/yii2-asset-icheck": "^1.0",
+        "hiqdev/hisite-core": "<2.0 || dev-master"
     },
     "require-dev": {
         "hiqdev/hidev-php": "<2.0",
-        "hiqdev/hidev-vendor": "<2.0"
+        "hiqdev/hidev-hiqdev": "<2.0"
     },
     "autoload": {
         "psr-4": {
@@ -70,8 +70,7 @@
     "extra": {
         "config-plugin": {
             "params": "src/config/params.php",
-            "hisite": "src/config/hisite.php",
-            "hidev": "src/config/hidev.php"
+            "hisite": "src/config/hisite.php"
         }
     },
     "minimum-stability": "dev",

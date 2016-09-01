@@ -10,21 +10,8 @@
  */
 
 return [
-    'adminEmail'            => 'admin@hiqdev.com',
-    'poweredByName'         => 'HIAM',
-    'poweredByUrl'          => 'https://github.com/hiqdev/hiam-core',
-
-    'cookieValidationKey'   => '',
-    'debug_allowed_ips'     => [],
-
-    'db_name'               => 'mrdp',
-    'db_user'               => 'sol',
-    'db_password'           => '****',
+    'poweredByName' => 'HIAM',
+    'poweredByUrl'  => 'https://github.com/hiqdev/hiam-core',
 
     'user.passwordResetTokenExpire' => 3600,
-
-    'facebook_client_id'        => null,
-    'facebook_client_secret'    => null,
-    'google_client_id'          => null,
-    'google_client_secret'      => null,
 ];
