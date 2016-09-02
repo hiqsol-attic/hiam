@@ -9,21 +9,22 @@
  * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hiam\assets;
+namespace hiam;
 
 use yii\web\AssetBundle;
 
 /**
- * Most basic asset for the app: bootstrap+plugins, font-awesome, ionic.
+ * Most basic asset for the app:
+ * - own hiam.css
+ * - bootstrap+plugins
+ * - font-awesome
  */
-class AppAsset extends AssetBundle
+class Asset extends AssetBundle
 {
-    public $sourcePath = '@hiam/assets/AppAssetFiles';
-    public $baseUrl = '@web';
+    public $sourcePath = '@hiam/assets';
     public $css = [
-        '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',
-        '//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css',
-        'css/site.css',
+        '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css',
+        'css/hiam.css',
     ];
     public $js = [
     ];

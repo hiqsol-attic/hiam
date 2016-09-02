@@ -95,6 +95,12 @@ a.desc:after {
 
 /** yandex button **/
 
+i.fa.fa-yandex {
+    font-family:"Verdana Narrow",Verdana,"Arial Narrow",Tahoma,Arial;
+    font-style:normal;
+    font-stretch:condensed;
+}
+
 .btn-yandex {
     color: #000;
     background-color: #ffd630;
