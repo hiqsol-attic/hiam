@@ -1,12 +1,13 @@
-hiqdev/hiam-core changelog
---------------------------
+hiqdev/hiam-core
+----------------
 
-## dev 2016-05-23
+## [Under development]
 
+- Changed: redone to hisite
 - Fixed signup and password reminding
 - Changed: redone with composer-config-plugin
 
-## 0.0.2 2016-05-04
+## [0.0.2] - 2016-05-04
 
 - Changed: redone to `hisite` style
 - Removed templates to yii2-theme-adminlte
@@ -27,10 +28,9 @@ hiqdev/hiam-core changelog
 - Fixed: small fixes for production
 - Changed: renamed to hiam
 
-## 0.0.1-alpha 2015-04-19
+## [0.0.1-alpha] - 2015-04-19
 
 - Added social login
 - Added basic functional
 
-## Development started 2014-12-13
-
+## [Development started] - 2014-12-13
