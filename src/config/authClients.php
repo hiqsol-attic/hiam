@@ -11,7 +11,7 @@
 
 $authClients = [];
 
-if (isset($params['facebook_client_id']) && $params['facebook_client_id']) {
+if (!empty($params['facebook_client_id'])) {
     $authClients['facebook'] = [
         'class'        => \yii\authclient\clients\Facebook::class,
         'clientId'     => $params['facebook_client_id'],
@@ -19,7 +19,7 @@ if (isset($params['facebook_client_id']) && $params['facebook_client_id']) {
     ];
 }
 
-if (isset($params['google_client_id']) && $params['google_client_id']) {
+if (!empty($params['google_client_id'])) {
     $authClients['google'] = [
         'class'        => \yii\authclient\clients\Google::class,
         'clientId'     => $params['google_client_id'],
@@ -32,7 +32,7 @@ if (isset($params['google_client_id']) && $params['google_client_id']) {
     ];
 }
 
-if (isset($params['github_client_id']) && $params['github_client_id']) {
+if (!empty($params['github_client_id'])) {
     $authClients['github'] = [
         'class'        => \yii\authclient\clients\GitHub::class,
         'clientId'     => $params['github_client_id'],
@@ -48,7 +48,7 @@ if (isset($params['github_client_id']) && $params['github_client_id']) {
     ];
 }
 
-if (isset($params['linkedin_client_id']) && $params['linkedin_client_id']) {
+if (!empty($params['linkedin_client_id'])) {
     $authClients['linkedin'] = [
         'class'        => \yii\authclient\clients\LinkedIn::class,
         'clientId'     => $params['linkedin_client_id'],
@@ -56,12 +56,12 @@ if (isset($params['linkedin_client_id']) && $params['linkedin_client_id']) {
     ];
 }
 
-if (isset($params['vkontakte_client_id']) && $params['vkontakte_client_id']) {
+if (!empty($params['vkontakte_client_id'])) {
     $params['vk_client_id']     = $params['vkontakte_client_id'];
     $params['vk_client_secret'] = $params['vkontakte_client_secret'];
 }
 
-if (isset($params['vk_client_id']) && $params['vk_client_id']) {
+if (!empty($params['vk_client_id'])) {
     $authClients['vk'] = [
         'class'        => \yii\authclient\clients\VKontakte::class,
         'clientId'     => $params['vk_client_id'],
@@ -69,7 +69,7 @@ if (isset($params['vk_client_id']) && $params['vk_client_id']) {
     ];
 }
 
-if (isset($params['yandex_client_id']) && $params['yandex_client_id']) {
+if (!empty($params['yandex_client_id'])) {
     $authClients['yandex'] = [
         'class'        => \yii\authclient\clients\Yandex::class,
         'clientId'     => $params['yandex_client_id'],
@@ -77,7 +77,7 @@ if (isset($params['yandex_client_id']) && $params['yandex_client_id']) {
     ];
 }
 
-if (isset($params['twitter_consumer_key']) && $params['twitter_consumer_key']) {
+if (!empty($params['twitter_consumer_key'])) {
     $authClients['twitter'] = [
         'class'          => \yii\authclient\clients\Twitter::class,
         'consumerKey'    => $params['twitter_consumer_key'],
@@ -85,7 +85,7 @@ if (isset($params['twitter_consumer_key']) && $params['twitter_consumer_key']) {
     ];
 }
 
-if (isset($params['live_client_id']) && $params['live_client_id']) {
+if (!empty($params['live_client_id'])) {
     $authClients['live'] = [
         'class'        => \yii\authclient\clients\Live::class,
         'clientId'     => $params['live_client_id'],
