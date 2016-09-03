@@ -37,3 +37,10 @@ composer.phar
 php-cs-fixer.phar
 phpunit-skelgen.phar
 phpunit.phar
+
+# Web
+/src/config/bootstrap.php
+/src/config/defines.php
+/src/config/hidev.php
+/src/config/web.php
+/web
