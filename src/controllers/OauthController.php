@@ -136,7 +136,7 @@ class OauthController extends \yii\web\Controller
             return $this->redirect(['/site/login']);
         }
 
-        $is_authorized = $this->isAuthorizedClients($this->getRequestValue('client_id'));
+        $is_authorized = $this->isAuthorizedClient($this->getRequestValue('client_id'));
 
         if (!$is_authorized) {
             if (empty($_POST)) {
