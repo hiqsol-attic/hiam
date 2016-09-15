@@ -52,7 +52,7 @@
         "yiisoft/yii2-debug": "^2.0",
         "yiisoft/yii2-bootstrap": "^2.0",
         "yiisoft/yii2-swiftmailer": "^2.0",
-        "filsh/yii2-oauth2-server": "*@dev",
+        "filsh/yii2-oauth2-server": "2.0.1.x-dev@dev",
         "hiqdev/yii2-hiam-authclient": "<2.0 || dev-master",
         "hiqdev/yii2-theme-adminlte": "<2.0 || dev-master",
         "hiqdev/yii2-asset-icheck": "^1.0",
