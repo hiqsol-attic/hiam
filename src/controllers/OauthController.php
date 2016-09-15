@@ -91,10 +91,10 @@ class OauthController extends \yii\web\Controller
     {
         $response = $this->getServer()->handleTokenRequest($this->getRequest());
         $access_token = $response->getParameter($this->getTokenParamName());
-        if ($access_token) { /// returning user_attributes together with token
+        if ($access_token) {
             $user_attributes = $this->findUser($access_token)->getAttributes();
             $response->addParameters(compact('user_attributes'));
-        };
+        }
         return $response->send();
     }
 
@@ -109,7 +109,7 @@ class OauthController extends \yii\web\Controller
 
         if (!is_object($user)) { /// TODO fix error returning
             return ['error' => 'no user'];
-        };
+        }
 /*
         $command = $this->getRequestValue('command');
         if (!Yii::$app->authManager->checkAccess($user->id,$command)) return ['error' => 'not allowed command','command' => $command];
@@ -117,11 +117,10 @@ class OauthController extends \yii\web\Controller
         return $user->getAttributes();
     }
 
-    protected static $authorizedClients = [
-        'sol-hipanel-master'  => 1,
-        'hipanel.ahnames.com' => 1,
-        'vds.spicyhost.com'   => 1,
-    ];
+    public function isAuthorizedClient($client)
+    {
+        return !empty(Yii::$app->params['hiam.authorizedClients']);
+    }
 
     public function actionAuthorize()
     {
@@ -129,32 +128,31 @@ class OauthController extends \yii\web\Controller
         $response = $this->getResponse();
         if (!$this->getServer()->validateAuthorizeRequest($request, $response)) {
             return $response->send();
-        };
+        }
 
         $id = Yii::$app->getUser()->id;
         if (!$id) {
             Yii::$app->user->setReturnUrl(Yii::$app->getRequest()->getUrl());
             return $this->redirect(['/site/login']);
-        };
-
-        if (self::$authorizedClients[$this->getRequestValue('client_id')]) {
-            $is_authorized = true;
         }
 
-        if (!$is_authorized && empty($_POST)) {
-            return $this->render('Authorize', [
-                'client_id' => 'THE CLIENT_ID',
-            ]);
-        };
+        $is_authorized = $this->isAuthorizedClients($this->getRequestValue('client_id'));
 
         if (!$is_authorized) {
+            if (empty($_POST)) {
+                return $this->render('authorizeClient', [
+                    'client_id' => 'THE CLIENT_ID',
+                ]);
+            }
+
             if (!Yii::$app->getRequest()->validateCsrfToken()) {
                 throw new BadRequestHttpException(Yii::t('yii', 'Unable to verify your data submission.'));
-            };
+            }
             $is_authorized = ($_POST['authorized'] === 'yes');
-        };
+        }
 
         $this->getServer()->handleAuthorizeRequest($request, $response, $is_authorized, $id);
+
         return $response->send();
     }
 }
