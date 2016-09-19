@@ -59,7 +59,7 @@ return [
         'oauth2' => [
             'class' => \filsh\yii2\oauth2server\Module::class,
             'options' => [
-                'enforce_state'     => false,
+                'enforce_state'     => true,
                 'access_lifetime'   => 3600 * 24,
             ],
             'storageMap' => [
