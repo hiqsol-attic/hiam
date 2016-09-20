@@ -1,6 +1,16 @@
-html,
-body {
-    height: 100%;
+.footer-copyright {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Smartphones (portrait and landscape) */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 580px) {
+    .footer-copyright {
+        position: relative;
+    }
 }
 
 .wrap {
@@ -90,22 +100,22 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
-
 /** -- Social buttons -- **/
 
 /** yandex button **/
 
 i.fa.fa-yandex {
-    font-family:"Verdana Narrow",Verdana,"Arial Narrow",Tahoma,Arial;
-    font-style:normal;
-    font-stretch:condensed;
+    font-family: "Verdana Narrow", Verdana, "Arial Narrow", Tahoma, Arial;
+    font-style: normal;
+    font-stretch: condensed;
 }
 
 .btn-yandex {
     color: #000;
     background-color: #ffd630;
-    border-color: rgba(191,153,0, 0.2);
+    border-color: rgba(191, 153, 0, 0.2);
 }
+
 .btn-yandex:hover,
 .btn-yandex:focus,
 .btn-yandex.focus,
@@ -115,13 +125,15 @@ i.fa.fa-yandex {
 :not(.btn-yandex i) {
     color: #d83933;
     background-color: #ffdb4c;
-    border-color: rgba(191,153,0, 0.2);
+    border-color: rgba(191, 153, 0, 0.2);
 }
+
 .btn-yandex:active,
 .btn-yandex.active,
 .open > .dropdown-toggle.btn-yandex {
     background-image: none;
 }
+
 .btn-yandex.disabled,
 .btn-yandex[disabled],
 fieldset[disabled] .btn-yandex,
@@ -141,12 +153,14 @@ fieldset[disabled] .btn-yandex:active,
 .btn-yandex[disabled].active,
 fieldset[disabled] .btn-yandex.active {
     background-color: #ffd630;
-    border-color: rgba(191,153,0, 0.2);
+    border-color: rgba(191, 153, 0, 0.2);
 }
+
 .btn-yandex .badge {
     color: #d83933;
     background-color: #ffffff;
 }
+
 .btn-yandex i {
     color: #d83933;
 }
@@ -158,6 +172,7 @@ fieldset[disabled] .btn-yandex.active {
     background-color: #2672ec;
     border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-windows:hover,
 .btn-windows:focus,
 .btn-windows.focus,
@@ -168,11 +183,13 @@ fieldset[disabled] .btn-yandex.active {
     background-color: #5a94f1;
     border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-windows:active,
 .btn-windows.active,
 .open > .dropdown-toggle.btn-windows {
     background-image: none;
 }
+
 .btn-windows.disabled,
 .btn-windows[disabled],
 fieldset[disabled] .btn-windows,
@@ -194,6 +211,7 @@ fieldset[disabled] .btn-windows.active {
     background-color: #2672ec;
     border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-windows .badge {
     color: #2672ec;
     background-color: #ffffff;
