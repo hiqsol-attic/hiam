@@ -18,7 +18,10 @@ use hiam\models\RemoteUser;
 use hiam\models\ResetPasswordForm;
 use hiam\models\SignupForm;
 use hiam\models\User;
+use hisite\actions\RenderAction;
+use hisite\actions\RedirectAction;
 use Yii;
+use yii\authclient\AuthAction;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -27,15 +30,15 @@ use yii\widgets\ActiveForm;
 /**
  * Site controller.
  */
-class SiteController extends Controller
+class SiteController extends \hisite\controllers\SiteController
 {
     public $defaultAction = 'lockscreen';
 
     public function behaviors()
     {
-        return [
+        return array_merge(parent::behaviors(), [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['login', 'signup', 'request-password-reset', 'remote-proceed', 'lockscreen'],
                 'denyCallback' => [$this, 'denyCallback'],
                 'rules' => [
@@ -53,7 +56,7 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-        ];
+        ]);
     }
 
     public function denyCallback()
@@ -61,22 +64,21 @@ class SiteController extends Controller
         return $this->redirect([Yii::$app->user->getIsGuest() ? 'login' : 'lockscreen']);
     }
 
-    /** {@inheritdoc} */
     public function actions()
     {
-        return [
+        return array_merge(parent::actions(), [
             'auth' => [
-                'class' => 'yii\authclient\AuthAction',
+                'class' => AuthAction::class,
                 'successCallback' => [$this, 'successCallback'],
             ],
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
+            'lockscreen' => [
+                'class' => RenderAction::class,
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            'back' => [
+                'class' => RedirectAction::class,
+                'url' => Yii::$app->params['site_url'],
             ],
-        ];
+        ]);
     }
 
     public function successCallback($client)
@@ -85,18 +87,18 @@ class SiteController extends Controller
         if ($user) {
             Yii::$app->user->login($user, 3600 * 24 * 30);
             return;
-        };
+        }
         return;
     }
 
-    public function actionLockscreen()
+    public function actionLogin($confirm = false)
     {
-        return $this->render('lockscreen');
-    }
+        $client = Yii::$app->authClientCollection->getActiveClient();
+        if ($client) {
+            return $this->redirect(['remote-proceed']);
+        }
 
-    public function actionIndex()
-    {
-        return $this->render('index');
+        return $this->doLogin('login');
     }
 
     protected function doLogin($view, $username = null)
@@ -113,22 +115,12 @@ class SiteController extends Controller
         }
     }
 
-    public function actionLogin($confirm = false)
-    {
-        $client = Yii::$app->authClientCollection->getActiveClient();
-        if ($client) {
-            return $this->redirect(['remote-proceed']);
-        };
-
-        return $this->doLogin('login');
-    }
-
     public function actionConfirm()
     {
         $client = Yii::$app->authClientCollection->getActiveClient();
         if (!$client) {
             return $this->redirect(['login']);
-        };
+        }
 
         $email = $client->getUserAttributes()['email'];
         $user = User::findOne(['email' => $email]);
@@ -137,7 +129,7 @@ class SiteController extends Controller
         $user = Yii::$app->getUser()->getIdentity();
         if ($user) {
             RemoteUser::set($client, $user);
-        };
+        }
         return $res;
     }
 
@@ -146,12 +138,13 @@ class SiteController extends Controller
         $client = Yii::$app->authClientCollection->getActiveClient();
         if (!$client) {
             return $this->redirect(['login']);
-        };
+        }
         $email = $client->getUserAttributes()['email'];
         $user = User::findByEmail($email);
         if ($user) {
             return $this->redirect(['confirm']);
-        };
+        }
+
         return $this->redirect(['signup']);
     }
 
@@ -165,15 +158,15 @@ class SiteController extends Controller
                 if (Yii::$app->getUser()->login($user)) {
                     if ($client) {
                         RemoteUser::set($client, $user);
-                    };
+                    }
                     return $this->goBack();
                 }
             }
         } else {
             if ($client) {
                 $model->load([$model->formName() => $client->getUserAttributes()]);
-            };
-        };
+            }
+        }
 
         return $this->render('signup', compact('model'));
     }
@@ -186,39 +179,6 @@ class SiteController extends Controller
         $model->load(Yii::$app->request->post());
 
         return ActiveForm::validate($model);
-    }
-
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-        Yii::$app->getSession()->destroy();
-        $post = Yii::$app->request->post('back');
-        $back = isset($post) ? $post : Yii::$app->request->get('back');
-
-        return $back ? $this->redirect($back) : $this->goHome();
-    }
-
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending email.');
-            }
-
-            return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 
     public function actionRequestPasswordReset($username = null)
@@ -237,9 +197,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
+        return $this->render('requestPasswordResetToken', compact('model'));
     }
 
     public function actionResetPassword($login)
@@ -256,8 +214,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
+        return $this->render('resetPassword', compact('model'));
     }
+
 }
