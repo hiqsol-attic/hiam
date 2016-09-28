@@ -35,6 +35,7 @@ if (!empty($params['google_client_id'])) {
 if (!empty($params['github_client_id'])) {
     $authClients['github'] = [
         'class'        => \yii\authclient\clients\GitHub::class,
+        'scope'        => '',
         'clientId'     => $params['github_client_id'],
         'clientSecret' => $params['github_client_secret'],
         'normalizeUserAttributeMap' => [
