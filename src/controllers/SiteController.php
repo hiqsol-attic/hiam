@@ -122,8 +122,12 @@ class SiteController extends \hisite\controllers\SiteController
             return $this->redirect(['login']);
         }
 
-        $email = $client->getUserAttributes()['email'];
-        $user = User::findOne(['email' => $email]);
+        try {
+            $email = $client->getUserAttributes()['email'];
+            $user = User::findOne(['email' => $email]);
+        } catch (\Exception $e) {
+            return $this->redirect(['logout']);
+        }
 
         $res = $this->doLogin('confirm', $user ? $user->email : null);
         $user = Yii::$app->getUser()->getIdentity();
@@ -139,8 +143,14 @@ class SiteController extends \hisite\controllers\SiteController
         if (!$client) {
             return $this->redirect(['login']);
         }
-        $email = $client->getUserAttributes()['email'];
-        $user = User::findByEmail($email);
+
+        try {
+            $email = $client->getUserAttributes()['email'];
+            $user = User::findByEmail($email);
+        } catch (\Exception $e) {
+            return $this->redirect(['logout']);
+        }
+
         if ($user) {
             return $this->redirect(['confirm']);
         }
@@ -164,7 +174,12 @@ class SiteController extends \hisite\controllers\SiteController
             }
         } else {
             if ($client) {
-                $model->load([$model->formName() => $client->getUserAttributes()]);
+                try {
+                    $data = $client->getUserAttributes();
+                } catch (\Exception $e) {
+                    return $this->redirect(['logout']);
+                }
+                $model->load([$model->formName() => $data]);
             }
         }
 
