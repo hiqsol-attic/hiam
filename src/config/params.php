@@ -10,8 +10,10 @@
  */
 
 return [
-    'poweredByName' => 'HIAM',
-    'poweredByUrl'  => 'https://github.com/hiqdev/hiam-core',
+    'logoUrl'           => '/site/back',
+
+    'poweredByName'     => 'HIAM',
+    'poweredByUrl'      => 'https://github.com/hiqdev/hiam-core',
 
     'user.passwordResetTokenExpire' => 3600,
 ];
