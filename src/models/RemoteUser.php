@@ -11,6 +11,8 @@
 
 namespace hiam\models;
 
+use yii\authclient\ClientInterface;
+
 /**
  * RemoteUser model.
  *
@@ -59,12 +61,6 @@ class RemoteUser extends \yii\db\ActiveRecord
         return static::$_providers[strtolower($name)];
     }
 
-    public static function afindOne($condition)
-    {
-        $q = static::find()->andWhere($condition);
-        d($q);
-    }
-
     public static function isTrustedEmail($provider, $email)
     {
         static $trustedEmails = [
@@ -80,10 +76,10 @@ class RemoteUser extends \yii\db\ActiveRecord
         return false;
     }
 
-    public static function set($client, $user)
+    public static function set(ClientInterface $client, $user)
     {
-        $remote = new self([
-            'provider'  => self::toProvider($client->getId()),
+        $remote = new static([
+            'provider'  => static::toProvider($client->getId()),
             'remoteid'  => $client->getUserAttributes()['id'],
             'client_id' => $user->id,
         ]);
