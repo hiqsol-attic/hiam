@@ -37,13 +37,6 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
-        'authManager' => [
-            'class'             => \hiam\rbac\HiDbManager::class,
-            'itemTable'         => '{{%rbac_item}}',
-            'itemChildTable'    => '{{%rbac_item_child}}',
-            'assignmentTable'   => '{{%rbac_assignment}}',
-            'ruleTable'         => '{{%rbac_rule}}',
-        ],
         'authClientCollection' => [
             'class' => \hiam\authclient\Collection::class,
             'clients' => $authClients,

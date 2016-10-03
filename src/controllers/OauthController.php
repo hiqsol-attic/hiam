@@ -110,10 +110,7 @@ class OauthController extends \yii\web\Controller
         if (!is_object($user)) { /// TODO fix error returning
             return ['error' => 'no user'];
         }
-/*
-        $command = $this->getRequestValue('command');
-        if (!Yii::$app->authManager->checkAccess($user->id,$command)) return ['error' => 'not allowed command','command' => $command];
-*/
+
         return $user->getAttributes();
     }
 
