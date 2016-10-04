@@ -22,19 +22,33 @@ use yii\web\IdentityInterface;
  * @property integer $id
  * @property string $username
  * @property string $password
- * @property string $password_reset_token
  * @property string $email
- * @property string $auth_key
  * @property integer $role
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $new_password write-only password
+ * @property integer $state
+ * @property integer $seller
+ * @property string $auth_key
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCredentialsInterface
 {
-    const STATUS_ACTIVE  = 'ok';
-    const STATUS_DELETED = 'deleted';
+    public $id;
+    public $role;
+    public $name;
+    public $state;
+    public $seller;
+    public $username;
+
+    public function init()
+    {
+        parent::init();
+        $this->on(static::EVENT_BEFORE_INSERT, function ($event) {
+            $seller = static::findByUsername(Yii::$app->params['user.seller']);
+            $event->sender->login = $event->sender->username;
+            $event->sender->seller_id = $seller->id;
+        });
+        $this->on(static::EVENT_AFTER_INSERT, function ($event) {
+            $event->sender->id = $event->sender->obj_id;
+        });
+    }
 
     public function getUserDetails($username)
     {
@@ -61,17 +75,17 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
 
     public static function findByUsername($username, $password = null)
     {
-        $query = static::find()->whereUsername($username);
+        $cond = ['username' => $username];
         if ($password) {
-            $query->wherePassword($password);
+            $cond['password'] = $password;
         }
 
-        return $query->one();
+        return static::findOne($cond);
     }
 
     public static function findByEmail($email)
     {
-        return static::find()->whereEmail($email)->one();
+        return static::findOne(compact('email'));
     }
 
     /**
@@ -85,27 +99,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
     /**
      * {@inheritdoc}
      */
-    public function attributes()
-    {
-        // return array_unique(array_merge(parent::attributes(),['id','type','state','seller','username']));
-        foreach (self::rules() as $ds) {
-            $d = reset($ds);
-            $ds = is_array($d) ? $d : [$d];
-            foreach ($ds as $k) {
-                $attributes[$k] = $k;
-            }
-        }
-
-        return array_values($attributes);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             ['id',              'integer'],
+            ['seller_id',       'integer'],
 
             ['username',        'filter', 'filter' => 'trim'],
             ['username',        'string', 'min' => 2, 'max' => 64],
@@ -119,9 +117,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
             ['password',        'filter', 'filter' => 'trim'],
             ['password',        'string', 'min' => 2, 'max' => 64],
 
-            ['name',            'filter', 'filter' => 'trim'],
-
-            [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
+            [['role', 'state'], 'string', 'min' => 2, 'max' => 10],
         ];
     }
 
@@ -158,21 +154,20 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
         $remote     = RemoteUser::findOne(compact('provider', 'remoteid'));
         if ($remote) {
             return static::findByUsername($remote->client_id);
-        };
+        }
         $user = static::findByEmail($email);
         if (!$user) {
             return null;
-        };
+        }
         if (RemoteUser::isTrustedEmail($provider, $email)) {
             return RemoteUser::set($client, $user);
-        };
+        }
 
         return null;
     }
 
     /**
      * Finds out if password reset token is valid.
-     *
      * @param string $token password reset token
      * @return boolean
      */

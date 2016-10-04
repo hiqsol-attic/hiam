@@ -34,9 +34,27 @@ class UserQuery extends \yii\db\ActiveQuery
         ;
     }
 
+    public function andWhere($condition)
+    {
+        if (!is_array($condition) || $condition[0]) {
+            return parent::andWhere($condition);
+        }
+        foreach (['id', 'username', 'password', 'email'] as $key) {
+            if (isset($condition[$key])) {
+                $this->{"where$key"}($condition[$key]);
+                unset($condition[$key]);
+            }
+        }
+        if (!empty($condition)) {
+            $this->andWhere($condition);
+        }
+
+        return $this;
+    }
+
     public function whereId($id)
     {
-        return $this->andWhere(['c.obj_id' => $id]);
+        return parent::andWhere(['c.obj_id' => $id]);
     }
 
     public function whereEmail($username)
@@ -51,15 +69,14 @@ class UserQuery extends \yii\db\ActiveQuery
             return $this->whereId($userId);
         }
 
-        return $this->andWhere(['or', 'c.login=:username', 'c.email=:username'], [':username' => $username]);
+        return parent::andWhere(['or', 'c.login=:username', 'c.email=:username'], [':username' => $username]);
     }
 
     public function wherePassword($password)
     {
-        return $this
-            ->leftJoin('value t', "t.obj_id=c.obj_id AND t.prop_id=prop_id('client,access:tmp_pwd')")
-            ->andWhere('check_password(:password,c.password) OR check_password(:password,t.value)')
-            ->addParams([':password' => $password]);
-        ;
+        return parent::andWhere(
+            'check_password(:password,c.password) OR check_password(:password,t.value)',
+            [':password' => $password]
+        )->leftJoin('value t', "t.obj_id=c.obj_id AND t.prop_id=prop_id('client,access:tmp_pwd')");
     }
 }
