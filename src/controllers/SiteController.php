@@ -11,7 +11,6 @@
 
 namespace hiam\controllers;
 
-use hiam\models\ContactForm;
 use hiam\models\LoginForm;
 use hiam\models\PasswordResetRequestForm;
 use hiam\models\RemoteUser;
@@ -124,7 +123,7 @@ class SiteController extends \hisite\controllers\SiteController
 
         try {
             $email = $client->getUserAttributes()['email'];
-            $user = User::findOne(['email' => $email]);
+            $user = User::findByEmail($email);
         } catch (\Exception $e) {
             return $this->redirect(['logout']);
         }
