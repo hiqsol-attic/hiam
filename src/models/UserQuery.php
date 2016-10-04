@@ -21,7 +21,7 @@ class UserQuery extends \yii\db\ActiveQuery
                 'c.obj_id   AS id',
                 'c.login    AS username',
                 'r.login    AS seller',
-                'y.name     AS role',
+                'y.name     AS type',
                 'z.name     AS state',
                 'k.name     AS name',
                 'coalesce(c.email,k.email) AS email',

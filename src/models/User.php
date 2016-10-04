@@ -23,7 +23,7 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $password
  * @property string $email
- * @property integer $role
+ * @property integer $type
  * @property integer $state
  * @property integer $seller
  * @property string $auth_key
@@ -31,7 +31,7 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCredentialsInterface
 {
     public $id;
-    public $role;
+    public $type;
     public $name;
     public $state;
     public $seller;
@@ -117,7 +117,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
             ['password',        'filter', 'filter' => 'trim'],
             ['password',        'string', 'min' => 2, 'max' => 64],
 
-            [['role', 'state'], 'string', 'min' => 2, 'max' => 10],
+            [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
         ];
     }
 
