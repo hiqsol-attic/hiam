@@ -69,9 +69,9 @@ class SignupForm extends \yii\base\Model
     {
         if ($this->validate()) {
             $user = new User(['scenario' => 'insert']);
-            $user->login = $this->username ?: $this->email;
-            $user->email = $this->email;
+            $user->username = $this->username ?: $this->email;
             $user->password = $this->password;
+            $user->email = $this->email;
             $seller = User::findByUsername($this->seller ?: Yii::$app->params['user.seller']);
             if (!$seller->obj_id) {
                 throw new InvalidParamException('wrong seller given');

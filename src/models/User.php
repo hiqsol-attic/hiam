@@ -39,54 +39,39 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
     public function getUserDetails($username)
     {
         $data = $this->findByUsername($username)->toArray();
-        $conv = [
-            'user_id'       => 'id',
-            'username'      => 'login',
-        ];
-        foreach ($conv as $k => $v) {
-            $data[$k] = $data[$v];
+        if (empty($data)) {
+            return false;
         }
+
+        $data['user_id'] = $data['id'];
         return $data;
     }
 
     public function checkUserCredentials($username, $password)
     {
         $check = $this->findByUsername($username, $password);
+
         return (bool) $check->id;
+    }
+
+    public static function find()
+    {
+        return new UserQuery(get_called_class());
     }
 
     public static function findByUsername($username, $password = null)
     {
-        $query = static::find()
-            ->select(['c.obj_id AS id', 'c.obj_id', 'c.login', 'c.type_id', 'c.state_id', 'c.seller_id',
-                        'r.login AS seller', 'y.name AS type', 'z.name AS state', 'c.login AS username',
-                        'coalesce(c.email,k.email) AS email', 'k.name', ])
-            ->from('client        c')
-            ->innerJoin('client        r', 'r.obj_id=c.seller_id')
-            ->innerJoin('ref           y', 'y.obj_id=c.type_id')
-            ->innerJoin('ref           z', "z.obj_id=c.state_id AND z.name IN ('ok')")
-            ->leftJoin('contact       k', 'k.obj_id=c.obj_id')
-            ->where(['or', 'c.login=:username', 'c.email=:username', 'c.obj_id=:id'])
-            ->addParams([':username' => $username, ':id' => (int) $username ?: null]);
+        $query = static::find()->whereUsername($username);
         if ($password) {
-            $query
-            ->leftJoin('value         t', "t.obj_id=c.obj_id AND t.prop_id=prop_id('client,access:tmp_pwd')")
-            ->andWhere('check_password(:password,c.password) OR check_password(:password,t.value)')
-            ->addParams([':password' => $password]);
+            $query->wherePassword($password);
         }
-        $user = $query->one();
-        return $user;
+
+        return $query->one();
     }
 
-    /**
-     * Find where login=$email or email=$email.
-     */
     public static function findByEmail($email)
     {
-        if (!$email) {
-            return null;
-        };
-        return static::findOne(['login' => $email]) ?: static::findOne(compact('email'));
+        return static::find()->whereEmail($email)->one();
     }
 
     /**
@@ -109,7 +94,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
             foreach ($ds as $k) {
                 $attributes[$k] = $k;
             }
-        };
+        }
 
         return array_values($attributes);
     }
@@ -122,17 +107,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
         return [
             ['id',              'integer'],
 
-            ['obj_id',          'integer'],
-            ['obj_id',          'required', 'except' => 'insert'],
+            ['username',        'filter', 'filter' => 'trim'],
+            ['username',        'string', 'min' => 2, 'max' => 64],
 
-            ['seller_id',       'integer'],
-            ['seller_id',       'required'],
-
-            ['seller',          'filter', 'filter' => 'trim',       'except' => 'insert'],
-            ['seller',          'string', 'min' => 2, 'max' => 64,  'except' => 'insert'],
-
-            ['login',           'filter', 'filter' => 'trim'],
-            ['login',           'string', 'min' => 2, 'max' => 64],
+            ['seller',          'filter', 'filter' => 'trim'],
+            ['seller',          'string', 'min' => 2, 'max' => 64],
 
             ['email',           'filter', 'filter' => 'trim'],
             ['email',           'email'],
@@ -140,14 +119,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
             ['password',        'filter', 'filter' => 'trim'],
             ['password',        'string', 'min' => 2, 'max' => 64],
 
-            ['referer_id',      'integer'],
-            ['type_id',         'integer'],
-            ['state_id',        'integer'],
-
-            ['name',            'filter', 'filter' => 'trim', 'except' => 'insert'],
+            ['name',            'filter', 'filter' => 'trim'],
 
             [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
-            ['username',        'string', 'min' => 2, 'max' => 10],
         ];
     }
 
@@ -165,6 +139,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
     public static function findIdentityByAccessToken($access_token, $type = null)
     {
         $token = OauthAccessTokens::findOne(compact('access_token'));
+
         return static::findByUsername($token->user_id);
     }
 
@@ -182,7 +157,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
         $email      = $attributes['email'];
         $remote     = RemoteUser::findOne(compact('provider', 'remoteid'));
         if ($remote) {
-            return static::findOne($remote->client_id);
+            return static::findByUsername($remote->client_id);
         };
         $user = static::findByEmail($email);
         if (!$user) {
@@ -193,24 +168,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
         };
 
         return null;
-    }
-
-    /**
-     * Finds user by password reset token.
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => 'ok',
-        ]);
     }
 
     /**
@@ -235,7 +192,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
      */
     public function getId()
     {
-        return $this->getPrimaryKey();
+        return $this->id;
     }
 
     /**
@@ -265,7 +222,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
     {
         //die(var_dump( Yii::$app->security->validatePassword($password, $this->password_hash)));
         //return Yii::$app->security->validatePassword($password, $this->password_hash);
-        $model = static::findByUsername($this->login, $password);
+        $model = static::findByUsername($this->username, $password);
         return (bool) $model->id;
     }
 
