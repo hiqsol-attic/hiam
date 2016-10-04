@@ -12,6 +12,7 @@
 namespace hiam\models;
 
 use yii\authclient\ClientInterface;
+use yii\web\IdentityInterface;
 
 /**
  * RemoteUser model.
@@ -67,25 +68,27 @@ class RemoteUser extends \yii\db\ActiveRecord
             '@gmail.com'    => 'google',
             '@yandex.ru'    => 'yandex',
         ];
-        foreach ($trustedEmails as $d => $p) {
-            $p = static::toProvider($p);
-            if ($provider === $p && substr($email, -strlen($d)) === $d) {
+        foreach ($trustedEmails as $domain => $trusted) {
+            if (static::toProvider($provider) === static::toProvider($trusted) && substr($email, -strlen($domain)) === $domain) {
                 return true;
-            };
-        };
+            }
+        }
         return false;
     }
 
-    public static function set(ClientInterface $client, $user)
+    /**
+     * Inserts or updates RemoteUser.
+     * @return user
+     */
+    public static function set(ClientInterface $client, IdentityInterface $user)
     {
-        $remote = new static([
-            'provider'  => static::toProvider($client->getId()),
-            'remoteid'  => $client->getUserAttributes()['id'],
-            'client_id' => $user->id,
-        ]);
-        if (!$remote->save()) {
-            throw new InvalidCallException('failed set RemoteUser');
-        };
+        $data = [
+            'provider' => static::toProvider($client->getId()),
+            'remoteid' => $client->getUserAttributes()['id'],
+        ];
+        $model = static::findOne($data) ?: new static($data);
+        $model->client_id = $user->getId();
+        $model->save();
 
         return $user;
     }
