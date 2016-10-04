@@ -19,13 +19,13 @@ use Yii;
 class SignupForm extends \yii\base\Model
 {
     //public $username;
-    public $seller;
     public $first_name;
     public $last_name;
     public $email;
     public $username;
     public $password;
     public $password_retype;
+    public $agree;
 
     /**
      * {@inheritdoc}
@@ -33,56 +33,40 @@ class SignupForm extends \yii\base\Model
     public function rules()
     {
         return [
-/* TODO TODO login
-            ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => User::class, 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
-*/
-
-            ['seller', 'filter', 'filter' => 'trim'],
-            ['seller', 'string'],
-
             [['first_name', 'last_name'], 'filter', 'filter' => 'trim'],
             [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
 
-            ['email', 'filter', 'filter' => 'trim'],
+            ['email', 'trim'],
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email address has already been taken.'],
-
-            ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'string'],
+            ['email', 'string', 'min' => 2, 'max' => 255],
 
             ['password',        'string', 'min' => 6],
             ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
 
             [['first_name', 'last_name', 'email', 'password', 'password_retype'], 'required'],
+
+            ['agree', 'required', 'requiredValue' => 1, 'message' => 'Please consider terms of use'],
         ];
     }
 
     /**
      * Signs user up.
-     *
      * @return User|null the saved model or null if saving fails
      */
     public function signup()
     {
         if ($this->validate()) {
-            $user = new User(['scenario' => 'insert']);
-            $user->username = $this->username ?: $this->email;
+            $user = new User;
+            $user->username = $this->email;
             $user->password = $this->password;
             $user->email = $this->email;
-            $seller = User::findByUsername($this->seller ?: Yii::$app->params['user.seller']);
-            if (!$seller->obj_id) {
-                throw new InvalidParamException('wrong seller given');
-            }
-            $user->seller_id = $seller->obj_id;
 
             if (!$user->save()) {
                 return null;
             }
 
-            $contact = Contact::findOne($user->obj_id);
+            $contact = Contact::findOne($user->id);
             $contact->load([$contact->formName() => $this->getAttributes()]);
             $contact->save();
 

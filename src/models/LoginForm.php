@@ -31,11 +31,8 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
             [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
@@ -59,13 +56,13 @@ class LoginForm extends Model
 
     /**
      * Logs in a user using the provided username and password.
-     *
      * @return boolean whether the user is logged in successfully
      */
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            $duration = isset(Yii::$app->params['login_duration']) ? Yii::$app->params['login_duration'] : 3600 * 24 * 31;
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? $duration : 0);
         } else {
             return false;
         }
@@ -73,7 +70,6 @@ class LoginForm extends Model
 
     /**
      * Finds user by [[username]].
-     *
      * @return User|null
      */
     public function getUser()
