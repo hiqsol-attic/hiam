@@ -80,7 +80,7 @@ class OauthController extends \yii\web\Controller
         return $this->getServer()->getConfig('token_param_name');
     }
 
-    public function findUser($access_token)
+    public function findIdentity($access_token)
     {
         /* @var $class IdentityInterface */
         $class = Yii::$app->getUser()->identityClass;
@@ -92,7 +92,7 @@ class OauthController extends \yii\web\Controller
         $response = $this->getServer()->handleTokenRequest($this->getRequest());
         $access_token = $response->getParameter($this->getTokenParamName());
         if ($access_token) {
-            $user_attributes = $this->findUser($access_token)->getAttributes();
+            $user_attributes = $this->findIdentity($access_token)->getAttributes();
             $response->addParameters(compact('user_attributes'));
         }
         return $response->send();
@@ -105,7 +105,7 @@ class OauthController extends \yii\web\Controller
             return $this->getServer()->getResponse()->send();
         }
         $access_token = $this->getRequestValue($this->getTokenParamName());
-        $user = $this->findUser($access_token);
+        $user = $this->findIdentity($access_token);
 
         if (!is_object($user)) { /// TODO fix error returning
             return ['error' => 'no user'];
