@@ -48,6 +48,14 @@ return [
                 \hiqdev\assets\icheck\iCheckAsset::class,
             ],
         ],
+        'i18n' => [
+            'translations' => [
+                'hiam' => [
+                    'class' => \yii\i18n\PhpMessageSource::class,
+                    'basePath' => '@hiam/messages',
+                ],
+            ],
+        ],
     ],
     'modules' => [
         'oauth2' => [
