@@ -9,10 +9,10 @@
  * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hiam\models;
+namespace hiam\storage;
 
 /**
- * User model.
+ * Contact model.
  *
  * @property integer $obj_id PK
  * @property string  $first_name

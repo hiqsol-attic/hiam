@@ -111,7 +111,7 @@ class OauthController extends \yii\web\Controller
             return ['error' => 'no user'];
         }
 
-        return $user->getAttributes();
+        return array_filter($user->getAttributes());
     }
 
     public function isAuthorizedClient($client)

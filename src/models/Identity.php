@@ -17,37 +17,59 @@ use Yii;
 use yii\web\IdentityInterface;
 
 /**
- * User model.
+ * Identity model.
  *
  * @property integer $id
- * @property string $username
- * @property string $password
+ * @property string $type
+ * @property string $name
+ * @property string $state
  * @property string $email
- * @property integer $type
- * @property integer $state
- * @property integer $seller
+ * @property string $seller
+ * @property string $password
+ * @property string $username
+ * @property string $last_name
+ * @property string $first_name
  * @property string $auth_key
  */
-class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCredentialsInterface
+class Identity extends \yii\base\Model implements IdentityInterface, UserCredentialsInterface
 {
     public $id;
     public $type;
     public $name;
     public $state;
+    public $email;
     public $seller;
+    public $password;
     public $username;
+    public $last_name;
+    public $first_name;
 
-    public function init()
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
     {
-        parent::init();
-        $this->on(static::EVENT_BEFORE_INSERT, function ($event) {
-            $seller = static::findByUsername(Yii::$app->params['user.seller']);
-            $event->sender->login = $event->sender->username;
-            $event->sender->seller_id = $seller->id;
-        });
-        $this->on(static::EVENT_AFTER_INSERT, function ($event) {
-            $event->sender->id = $event->sender->obj_id;
-        });
+        return [
+            ['id',              'integer'],
+            ['seller_id',       'integer'],
+
+            ['name',            'trim'],
+            ['name',            'string', 'min' => 2, 'max' => 64],
+
+            ['username',        'trim'],
+            ['username',        'string', 'min' => 2, 'max' => 64],
+
+            ['seller',          'trim'],
+            ['seller',          'string', 'min' => 2, 'max' => 64],
+
+            ['email',           'trim'],
+            ['email',           'email'],
+
+            ['password',        'trim'],
+            ['password',        'string', 'min' => 2, 'max' => 64],
+
+            [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
+        ];
     }
 
     public function getUserDetails($username)
@@ -68,11 +90,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
         return (bool) $check->id;
     }
 
-    public static function find()
-    {
-        return new UserQuery(get_called_class());
-    }
-
     public static function findByUsername($username, $password = null)
     {
         $cond = ['username' => $username];
@@ -88,37 +105,36 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
         return static::findOne(compact('email'));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public static function findOne($cond)
     {
-        return '{{%client}}';
+        $class = static::getStorageClass();
+        $store = $class::findOne($cond);
+
+        if (!$store) {
+            return null;
+        }
+
+        $model = new static;
+        $model->setAttributes($store->getAttributes($model->attributes()));
+
+        return $model;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function save()
     {
-        return [
-            ['id',              'integer'],
-            ['seller_id',       'integer'],
+        $store = static::findByUsername($this->username);
+        if (!$store) {
+            $class = static::getStorageClass();
+            $store = new $class;
+        }
+        $store->setAttributes($this->getAttributes());
 
-            ['username',        'filter', 'filter' => 'trim'],
-            ['username',        'string', 'min' => 2, 'max' => 64],
+        return $store->save();
+    }
 
-            ['seller',          'filter', 'filter' => 'trim'],
-            ['seller',          'string', 'min' => 2, 'max' => 64],
-
-            ['email',           'filter', 'filter' => 'trim'],
-            ['email',           'email'],
-
-            ['password',        'filter', 'filter' => 'trim'],
-            ['password',        'string', 'min' => 2, 'max' => 64],
-
-            [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
-        ];
+    public static function getStorageClass()
+    {
+        return Yii::$app->user->storageClass;
     }
 
     /**
@@ -209,7 +225,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface, UserCreden
 
     /**
      * Validates password.
-     *
      * @param string $password password to validate
      * @return boolean if password provided is valid for current user
      */

@@ -16,7 +16,7 @@ use hiam\models\PasswordResetRequestForm;
 use hiam\models\RemoteUser;
 use hiam\models\ResetPasswordForm;
 use hiam\models\SignupForm;
-use hiam\models\User;
+use hiam\models\Identity;
 use hisite\actions\RenderAction;
 use hisite\actions\RedirectAction;
 use Yii;
@@ -82,7 +82,7 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function successCallback($client)
     {
-        $user = User::findIdentityByAuthClient($client);
+        $user = Identity::findIdentityByAuthClient($client);
         if ($user) {
             Yii::$app->user->login($user, 3600 * 24 * 30);
             return;
@@ -123,7 +123,7 @@ class SiteController extends \hisite\controllers\SiteController
 
         try {
             $email = $client->getUserAttributes()['email'];
-            $user = User::findByEmail($email);
+            $user = Identity::findByEmail($email);
         } catch (\Exception $e) {
             return $this->redirect(['logout']);
         }
@@ -145,7 +145,7 @@ class SiteController extends \hisite\controllers\SiteController
 
         try {
             $email = $client->getUserAttributes()['email'];
-            $user = User::findByEmail($email);
+            $user = Identity::findByEmail($email);
         } catch (\Exception $e) {
             return $this->redirect(['logout']);
         }

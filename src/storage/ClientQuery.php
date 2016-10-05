@@ -9,9 +9,9 @@
  * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hiam\models;
+namespace hiam\storage;
 
-class UserQuery extends \yii\db\ActiveQuery
+class ClientQuery extends \yii\db\ActiveQuery
 {
     public function init()
     {
@@ -26,11 +26,11 @@ class UserQuery extends \yii\db\ActiveQuery
                 'k.name     AS name',
                 'coalesce(c.email,k.email) AS email',
             ])
-            ->from('client        c')
-            ->innerJoin('client        r', 'r.obj_id=c.seller_id')
-            ->innerJoin('ref           y', 'y.obj_id=c.type_id')
-            ->innerJoin('ref           z', "z.obj_id=c.state_id AND z.name IN ('ok')")
-            ->leftJoin('contact       k', 'k.obj_id=c.obj_id')
+            ->from('client          c')
+            ->innerJoin('client     r', 'r.obj_id=c.seller_id')
+            ->innerJoin('ref        y', 'y.obj_id=c.type_id')
+            ->innerJoin('ref        z', "z.obj_id=c.state_id AND z.name IN ('ok')")
+            ->leftJoin('contact     k', 'k.obj_id=c.obj_id')
         ;
     }
 

@@ -25,8 +25,9 @@ return [
             'password'  => empty($params['db_password']) ? '*' : $params['db_password'],
         ],
         'user' => [
-            'class'           => \yii\web\User::class,
-            'identityClass'   => \hiam\models\User::class,
+            'class'           => \hiam\components\User::class,
+            'identityClass'   => \hiam\models\Identity::class,
+            'storageClass'    => \hiam\storage\Client::class,
             'enableAutoLogin' => true,
         ],
         'mailer' => [
@@ -56,7 +57,7 @@ return [
                 'access_lifetime'   => 3600 * 24,
             ],
             'storageMap' => [
-                'user_credentials'  => \hiam\models\User::class,
+                'user_credentials'  => \hiam\models\Identity::class,
             ],
             'grantTypes' => [
 ///             'client_credentials' => [

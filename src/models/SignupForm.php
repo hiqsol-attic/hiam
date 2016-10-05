@@ -38,7 +38,7 @@ class SignupForm extends \yii\base\Model
 
             ['email', 'trim'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => Identity::class, 'message' => 'This email address has already been taken.'],
             ['email', 'string', 'min' => 2, 'max' => 255],
 
             ['password',        'string', 'min' => 6],
@@ -52,27 +52,17 @@ class SignupForm extends \yii\base\Model
 
     /**
      * Signs user up.
-     * @return User|null the saved model or null if saving fails
+     * @return Identity|null the saved model or null if saving fails
      */
     public function signup()
     {
-        if ($this->validate()) {
-            $user = new User;
-            $user->username = $this->email;
-            $user->password = $this->password;
-            $user->email = $this->email;
-
-            if (!$user->save()) {
-                return null;
-            }
-
-            $contact = Contact::findOne($user->id);
-            $contact->load([$contact->formName() => $this->getAttributes()]);
-            $contact->save();
-
-            return $user;
+        if (!$this->validate()) {
+            return null;
         }
+        $user = new Identity;
+        $user->setAttributes($this->getAttributes());
+        $user->username = $this->email;
 
-        return null;
+        return $user->save() ? $user : null;
     }
 }
