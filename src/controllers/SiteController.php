@@ -168,6 +168,8 @@ class SiteController extends \hisite\controllers\SiteController
                     if ($client) {
                         RemoteUser::set($client, $user);
                     }
+                    Yii::$app->getSession()->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
+
                     return $this->goBack();
                 }
             }

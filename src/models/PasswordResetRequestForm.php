@@ -28,9 +28,9 @@ class PasswordResetRequestForm extends Model
     public function rules()
     {
         return [
-            ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required'],
+            ['email', 'trim'],
             ['email', 'email'],
+            ['email', 'required'],
         ];
     }
 
@@ -40,13 +40,18 @@ class PasswordResetRequestForm extends Model
      */
     public function sendEmail()
     {
-        $url = Yii::$app->params['api_url'] . '/clientRemindPassword?' . http_build_query([
-            'query'       => $this->email,
-            'confirm_url' => Url::to('site/reset-password', true),
-        ]);
+        $user = Identity::findByUsername($this->email);
 
-        $json = file_get_contents($url);
+        if (!$user) {
+            return false;
+        }
 
-        return true;
+        $token = 'token';
+
+        return Yii::$app->mailer->compose()
+            ->renderHtmlBody('passwordResetToken', compact('user', 'token'))
+            ->setTo($this->email)
+            ->send();
+        ;
     }
 }

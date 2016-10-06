@@ -1,6 +1,6 @@
 <?php
 
-namespace hiam\components;
+namespace hiam\base;
 
 class User extends \yii\web\User
 {
