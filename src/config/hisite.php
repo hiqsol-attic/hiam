@@ -25,7 +25,7 @@ return [
             'password'  => empty($params['db_password']) ? '*' : $params['db_password'],
         ],
         'user' => [
-            'class'           => \hiam\components\User::class,
+            'class'           => \hiam\base\User::class,
             'identityClass'   => \hiam\models\Identity::class,
             'storageClass'    => \hiam\storage\Client::class,
             'enableAutoLogin' => true,
@@ -33,10 +33,12 @@ return [
         'mailer' => [
             'class' => \yii\swiftmailer\Mailer::class,
             'viewPath' => '@hiam/mail',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'messageClass' => \hiam\base\Message::class,
+            'messageConfig' => [
+                'from' => [$params['supportEmail'] => $params['organizationName']],
+                'bcc'  => ['sol@hiqdev.com', 'silverfire@hiqdev.com'],
+            ],
         ],
         'authClientCollection' => [
             'class' => \hiam\authclient\Collection::class,
