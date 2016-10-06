@@ -23,26 +23,34 @@ use Yii;
 class Client extends \yii\db\ActiveRecord
 {
     public $id;
-    public $type;
     public $name;
+    public $type;
     public $state;
     public $seller;
     public $username;
     public $last_name;
     public $first_name;
 
+    public function rules()
+    {
+        return [
+            [['username', 'email', 'password', 'first_name', 'last_name'], 'trim'],
+        ];
+    }
+
     public function init()
     {
         parent::init();
         $this->on(static::EVENT_BEFORE_INSERT, function ($event) {
-            $seller = static::findByUsername(Yii::$app->params['user.seller']);
+            $seller = static::findOne(['username' => Yii::$app->params['user.seller']]);
             $model = $event->sender;
-            $model->login = $model->username;
+            $model->login = $model->username ?: $model->email;
             $model->seller_id = $seller->id;
         });
         $this->on(static::EVENT_AFTER_INSERT, function ($event) {
             $model = $event->sender;
             $model->id = $model->obj_id;
+            $model->type = 'client';
             $contact = Contact::findOne($model->id);
             $contact->setAttributes($model->getAttributes());
             $contact->save();

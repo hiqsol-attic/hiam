@@ -53,9 +53,6 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
             ['id',              'integer'],
             ['seller_id',       'integer'],
 
-            ['name',            'trim'],
-            ['name',            'string', 'min' => 2, 'max' => 64],
-
             ['username',        'trim'],
             ['username',        'string', 'min' => 2, 'max' => 64],
 
@@ -69,6 +66,10 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
             ['password',        'string', 'min' => 2, 'max' => 64],
 
             [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
+
+            [['name', 'first_name', 'last_name'], 'trim'],
+            [['name', 'first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
+
         ];
     }
 
@@ -122,14 +123,15 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
 
     public function save()
     {
-        $store = static::findByUsername($this->username);
-        if (!$store) {
-            $class = static::getStorageClass();
-            $store = new $class;
-        }
+        $store = static::findByUsername($this->username) ?: Yii::createObject(static::getStorageClass());
         $store->setAttributes($this->getAttributes());
+        if (!$store->save()) {
+            return false;
+        }
+        $model = static::findByUsername($this->username);
+        $this->setAttributes($model->getAttributes());
 
-        return $store->save();
+        return true;
     }
 
     public static function getStorageClass()

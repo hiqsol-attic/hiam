@@ -18,11 +18,9 @@ use Yii;
  */
 class SignupForm extends \yii\base\Model
 {
-    //public $username;
     public $first_name;
     public $last_name;
     public $email;
-    public $username;
     public $password;
     public $password_retype;
     public $agree;
@@ -33,20 +31,24 @@ class SignupForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['first_name', 'last_name'], 'filter', 'filter' => 'trim'],
+            [['first_name', 'last_name'], 'trim'],
             [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
 
             ['email', 'trim'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => Identity::class, 'message' => 'This email address has already been taken.'],
             ['email', 'string', 'min' => 2, 'max' => 255],
+            ['email', function ($attribute) {
+                if (!empty(Identity::findByEmail($this->email))) {
+                    $this->addError($attribute, Yii::t('hiam', 'This email has already been taken') . '.');
+                }
+            }],
 
             ['password',        'string', 'min' => 6],
-            ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+            ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => Yii::t('hiam', "Passwords don't match.")],
 
             [['first_name', 'last_name', 'email', 'password', 'password_retype'], 'required'],
 
-            ['agree', 'required', 'requiredValue' => 1, 'message' => 'Please consider terms of use'],
+            ['agree', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider terms of use.')],
         ];
     }
 
