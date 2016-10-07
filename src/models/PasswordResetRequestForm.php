@@ -46,12 +46,19 @@ class PasswordResetRequestForm extends Model
             return false;
         }
 
+        if (Yii::$app->has('authManager')) {
+            $auth = Yii::$app->authManager;
+            if ($auth->getItem('restore-password') && !$auth->checkAccess($user->id, 'restore-password')) {
+                return false;
+            }
+        }
+
         $token = 'token';
 
         return Yii::$app->mailer->compose()
             ->renderHtmlBody('passwordResetToken', compact('user', 'token'))
             ->setTo($this->email)
-            ->send();
+            ->send()
         ;
     }
 }
