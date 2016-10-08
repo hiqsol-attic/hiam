@@ -28,7 +28,8 @@ return [
             'class'           => \hiam\base\User::class,
             'identityClass'   => \hiam\models\Identity::class,
             'storageClass'    => \hiam\storage\Client::class,
-            'enableAutoLogin' => true,
+            'disallowSignup'  => $params['user.disallowSignup'],
+            'enableAutoLogin' => $params['user.enableAutoLogin'],
         ],
         'mailer' => [
             'class' => \yii\swiftmailer\Mailer::class,

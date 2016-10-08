@@ -16,4 +16,6 @@ return [
     'poweredByUrl'      => 'https://github.com/hiqdev/hiam-core',
 
     'user.passwordResetTokenExpire' => 3600,
+    'user.disallowSignup'           => false,
+    'user.enableAutoLogin'          => true,
 ];
