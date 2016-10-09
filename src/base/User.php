@@ -6,5 +6,7 @@ class User extends \yii\web\User
 {
     public $storageClass;
 
-    public $disallowSignup = true;
+    public $disallowSignup = false;
+
+    public $disallowRestorePassword = false;
 }

@@ -110,7 +110,12 @@ class SiteController extends \hisite\controllers\SiteController
                 $model->username = $username;
             }
             $model->password = null;
-            return $this->render($view, compact('model'));
+
+            return $this->render($view, [
+                'model' => $model,
+                'signupPage' => Yii::$app->user->disallowSignup ? '' : null,
+                'restorePasswordPage' => Yii::$app->user->disallowRestorePassword ? '' : null,
+            ]);
         }
     }
 
