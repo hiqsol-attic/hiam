@@ -17,6 +17,6 @@ return [
 
     'user.passwordResetTokenExpire' => 3600,
     'user.enableAutoLogin'          => true,
-    'user.disallowSignup'           => false,
-    'user.disallowRestorePassword'  => false,
+    'user.disableSignup'            => false,
+    'user.disableRestorePassword'   => false,
 ];

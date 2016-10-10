@@ -30,8 +30,8 @@ return [
             'storageClass'    => \hiam\storage\Client::class,
             'loginDuration'   => $params['user.loginDuration'],
             'enableAutoLogin' => $params['user.enableAutoLogin'],
-            'disallowSignup'  => $params['user.disallowSignup'],
-            'disallowRestorePassword'  => $params['user.disallowRestorePassword'],
+            'disableSignup'   => $params['user.disableSignup'],
+            'disableRestorePassword' => $params['user.disableRestorePassword'],
         ],
         'mailer' => [
             'class' => \yii\swiftmailer\Mailer::class,
