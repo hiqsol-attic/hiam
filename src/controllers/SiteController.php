@@ -84,7 +84,7 @@ class SiteController extends \hisite\controllers\SiteController
     {
         $user = Identity::findIdentityByAuthClient($client);
         if ($user) {
-            Yii::$app->user->login($user, 3600 * 24 * 30);
+            Yii::$app->user->login($user);
             return;
         }
         return;
@@ -103,20 +103,25 @@ class SiteController extends \hisite\controllers\SiteController
     protected function doLogin($view, $username = null)
     {
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            if ($username !== null) {
-                $model->username = $username;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user = Yii::$app->user->findIdentity($model->username, $model->password);
+            if ($user) {
+                Yii::$app->user->login($user, $model->rememberMe ? null : 0);
+                return $this->goBack();
             }
+            $model->addError('password', 'Incorrect username or password.');
             $model->password = null;
-
-            return $this->render($view, [
-                'model' => $model,
-                'signupPage' => Yii::$app->user->disallowSignup ? '' : null,
-                'restorePasswordPage' => Yii::$app->user->disallowRestorePassword ? '' : null,
-            ]);
         }
+
+        if ($username !== null) {
+            $model->username = $username;
+        }
+
+        return $this->render($view, [
+            'model' => $model,
+            'signupPage' => Yii::$app->user->disableSignup ? '' : null,
+            'restorePasswordPage' => Yii::$app->user->disableRestorePassword ? '' : null,
+        ]);
     }
 
     public function actionConfirm()
@@ -134,7 +139,7 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         $res = $this->doLogin('confirm', $user ? $user->email : null);
-        $user = Yii::$app->getUser()->getIdentity();
+        $user = Yii::$app->user->getIdentity();
         if ($user) {
             RemoteUser::set($client, $user);
         }
@@ -164,16 +169,21 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function actionSignup()
     {
+        if (Yii::$app->user->disableSignup) {
+            Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, signup is disabled.'));
+            return $this->redirect(['login']);
+        }
+
         $client = Yii::$app->authClientCollection->getActiveClient();
 
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
+                if (Yii::$app->user->login($user)) {
                     if ($client) {
                         RemoteUser::set($client, $user);
                     }
-                    Yii::$app->getSession()->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
+                    Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
 
                     return $this->goBack();
                 }
@@ -210,11 +220,11 @@ class SiteController extends \hisite\controllers\SiteController
         }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', Yii::t('hiam', 'Check your email for further instructions.'));
 
                 return $this->goHome();
             } else {
-                Yii::$app->getSession()->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+                Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to reset password for email provided.'));
             }
         }
 
@@ -227,9 +237,9 @@ class SiteController extends \hisite\controllers\SiteController
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->resetPassword()) {
-                Yii::$app->getSession()->setFlash('success', 'New password was saved.');
+                Yii::$app->session->setFlash('success', 'New password was saved.');
             } else {
-                Yii::$app->getSession()->setFlash('error', 'Failed reset password. Please start over.');
+                Yii::$app->session->setFlash('error', 'Failed reset password. Please start over.');
             }
 
             return $this->goHome();
