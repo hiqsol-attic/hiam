@@ -75,7 +75,7 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
 
     public function getUserDetails($username)
     {
-        $data = $this->findByUsername($username)->toArray();
+        $data = $this->findIdentity($username)->toArray();
         if (empty($data)) {
             return false;
         }
@@ -86,12 +86,20 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
 
     public function checkUserCredentials($username, $password)
     {
-        $check = $this->findByUsername($username, $password);
+        $check = $this->findIdentity($username, $password);
 
         return (bool) $check->id;
     }
 
-    public static function findByUsername($username, $password = null)
+    /**
+     * Finds an identity by the given ID.
+     * @param string|integer $username ID or username or email to be looked for
+     * @param string $password when given the password is checked
+     * @return IdentityInterface the identity object that matches the given ID.
+     * Null should be returned if such an identity cannot be found
+     * or the identity is not in an active state (disabled, deleted, etc.)
+     */
+    public static function findIdentity($username, $password = null)
     {
         $cond = ['username' => $username];
         if ($password) {
@@ -123,12 +131,12 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
 
     public function save()
     {
-        $store = static::findByUsername($this->username) ?: Yii::createObject(static::getStorageClass());
+        $store = static::findIdentity($this->username) ?: Yii::createObject(static::getStorageClass());
         $store->setAttributes($this->getAttributes());
         if (!$store->save()) {
             return false;
         }
-        $model = static::findByUsername($this->username);
+        $model = static::findIdentity($this->username);
         $this->setAttributes($model->getAttributes());
 
         return true;
@@ -142,19 +150,11 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
     /**
      * {@inheritdoc}
      */
-    public static function findIdentity($id)
-    {
-        return static::findByUsername($id);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public static function findIdentityByAccessToken($access_token, $type = null)
     {
         $token = OauthAccessTokens::findOne(compact('access_token'));
 
-        return static::findByUsername($token->user_id);
+        return static::findIdentity($token->user_id);
     }
 
     /**
@@ -171,7 +171,7 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
         $email      = $attributes['email'];
         $remote     = RemoteUser::findOne(compact('provider', 'remoteid'));
         if ($remote) {
-            return static::findByUsername($remote->client_id);
+            return static::findIdentity($remote->client_id);
         }
         $user = static::findByEmail($email);
         if (!$user) {
@@ -232,20 +232,8 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
      */
     public function validatePassword($password)
     {
-        //die(var_dump( Yii::$app->security->validatePassword($password, $this->password_hash)));
-        //return Yii::$app->security->validatePassword($password, $this->password_hash);
-        $model = static::findByUsername($this->username, $password);
+        $model = static::findIdentity($this->username, $password);
         return (bool) $model->id;
-    }
-
-    /**
-     * Generates password hash from password and sets it to the model.
-     *
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
@@ -263,13 +251,5 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
     public function generatePasswordResetToken()
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
-     * Removes password reset token.
-     */
-    public function removePasswordResetToken()
-    {
-        $this->password_reset_token = null;
     }
 }

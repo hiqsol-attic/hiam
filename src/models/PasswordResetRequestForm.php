@@ -40,7 +40,7 @@ class PasswordResetRequestForm extends Model
      */
     public function sendEmail()
     {
-        $user = Identity::findByUsername($this->email);
+        $user = Yii::$app->user->findIdentity($this->email);
 
         if (!$user) {
             return false;

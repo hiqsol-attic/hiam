@@ -28,6 +28,7 @@ return [
             'class'           => \hiam\base\User::class,
             'identityClass'   => \hiam\models\Identity::class,
             'storageClass'    => \hiam\storage\Client::class,
+            'loginDuration'   => $params['user.loginDuration'],
             'enableAutoLogin' => $params['user.enableAutoLogin'],
             'disallowSignup'  => $params['user.disallowSignup'],
             'disallowRestorePassword'  => $params['user.disallowRestorePassword'],

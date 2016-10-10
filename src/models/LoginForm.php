@@ -12,18 +12,17 @@
 namespace hiam\models;
 
 use Yii;
-use yii\base\Model;
 
 /**
  * Login form.
  */
-class LoginForm extends Model
+class LoginForm extends \yii\base\Model
 {
     public $username;
     public $password;
     public $rememberMe = true;
 
-    private $_user = false;
+    protected $_identity;
 
     /**
      * {@inheritdoc}
@@ -47,8 +46,8 @@ class LoginForm extends Model
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $user = $this->getIdentity();
-            if (!$user || !$user->validatePassword($this->password)) {
+            $identity = $this->getIdentity();
+            if (!$identity || !$identity->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }
@@ -61,8 +60,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            $duration = isset(Yii::$app->params['login_duration']) ? Yii::$app->params['login_duration'] : 3600 * 24 * 31;
-            return Yii::$app->user->login($this->getIdentity(), $this->rememberMe ? $duration : 0);
+            return Yii::$app->user->login($this->getIdentity(), $this->rememberMe ? null : 0);
         } else {
             return false;
         }
@@ -74,10 +72,10 @@ class LoginForm extends Model
      */
     public function getIdentity()
     {
-        if (!$this->_user) {
-            $this->_user = call_user_func([Yii::$app->user->identityClass, 'findByUsername'], $this->username);
+        if ($this->_identity === null) {
+            $this->_identity = Yii::$app->user->findIdentity($this->username);
         }
 
-        return $this->_user;
+        return $this->_identity;
     }
 }
