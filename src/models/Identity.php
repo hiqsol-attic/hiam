@@ -162,7 +162,7 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
      */
     public static function findIdentityByAuthClient($client)
     {
-        $provider   = RemoteUser::toProvider($client->getId());
+        $provider = RemoteUser::toProvider($client->getId());
         if (!$provider) {
             return null;
         }

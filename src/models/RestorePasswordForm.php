@@ -12,13 +12,11 @@
 namespace hiam\models;
 
 use Yii;
-use yii\base\Model;
-use yii\helpers\Url;
 
 /**
- * Password reset request form.
+ * Password password form.
  */
-class PasswordResetRequestForm extends Model
+class RestorePasswordForm extends \yii\base\Model
 {
     public $email;
 

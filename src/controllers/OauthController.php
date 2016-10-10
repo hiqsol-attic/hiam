@@ -82,7 +82,7 @@ class OauthController extends \yii\web\Controller
 
     public function findIdentity($access_token)
     {
-        /* @var $class IdentityInterface */
+        /** @var IdentityInterface $class */
         $class = Yii::$app->getUser()->identityClass;
         return $class::findIdentityByAccessToken($access_token);
     }

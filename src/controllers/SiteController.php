@@ -12,7 +12,7 @@
 namespace hiam\controllers;
 
 use hiam\models\LoginForm;
-use hiam\models\PasswordResetRequestForm;
+use hiam\models\RestorePasswordForm;
 use hiam\models\RemoteUser;
 use hiam\models\ResetPasswordForm;
 use hiam\models\SignupForm;
@@ -38,12 +38,12 @@ class SiteController extends \hisite\controllers\SiteController
         return array_merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['login', 'signup', 'request-password-reset', 'remote-proceed', 'lockscreen'],
+                'only' => ['login', 'signup', 'restore-password', 'remote-proceed', 'lockscreen'],
                 'denyCallback' => [$this, 'denyCallback'],
                 'rules' => [
                     // ? - guest
                     [
-                        'actions' => ['login', 'confirm', 'signup', 'request-password-reset', 'remote-proceed'],
+                        'actions' => ['login', 'confirm', 'signup', 'restore-password', 'remote-proceed'],
                         'roles' => ['?'],
                         'allow' => true,
                     ],
@@ -82,12 +82,10 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function successCallback($client)
     {
-        $user = Identity::findIdentityByAuthClient($client);
+        $user = $this->findIdentityByAuthClient($client);
         if ($user) {
             Yii::$app->user->login($user);
-            return;
         }
-        return;
     }
 
     public function actionLogin($confirm = false)
@@ -103,6 +101,7 @@ class SiteController extends \hisite\controllers\SiteController
     protected function doLogin($view, $username = null)
     {
         $model = new LoginForm();
+        $model->username = $username;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = Yii::$app->user->findIdentity($model->username, $model->password);
             if ($user) {
@@ -111,10 +110,6 @@ class SiteController extends \hisite\controllers\SiteController
             }
             $model->addError('password', 'Incorrect username or password.');
             $model->password = null;
-        }
-
-        if ($username !== null) {
-            $model->username = $username;
         }
 
         return $this->render($view, [
@@ -212,12 +207,15 @@ class SiteController extends \hisite\controllers\SiteController
         return ActiveForm::validate($model);
     }
 
-    public function actionRequestPasswordReset($username = null)
+    public function actionRestorePassword($username = null)
     {
-        $model = new PasswordResetRequestForm();
-        if ($username) {
-            $model->email = $username;
+        if (Yii::$app->user->disableRestorePassword) {
+            Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, password restore is disabled.'));
+            return $this->redirect(['login']);
         }
+
+        $model = new RestorePasswordForm();
+        $model->email = $username;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Check your email for further instructions.'));
@@ -228,7 +226,7 @@ class SiteController extends \hisite\controllers\SiteController
             }
         }
 
-        return $this->render('requestPasswordResetToken', compact('model'));
+        return $this->render('restorePassword', compact('model'));
     }
 
     public function actionResetPassword($login)

@@ -11,8 +11,6 @@
 
 namespace hiam\models;
 
-use Yii;
-
 /**
  * Login form.
  */
