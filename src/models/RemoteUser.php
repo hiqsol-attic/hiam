@@ -57,39 +57,35 @@ class RemoteUser extends \yii\db\ActiveRecord
     public static function toProvider($name)
     {
         if (strlen($name) === 1) {
-            return $name;
+            $keys = array_flip(static::$_providers);
+            return isset($keys[$name]) ? $name : null;
         }
-        return static::$_providers[strtolower($name)];
+        $key = strtolower($name);
+
+        return isset(static::$_providers[$key]) ? static::$_providers[$key] : null;
     }
 
-    public static function isTrustedEmail($provider, $email)
+    public function isTrustedEmail($email)
     {
         static $trustedEmails = [
             '@gmail.com'    => 'google',
             '@yandex.ru'    => 'yandex',
         ];
         foreach ($trustedEmails as $domain => $trusted) {
-            if (static::toProvider($provider) === static::toProvider($trusted) && substr($email, -strlen($domain)) === $domain) {
+            if ($this->provider === static::toProvider($trusted) && substr($email, -strlen($domain)) === $domain) {
                 return true;
             }
         }
         return false;
     }
 
-    /**
-     * Inserts or updates RemoteUser.
-     * @return user
-     */
-    public static function set(ClientInterface $client, IdentityInterface $user)
+    public static function findOrCreate($provider, $remoteid)
     {
         $data = [
-            'provider' => static::toProvider($client->getId()),
-            'remoteid' => $client->getUserAttributes()['id'],
+            'provider' => static::toProvider($provider),
+            'remoteid' => $remoteid,
         ];
-        $model = static::findOne($data) ?: new static($data);
-        $model->client_id = $user->getId();
-        $model->save();
 
-        return $user;
+        return static::findOne($data) ?: new static($data);
     }
 }

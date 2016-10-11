@@ -158,33 +158,6 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
     }
 
     /**
-     * Finds user through RemoteUser.
-     */
-    public static function findIdentityByAuthClient($client)
-    {
-        $provider = RemoteUser::toProvider($client->getId());
-        if (!$provider) {
-            return null;
-        }
-        $attributes = $client->getUserAttributes();
-        $remoteid   = $attributes['id'];
-        $email      = $attributes['email'];
-        $remote     = RemoteUser::findOne(compact('provider', 'remoteid'));
-        if ($remote) {
-            return static::findIdentity($remote->client_id);
-        }
-        $user = static::findByEmail($email);
-        if (!$user) {
-            return null;
-        }
-        if (RemoteUser::isTrustedEmail($provider, $email)) {
-            return RemoteUser::set($client, $user);
-        }
-
-        return null;
-    }
-
-    /**
      * Finds out if password reset token is valid.
      * @param string $token password reset token
      * @return boolean

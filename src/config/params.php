@@ -15,6 +15,10 @@ return [
     'poweredByName'     => 'HIAM',
     'poweredByUrl'      => 'https://github.com/hiqdev/hiam-core',
 
+    'supportEmail'      => 'support@email',
+    'organizationName'  => 'Organization',
+
+    'user.loginDuration'            => 3600 * 24 * 31,
     'user.passwordResetTokenExpire' => 3600,
     'user.enableAutoLogin'          => true,
     'user.disableSignup'            => false,

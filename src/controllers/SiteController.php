@@ -13,16 +13,13 @@ namespace hiam\controllers;
 
 use hiam\models\LoginForm;
 use hiam\models\RestorePasswordForm;
-use hiam\models\RemoteUser;
 use hiam\models\ResetPasswordForm;
 use hiam\models\SignupForm;
-use hiam\models\Identity;
 use hisite\actions\RenderAction;
 use hisite\actions\RedirectAction;
 use Yii;
 use yii\authclient\AuthAction;
 use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -82,7 +79,7 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function successCallback($client)
     {
-        $user = $this->findIdentityByAuthClient($client);
+        $user = Yii::$app->user->findIdentityByAuthClient($client);
         if ($user) {
             Yii::$app->user->login($user);
         }
@@ -128,7 +125,7 @@ class SiteController extends \hisite\controllers\SiteController
 
         try {
             $email = $client->getUserAttributes()['email'];
-            $user = Identity::findByEmail($email);
+            $user = Yii::$app->user->findByEmail($email);
         } catch (\Exception $e) {
             return $this->redirect(['logout']);
         }
@@ -136,7 +133,7 @@ class SiteController extends \hisite\controllers\SiteController
         $res = $this->doLogin('confirm', $user ? $user->email : null);
         $user = Yii::$app->user->getIdentity();
         if ($user) {
-            RemoteUser::set($client, $user);
+            Yii::$app->user->setRemoteUser($client, $user);
         }
         return $res;
     }
@@ -150,7 +147,7 @@ class SiteController extends \hisite\controllers\SiteController
 
         try {
             $email = $client->getUserAttributes()['email'];
-            $user = Identity::findByEmail($email);
+            $user = Yii::$app->user->findByEmail($email);
         } catch (\Exception $e) {
             return $this->redirect(['logout']);
         }
@@ -176,7 +173,7 @@ class SiteController extends \hisite\controllers\SiteController
             if ($user = $model->signup()) {
                 if (Yii::$app->user->login($user)) {
                     if ($client) {
-                        RemoteUser::set($client, $user);
+                        Yii::$app->user->setRemoteUser($client, $user);
                     }
                     Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
 

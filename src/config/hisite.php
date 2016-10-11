@@ -27,6 +27,7 @@ return [
         'user' => [
             'class'           => \hiam\base\User::class,
             'identityClass'   => \hiam\models\Identity::class,
+            'remoteUserClass' => \hiam\models\RemoteUser::class,
             'storageClass'    => \hiam\storage\Client::class,
             'loginDuration'   => $params['user.loginDuration'],
             'enableAutoLogin' => $params['user.enableAutoLogin'],

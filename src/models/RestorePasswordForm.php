@@ -38,7 +38,7 @@ class RestorePasswordForm extends \yii\base\Model
      */
     public function sendEmail()
     {
-        $user = Yii::$app->user->findIdentity($this->email);
+        $user = Yii::$app->user->findByEmail($this->email);
 
         if (!$user) {
             return false;
