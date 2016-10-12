@@ -6,15 +6,6 @@ use hiam\models\RemoteUser;
 
 class RemoteUserTest extends \PHPUnit_Framework_TestCase
 {
-    use \yii\test\FixtureTrait;
-
-    public function fixtures()
-    {
-        return [
-            'users' => RemoteUserFixture::class,
-        ];
-    }
-
     public function testToProvider()
     {
         $this->assertSame('g', RemoteUser::toProvider('google'));
@@ -41,12 +32,11 @@ class RemoteUserTest extends \PHPUnit_Framework_TestCase
     public function no_testIsTrustedEmail()
     {
         $model = new RemoteUser(['provider' => 'g']);
-        var_dump($model);die();
 
         $this->assertTrue ($model->isTrustedEmail('some@gmail.com'));
-        $this->assertFalse($model->isTrustedEmail('some@other.com'));
+        $this->assertFalse($model->isTrustedEmail('some@other.net'));
 
         $this->assertTrue ($model->isTrustedEmail('some@yandex.ru'));
-        $this->assertFalse($model->isTrustedEmail('some@other.com'));
+        $this->assertFalse($model->isTrustedEmail('some@other.net'));
     }
 }
