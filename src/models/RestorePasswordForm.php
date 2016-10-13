@@ -51,7 +51,12 @@ class RestorePasswordForm extends \yii\base\Model
             }
         }
 
-        $token = 'token';
+        $token = Yii::$app->confirmator->issueToken([
+            'action'    => 'restore-password',
+            'email'     => $this->email,
+            'username'  => $user->username,
+            'notAfter'  => '+ 3 days',
+        ])->toString();
 
         return Yii::$app->mailer->compose()
             ->renderHtmlBody('passwordResetToken', compact('user', 'token'))

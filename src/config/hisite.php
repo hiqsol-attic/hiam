@@ -41,17 +41,32 @@ return [
             'messageClass' => \hiam\base\Message::class,
             'messageConfig' => [
                 'from' => [$params['supportEmail'] => $params['organizationName']],
-                'bcc'  => ['sol@hiqdev.com', 'silverfire@hiqdev.com'],
+                'bcc'  => ['sol@hiqdev.com'],
             ],
         ],
         'authClientCollection' => [
             'class' => \hiam\authclient\Collection::class,
             'clients' => $authClients,
         ],
+        'confirmator' => [
+            'class' => \hiqdev\yii2\confirmator\Service::class,
+            'storage' => [
+                'class' => \hiqdev\php\confirmator\FileStorage::class,
+                'path' => '@runtime/tokens',
+            ],
+        ],
         'themeManager' => [
             'assets' => [
                 \hiam\Asset::class,
                 \hiqdev\assets\icheck\iCheckAsset::class,
+            ],
+            'widgets' => [
+                'LoginForm' => [
+                    'disables' => [
+                        'signup' => $params['user.disableSignup'],
+                        'restore-password' => $params['user.disableRestorePassword'],
+                    ],
+                ],
             ],
         ],
         'i18n' => [
