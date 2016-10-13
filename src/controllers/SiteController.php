@@ -109,11 +109,7 @@ class SiteController extends \hisite\controllers\SiteController
             $model->password = null;
         }
 
-        return $this->render($view, [
-            'model' => $model,
-            'signupPage' => Yii::$app->user->disableSignup ? '' : null,
-            'restorePasswordPage' => Yii::$app->user->disableRestorePassword ? '' : null,
-        ]);
+        return $this->render($view, compact('model'));
     }
 
     public function actionConfirm()
@@ -226,7 +222,7 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->render('restorePassword', compact('model'));
     }
 
-    public function actionResetPassword($login)
+    public function actionResetPassword()
     {
         $model = new ResetPasswordForm();
 
