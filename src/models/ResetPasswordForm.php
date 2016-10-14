@@ -53,4 +53,12 @@ class ResetPasswordForm extends Model
 
         return !isset($res['_error']);
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'password' => Yii::t('hiam', 'Password'),
+            'password_retype' => Yii::t('hiam', 'Retype password'),
+        ];
+    }
 }

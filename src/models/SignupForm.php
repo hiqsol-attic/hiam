@@ -12,6 +12,7 @@
 namespace hiam\models;
 
 use Yii;
+use yii\helpers\Html;
 
 /**
  * Signup form.
@@ -23,7 +24,7 @@ class SignupForm extends \yii\base\Model
     public $email;
     public $password;
     public $password_retype;
-    public $agree;
+    public $i_agree;
 
     /**
      * {@inheritdoc}
@@ -48,7 +49,8 @@ class SignupForm extends \yii\base\Model
 
             [['first_name', 'last_name', 'email', 'password', 'password_retype'], 'required'],
 
-            ['agree', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider terms of use.')],
+            ['i_agree', 'boolean'],
+            ['i_agree', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider terms of use.')],
         ];
     }
 
@@ -66,5 +68,17 @@ class SignupForm extends \yii\base\Model
         $user->username = $this->email;
 
         return $user->save() ? $user : null;
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'first_name' => Yii::t('hiam', 'First Name'),
+            'last_name' => Yii::t('hiam', 'Last Name'),
+            'email' => Yii::t('hiam', 'Email'),
+            'password' => Yii::t('hiam', 'Password'),
+            'password_retype' => Yii::t('hiam', 'Retype password'),
+            'i_agree' => Yii::t('hiam', 'I agree to the') . ' ' . Html::a(Yii::t('hiam', 'terms'), '/site/terms'),
+        ];
     }
 }

@@ -32,6 +32,13 @@ class RestorePasswordForm extends \yii\base\Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'email' => Yii::t('hiam', 'Email'),
+        ];
+    }
+
     /**
      * Sends an email with a link, for resetting the password.
      * @return boolean whether the email was send

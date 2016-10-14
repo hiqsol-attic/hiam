@@ -11,6 +11,8 @@
 
 namespace hiam\models;
 
+use Yii;
+
 /**
  * Login form.
  */
@@ -18,7 +20,7 @@ class LoginForm extends \yii\base\Model
 {
     public $username;
     public $password;
-    public $rememberMe = true;
+    public $remember_me = true;
 
     /**
      * {@inheritdoc}
@@ -27,7 +29,16 @@ class LoginForm extends \yii\base\Model
     {
         return [
             [['username', 'password'], 'required'],
-            ['rememberMe', 'boolean'],
+            ['remember_me', 'boolean'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => Yii::t('hiam', 'Login or Email'),
+            'password' => Yii::t('hiam', 'Password'),
+            'remember_me' => Yii::t('hiam', 'Remember me'),
         ];
     }
 }
