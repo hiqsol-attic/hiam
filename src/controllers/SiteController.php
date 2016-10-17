@@ -121,7 +121,7 @@ class SiteController extends \hisite\controllers\SiteController
 
         try {
             $email = $client->getUserAttributes()['email'];
-            $user = Yii::$app->user->findByEmail($email);
+            $user = Yii::$app->user->findIdentityByEmail($email);
         } catch (\Exception $e) {
             return $this->redirect(['logout']);
         }
@@ -143,7 +143,7 @@ class SiteController extends \hisite\controllers\SiteController
 
         try {
             $email = $client->getUserAttributes()['email'];
-            $user = Yii::$app->user->findByEmail($email);
+            $user = Yii::$app->user->findIdentityByEmail($email);
         } catch (\Exception $e) {
             return $this->redirect(['logout']);
         }

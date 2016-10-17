@@ -39,7 +39,7 @@ class SignupForm extends \yii\base\Model
             ['email', 'email'],
             ['email', 'string', 'min' => 2, 'max' => 255],
             ['email', function ($attribute) {
-                if (!empty(Identity::findByEmail($this->email))) {
+                if (!empty(Yii::$app->user->findIdentityByEmail($this->email))) {
                     $this->addError($attribute, Yii::t('hiam', 'This email has already been taken') . '.');
                 }
             }],

@@ -109,7 +109,7 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
         return static::findOne($cond);
     }
 
-    public static function findByEmail($email)
+    public static function findIdentityByEmail($email)
     {
         return static::findOne(compact('email'));
     }

@@ -31,10 +31,10 @@ class User extends \yii\web\User
         return $class::findIdentity($id, $password);
     }
 
-    public function findByEmail($email)
+    public function findIdentityByEmail($email)
     {
         $class = $this->identityClass;
-        return $class::findByEmail($email);
+        return $class::findIdentityByEmail($email);
     }
 
     /**
@@ -51,7 +51,7 @@ class User extends \yii\web\User
             return $this->findIdentity($remote->client_id);
         }
         $email = $client->getUserAttributes()['email'];
-        $user = $this->findByEmail($email);
+        $user = $this->findIdentityByEmail($email);
         if (!$user) {
             return null;
         }
