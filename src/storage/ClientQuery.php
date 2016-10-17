@@ -21,6 +21,7 @@ class ClientQuery extends \yii\db\ActiveQuery
                 'c.obj_id       AS id',
                 'c.login        AS username',
                 'r.login        AS seller',
+                'c.seller_id    AS seller_id',
                 'y.name         AS type',
                 'z.name         AS state',
                 'k.first_name   AS first_name',
