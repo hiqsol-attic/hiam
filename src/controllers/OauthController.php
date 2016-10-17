@@ -12,6 +12,7 @@
 namespace hiam\controllers;
 
 use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
+use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use Yii;
 use yii\filters\ContentNegotiator;
 use yii\helpers\ArrayHelper;
@@ -80,11 +81,14 @@ class OauthController extends \yii\web\Controller
         return $this->getServer()->getConfig('token_param_name');
     }
 
-    public function findIdentity($access_token)
+    public function findIdentityByToken(OauthAccessTokens $token)
     {
-        /** @var IdentityInterface $class */
-        $class = Yii::$app->getUser()->identityClass;
-        return $class::findIdentityByAccessToken($access_token);
+        return Yii::$app->user->findIdentity($token->user_id);
+    }
+
+    public function findToken($access_token)
+    {
+        return OauthAccessTokens::findOne($access_token);
     }
 
     public function actionToken()
@@ -92,9 +96,11 @@ class OauthController extends \yii\web\Controller
         $response = $this->getServer()->handleTokenRequest($this->getRequest());
         $access_token = $response->getParameter($this->getTokenParamName());
         if ($access_token) {
-            $user_attributes = $this->findIdentity($access_token)->getAttributes();
+            $token = $this->findToken($access_token);
+            $user_attributes = $this->findIdentityByToken($token)->getAttributes();
             $response->addParameters(compact('user_attributes'));
         }
+
         return $response->send();
     }
 
@@ -105,18 +111,21 @@ class OauthController extends \yii\web\Controller
             return $this->getServer()->getResponse()->send();
         }
         $access_token = $this->getRequestValue($this->getTokenParamName());
-        $user = $this->findIdentity($access_token);
+        $token = $this->findToken($access_token);
+        $user = $this->findIdentityByToken($token);
 
         if (!is_object($user)) { /// TODO fix error returning
             return ['error' => 'no user'];
         }
 
-        return array_filter($user->getAttributes());
+        return array_merge(array_filter($user->getAttributes()), [
+            'token' => $token
+        ]);
     }
 
     public function isAuthorizedClient($client)
     {
-        return !empty(Yii::$app->params['hiam.authorizedClients']);
+        return !empty(Yii::$app->params['hiam.authorizedClients'][$client]);
     }
 
     public function actionAuthorize()
