@@ -74,6 +74,10 @@ class SiteController extends \hisite\controllers\SiteController
                 'class' => RedirectAction::class,
                 'url' => Yii::$app->params['site_url'],
             ],
+            'terms' => [
+                'class' => RedirectAction::class,
+                'url' => Yii::$app->params['terms_url'],
+            ],
         ]);
     }
 
