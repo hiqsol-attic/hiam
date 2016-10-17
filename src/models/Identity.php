@@ -21,9 +21,9 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property string $type
- * @property string $name
  * @property string $state
  * @property string $email
+ * @property string $seller
  * @property string $password
  * @property string $username
  * @property string $last_name
@@ -34,9 +34,9 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
 {
     public $id;
     public $type;
-    public $name;
     public $state;
     public $email;
+    public $seller;
     public $password;
     public $username;
     public $last_name;
@@ -53,6 +53,9 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
             ['username',        'trim'],
             ['username',        'string', 'min' => 2, 'max' => 64],
 
+            ['seller',          'trim'],
+            ['seller',          'string', 'min' => 2, 'max' => 64],
+
             ['email',           'trim'],
             ['email',           'email'],
 
@@ -61,9 +64,8 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
 
             [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
 
-            [['name', 'first_name', 'last_name'], 'trim'],
-            [['name', 'first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
-
+            [['first_name', 'last_name'], 'trim'],
+            [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
         ];
     }
 

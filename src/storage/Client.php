@@ -16,14 +16,13 @@ use Yii;
 /**
  * Client model.
  *
- * @property string $seller_id
+ * @property integer $seller_id
  * @property string $password
  * @property string $email
  */
 class Client extends \yii\db\ActiveRecord
 {
     public $id;
-    public $name;
     public $type;
     public $state;
     public $seller;

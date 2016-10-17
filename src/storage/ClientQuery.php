@@ -18,12 +18,13 @@ class ClientQuery extends \yii\db\ActiveQuery
         parent::init();
         $this
             ->select([
-                'c.obj_id   AS id',
-                'c.login    AS username',
-                'r.login    AS seller',
-                'y.name     AS type',
-                'z.name     AS state',
-                'k.name     AS name',
+                'c.obj_id       AS id',
+                'c.login        AS username',
+                'r.login        AS seller',
+                'y.name         AS type',
+                'z.name         AS state',
+                'k.first_name   AS first_name',
+                'k.last_name    AS last_name',
                 'coalesce(c.email,k.email) AS email',
             ])
             ->from('client          c')
