@@ -106,7 +106,7 @@ class SiteController extends \hisite\controllers\SiteController
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = Yii::$app->user->findIdentity($model->username, $model->password);
             if ($user) {
-                Yii::$app->user->login($user, $model->rememberMe ? null : 0);
+                Yii::$app->user->login($user, $model->remember_me ? null : 0);
                 return $this->goBack();
             }
             $model->addError('password', 'Incorrect username or password.');
