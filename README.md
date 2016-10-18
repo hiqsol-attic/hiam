@@ -14,18 +14,19 @@ HIAM is Identity and Access Management server.
 
 Provides:
 
-- OAuth2 server
-- multi-factor authorization with:
+- [OAuth2](https://oauth.net/2/) server
+- [multi-factor authentication](https://en.wikipedia.org/wiki/Multi-factor_authentication) with:
     - limiting access from user allowed IPs only
-    - [TOTP](https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm) aka Google Authenticator
-- Social login: Facebook, Google, VK, LinkedIn, GitHub, Live, Yandex
-- RBAC - Role Based Access Control
+    - Google Authenticator compatible [TOTP](https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm)
+- Social login with Facebook, Google, VK, LinkedIn, GitHub, Live, Yandex
+- [RBAC](https://en.wikipedia.org/wiki/Role-based_access_control) - Role Based Access Control
 - Full activity logging with searching and reporting
 
 Based on:
 
 - [yiisoft/yii2](https://github.com/yiisoft/yii2)
-- [bshaffer/oauth2-server-php](https://github.com/bshaffer/oauth2-server-php)
+- [yiisoft/yii2-authclient](https://github.com/yiisoft/yii2-authclient) - social login
+- [bshaffer/oauth2-server-php](https://github.com/bshaffer/oauth2-server-php) - OAuth2 server
 
 ## Installation
 
