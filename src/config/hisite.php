@@ -29,7 +29,7 @@ return [
             'identityClass'   => \hiam\models\Identity::class,
             'remoteUserClass' => \hiam\models\RemoteUser::class,
             'storageClasses'  => [
-                'identity'   => \hiam\storage\Client::class,
+                'identity'   => \hiam\storage\HiamIdentity::class,
                 'remoteUser' => \hiam\storage\HiamRemoteUser::class,
             ],
             'loginDuration'   => $params['user.loginDuration'],
