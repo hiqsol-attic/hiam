@@ -135,6 +135,7 @@ class SiteController extends \hisite\controllers\SiteController
         if ($user) {
             Yii::$app->user->setRemoteUser($client, $user);
         }
+
         return $res;
     }
 

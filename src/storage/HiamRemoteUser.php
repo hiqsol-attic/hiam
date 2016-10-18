@@ -20,6 +20,19 @@ namespace hiam\storage;
  */
 class HiamRemoteUser extends \yii\db\ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['provider'],  'string', 'min' => 1, 'max' => 1],
+            [['remoteid'],  'string', 'min' => 1, 'max' => 99],
+            [['client_id'], 'integer'],
+            [['provider', 'remoteid', 'client_id'], 'required'],
+        ];
+    }
+
     private static $_providers = [
         'google'    => 'g',
         'facebook'  => 'f',
