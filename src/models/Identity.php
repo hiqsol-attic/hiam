@@ -13,7 +13,6 @@ namespace hiam\models;
 
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use OAuth2\Storage\UserCredentialsInterface;
-use hiam\base\ProxyModel;
 use Yii;
 use yii\web\IdentityInterface;
 

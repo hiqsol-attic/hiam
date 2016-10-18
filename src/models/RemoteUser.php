@@ -11,7 +11,6 @@
 
 namespace hiam\models;
 
-use hiam\base\ProxyModel;
 use yii\authclient\ClientInterface;
 use yii\web\IdentityInterface;
 
