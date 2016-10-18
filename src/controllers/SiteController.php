@@ -12,6 +12,7 @@
 namespace hiam\controllers;
 
 use hiam\models\LoginForm;
+use hiam\models\ConfirmPasswordForm;
 use hiam\models\RestorePasswordForm;
 use hiam\models\ResetPasswordForm;
 use hiam\models\SignupForm;
@@ -35,12 +36,12 @@ class SiteController extends \hisite\controllers\SiteController
         return array_merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['login', 'signup', 'restore-password', 'remote-proceed', 'lockscreen'],
+                'only' => ['login', 'signup', 'lockscreen', 'confirm-password', 'restore-password', 'remote-proceed'],
                 'denyCallback' => [$this, 'denyCallback'],
                 'rules' => [
                     // ? - guest
                     [
-                        'actions' => ['login', 'confirm', 'signup', 'restore-password', 'remote-proceed'],
+                        'actions' => ['login', 'signup', 'confirm-password', 'restore-password', 'remote-proceed'],
                         'roles' => ['?'],
                         'allow' => true,
                     ],
@@ -89,19 +90,18 @@ class SiteController extends \hisite\controllers\SiteController
         }
     }
 
-    public function actionLogin($confirm = false)
+    public function actionLogin()
     {
         $client = Yii::$app->authClientCollection->getActiveClient();
         if ($client) {
             return $this->redirect(['remote-proceed']);
         }
 
-        return $this->doLogin('login');
+        return $this->doLogin(new LoginForm(), 'login');
     }
 
-    protected function doLogin($view, $username = null)
+    protected function doLogin($model, $view, $username = null)
     {
-        $model = new LoginForm();
         $model->username = $username;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = Yii::$app->user->findIdentity($model->username, $model->password);
@@ -116,7 +116,7 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->render($view, compact('model'));
     }
 
-    public function actionConfirm()
+    public function actionConfirmPassword()
     {
         $client = Yii::$app->authClientCollection->getActiveClient();
         if (!$client) {
@@ -130,7 +130,7 @@ class SiteController extends \hisite\controllers\SiteController
             return $this->redirect(['logout']);
         }
 
-        $res = $this->doLogin('confirmPassword', $user ? $user->email : null);
+        $res = $this->doLogin(new ConfirmPasswordForm(), 'confirmPassword', $user ? $user->email : null);
         $user = Yii::$app->user->getIdentity();
         if ($user) {
             Yii::$app->user->setRemoteUser($client, $user);
@@ -153,7 +153,7 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         if ($user) {
-            return $this->redirect(['confirm']);
+            return $this->redirect(['confirm-password']);
         }
 
         return $this->redirect(['signup']);
