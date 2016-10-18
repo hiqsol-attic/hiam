@@ -11,11 +11,11 @@
 
 namespace hiam\controllers;
 
-use hiam\models\LoginForm;
-use hiam\models\ConfirmPasswordForm;
-use hiam\models\RestorePasswordForm;
-use hiam\models\ResetPasswordForm;
-use hiam\models\SignupForm;
+use hiam\forms\LoginForm;
+use hiam\forms\ConfirmPasswordForm;
+use hiam\forms\RestorePasswordForm;
+use hiam\forms\ResetPasswordForm;
+use hiam\forms\SignupForm;
 use hisite\actions\RenderAction;
 use hisite\actions\RedirectAction;
 use Yii;
@@ -90,14 +90,14 @@ class SiteController extends \hisite\controllers\SiteController
         }
     }
 
-    public function actionLogin()
+    public function actionLogin($username = null)
     {
         $client = Yii::$app->authClientCollection->getActiveClient();
         if ($client) {
             return $this->redirect(['remote-proceed']);
         }
 
-        return $this->doLogin(new LoginForm(), 'login');
+        return $this->doLogin(new LoginForm(), 'login', $username);
     }
 
     protected function doLogin($model, $view, $username = null)
@@ -106,7 +106,7 @@ class SiteController extends \hisite\controllers\SiteController
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = Yii::$app->user->findIdentity($model->username, $model->password);
             if ($user) {
-                Yii::$app->user->login($user, $model->remember_me ? null : 0);
+                Yii::$app->user->login($user, !empty($model->remember_me) ? null : 0);
                 return $this->goBack();
             }
             $model->addError('password', 'Incorrect username or password.');

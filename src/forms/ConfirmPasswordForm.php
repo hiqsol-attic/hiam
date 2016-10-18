@@ -9,18 +9,17 @@
  * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hiam\models;
+namespace hiam\forms;
 
 use Yii;
 
 /**
- * Login form.
+ * Confirm password form.
  */
-class LoginForm extends \yii\base\Model
+class ConfirmPasswordForm extends \yii\base\Model
 {
     public $username;
     public $password;
-    public $remember_me = true;
 
     /**
      * {@inheritdoc}
@@ -29,7 +28,6 @@ class LoginForm extends \yii\base\Model
     {
         return [
             [['username', 'password'], 'required'],
-            ['remember_me', 'boolean'],
         ];
     }
 
@@ -38,7 +36,6 @@ class LoginForm extends \yii\base\Model
         return [
             'username' => Yii::t('hiam', 'Login or Email'),
             'password' => Yii::t('hiam', 'Password'),
-            'remember_me' => Yii::t('hiam', 'Remember me'),
         ];
     }
 }
