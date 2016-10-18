@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
  */
 
-namespace hiam\base;
+namespace hiam\models;
 
 use Yii;
 
