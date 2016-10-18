@@ -7,7 +7,7 @@ use yii\authclient\ClientInterface;
 
 class User extends \yii\web\User
 {
-    public $storageClass;
+    public $storageClasses = [];
 
     public $remoteUserClass;
 
@@ -79,5 +79,19 @@ class User extends \yii\web\User
     {
         $class = $this->remoteUserClass;
         return $class::findOrCreate($client->getId(), $client->getUserAttributes()['id']);
+    }
+
+    public function getStorageClass($name)
+    {
+        if ($name == $this->identityClass) {
+            $name = 'identity';
+        } elseif ($name == $this->remoteUserClass) {
+            $name = 'remoteUser';
+        }
+        if (!isset($this->storageClasses[$name])) {
+            throw new InvalidConfigException("not configured storage class for $name");
+        }
+
+        return $this->storageClasses[$name];
     }
 }

@@ -130,7 +130,7 @@ class SiteController extends \hisite\controllers\SiteController
             return $this->redirect(['logout']);
         }
 
-        $res = $this->doLogin('confirm', $user ? $user->email : null);
+        $res = $this->doLogin('confirmPassword', $user ? $user->email : null);
         $user = Yii::$app->user->getIdentity();
         if ($user) {
             Yii::$app->user->setRemoteUser($client, $user);

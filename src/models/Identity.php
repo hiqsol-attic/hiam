@@ -13,6 +13,7 @@ namespace hiam\models;
 
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use OAuth2\Storage\UserCredentialsInterface;
+use hiam\base\ProxyModel;
 use Yii;
 use yii\web\IdentityInterface;
 
@@ -30,7 +31,7 @@ use yii\web\IdentityInterface;
  * @property string $first_name
  * @property string $auth_key
  */
-class Identity extends \yii\base\Model implements IdentityInterface, UserCredentialsInterface
+class Identity extends ProxyModel implements IdentityInterface, UserCredentialsInterface
 {
     public $id;
     public $type;
@@ -110,37 +111,9 @@ class Identity extends \yii\base\Model implements IdentityInterface, UserCredent
         return static::findOne(compact('email'));
     }
 
-    public static function findOne($cond)
+    public static function primaryKey()
     {
-        $class = static::getStorageClass();
-        $store = $class::findOne($cond);
-
-        if (!$store) {
-            return null;
-        }
-
-        $model = new static;
-        $model->setAttributes($store->getAttributes($model->attributes()));
-
-        return $model;
-    }
-
-    public function save()
-    {
-        $store = static::findIdentity($this->username) ?: Yii::createObject(static::getStorageClass());
-        $store->setAttributes($this->getAttributes());
-        if (!$store->save()) {
-            return false;
-        }
-        $model = static::findIdentity($this->username);
-        $this->setAttributes($model->getAttributes());
-
-        return true;
-    }
-
-    public static function getStorageClass()
-    {
-        return Yii::$app->user->storageClass;
+        return ['username'];
     }
 
     /**

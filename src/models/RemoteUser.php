@@ -11,6 +11,7 @@
 
 namespace hiam\models;
 
+use hiam\base\ProxyModel;
 use yii\authclient\ClientInterface;
 use yii\web\IdentityInterface;
 
@@ -21,14 +22,15 @@ use yii\web\IdentityInterface;
  * @property string  $remoteid
  * @property integer $client_id
  */
-class RemoteUser extends \yii\db\ActiveRecord
+class RemoteUser extends ProxyModel
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public $provider;
+    public $remoteid;
+    public $client_id;
+
+    public static function primaryKey()
     {
-        return '{{%hiam_remote_user}}';
+        return ['provider', 'remoteid'];
     }
 
     /**
@@ -37,46 +39,38 @@ class RemoteUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['provider'],          'string'],
-            [['remoteid'],          'safe'],
-            [['client_id'],         'integer'],
-            [['provider', 'remoteid', 'client_id'],   'required'],
+            [['provider'],  'string'],
+            [['remoteid'],  'string'],
+            [['client_id'], 'integer'],
+            [['provider', 'remoteid', 'client_id'], 'required'],
         ];
     }
 
-    private static $_providers = [
-        'google'    => 'g',
-        'facebook'  => 'f',
-        'linkedin'  => 'l',
-        'github'    => 'h',
-        'vk'        => 'v',
-        'yandex'    => 'y',
-        'live'      => 'w',
-    ];
-
-    public static function toProvider($name)
-    {
-        if (strlen($name) === 1) {
-            $keys = array_flip(static::$_providers);
-            return isset($keys[$name]) ? $name : null;
-        }
-        $key = strtolower($name);
-
-        return isset(static::$_providers[$key]) ? static::$_providers[$key] : null;
-    }
-
+    /**
+     * Returns if given email is provided with appropriate service so it can be trusted.
+     * @param string email address
+     * @return bool is trusted
+     */
     public function isTrustedEmail($email)
     {
         static $trustedEmails = [
-            '@gmail.com'    => 'google',
-            '@yandex.ru'    => 'yandex',
+            '@gmail.com'    => 'Google',
+            '@yandex.ru'    => 'Yandex',
         ];
         foreach ($trustedEmails as $domain => $trusted) {
             if ($this->provider === static::toProvider($trusted) && substr($email, -strlen($domain)) === $domain) {
                 return true;
             }
         }
+
         return false;
+    }
+
+    public function toProvider($name)
+    {
+        $class = static::getStorageClass();
+
+        return $class::toProvider($name);
     }
 
     public static function findOrCreate($provider, $remoteid)
@@ -88,4 +82,5 @@ class RemoteUser extends \yii\db\ActiveRecord
 
         return static::findOne($data) ?: new static($data);
     }
+
 }
