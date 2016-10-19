@@ -38,15 +38,4 @@ class RestorePasswordForm extends \yii\base\Model
             'email' => Yii::t('hiam', 'Email'),
         ];
     }
-
-    /**
-     * Sends an email with a link for resetting the password.
-     * @return boolean whether the email was send
-     */
-    public function sendEmail()
-    {
-        $user = Yii::$app->user->findIdentityByEmail($this->email);
-
-        return Yii::$app->mailer->sendToken($user, 'restore-password');
-    }
 }

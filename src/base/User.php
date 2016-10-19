@@ -2,8 +2,11 @@
 
 namespace hiam\base;
 
+use Yii;
 use yii\web\IdentityInterface;
 use yii\authclient\ClientInterface;
+use yii\helpers\StringHelper;
+use yii\validators\IpValidator;
 
 class User extends \yii\web\User
 {
@@ -19,10 +22,43 @@ class User extends \yii\web\User
 
     public function login(IdentityInterface $identity, $duration = null)
     {
-        if ($duration === null) {
-            $duration = $this->loginDuration;
+        $this->setHalfUser($identity);
+        $this->validateIps($identity);
+
+        return parent::login($identity, isset($duration) ? $duration : $this->loginDuration);
+    }
+
+    public function setHalfUser($value)
+    {
+        Yii::$app->session->set('halfUser', $value);
+    }
+
+    public function getHalfUser()
+    {
+        return Yii::$app->session->get('halfUser');
+    }
+
+    public function removeHalfUser()
+    {
+        Yii::$app->session->remove('halfUser');
+    }
+
+    protected function validateIps(IdentityInterface $identity)
+    {
+        if (empty($identity->allowed_ips)) {
+            return;
         }
-        return parent::login($identity, $duration ?: $this->loginDuration);
+        $ips = array_filter(StringHelper::explode($identity->allowed_ips));
+        $validator = new IpValidator([
+            'ipv6' => false,
+            'ranges' => $ips,
+        ]);
+        if ($validator->validate(Yii::$app->request->getUserIP())) {
+            return;
+        }
+
+        Yii::$app->response->redirect('/site/not-allowed-ip');
+        Yii::$app->end();
     }
 
     public function findIdentity($id, $password = null)

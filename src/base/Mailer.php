@@ -7,7 +7,7 @@ use yii\helpers\Inflector;
 
 class Mailer extends \yii\swiftmailer\Mailer
 {
-    public function sendToken($user, $action)
+    public function sendToken($user, $action, array $data = [])
     {
         if (!$user) {
             return false;
@@ -20,12 +20,12 @@ class Mailer extends \yii\swiftmailer\Mailer
             }
         }
 
-        $token = Yii::$app->confirmator->issueToken([
+        $token = Yii::$app->confirmator->issueToken(array_merge([
             'action'    => $action,
             'email'     => $user->email,
             'username'  => $user->username,
             'notAfter'  => '+ 3 days',
-        ])->toString();
+        ], $data));
 
         $view = lcfirst(Inflector::id2camel($action . '-token'));
 
