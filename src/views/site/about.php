@@ -10,6 +10,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>This is Identity and Access Management server of <?= Yii::$app->params['orgName'] ?></p>
-    <p>See more at <a href="<?= Yii::$app->params['orgUrl'] ?>"><?= Yii::$app->params['orgUrl'] ?></a></p>
+    <p>This is Identity and Access Management server of <?= Yii::$app->themeManager->widget('OrganizationLink') ?>.</p>
+    <p><?= Yii::$app->themeManager->widget('PoweredBy') ?>
 </div>
