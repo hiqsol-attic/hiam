@@ -23,4 +23,6 @@ return [
     'user.enableAutoLogin'          => true,
     'user.disableSignup'            => false,
     'user.disableRestorePassword'   => false,
+
+    'debug.allowedIps'  => [],
 ];
