@@ -81,6 +81,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
         }
 
         $data['user_id'] = $data['id'];
+
         return $data;
     }
 
@@ -142,6 +143,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         $parts = explode('_', $token);
         $timestamp = (int) end($parts);
+
         return $timestamp + $expire >= time();
     }
 
@@ -178,6 +180,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
     public function validatePassword($password)
     {
         $model = static::findIdentity($this->username, $password);
+
         return (bool) $model->id;
     }
 

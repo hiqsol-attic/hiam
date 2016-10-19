@@ -26,7 +26,7 @@ abstract class ProxyModel extends \yii\base\Model
             return null;
         }
 
-        $model = new static;
+        $model = new static();
         $model->setAttributes($store->getAttributes($model->attributes()));
 
         return $model;

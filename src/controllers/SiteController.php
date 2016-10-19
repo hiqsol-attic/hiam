@@ -171,6 +171,7 @@ class SiteController extends \hisite\controllers\SiteController
     {
         if (Yii::$app->user->disableSignup) {
             Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, signup is disabled.'));
+
             return $this->redirect(['login']);
         }
 
@@ -216,6 +217,7 @@ class SiteController extends \hisite\controllers\SiteController
     {
         if (Yii::$app->user->disableRestorePassword) {
             Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, password restore is disabled.'));
+
             return $this->redirect(['login']);
         }
 
@@ -225,6 +227,7 @@ class SiteController extends \hisite\controllers\SiteController
             $user = Yii::$app->user->findIdentityByEmail($model->email);
             if (Yii::$app->mailer->sendToken($user, 'restore-password')) {
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Check your email for further instructions.'));
+
                 return $this->goHome();
             } else {
                 Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to reset password for email provided.'));
@@ -274,6 +277,7 @@ class SiteController extends \hisite\controllers\SiteController
                 $user->allowed_ips .= $user->allowed_ips ? ',' . $ip : $ip;
                 if ($user->save() && Yii::$app->user->login($user)) {
                     Yii::$app->session->setFlash('success', Yii::t('hiam', 'Now you are allowed to login from {ip}.', ['ip' => $ip]));
+
                     return $this->goBack();
                 }
             }
@@ -284,5 +288,4 @@ class SiteController extends \hisite\controllers\SiteController
 
         return $this->render('notAllowedIp');
     }
-
 }

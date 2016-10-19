@@ -32,6 +32,7 @@ class OauthAuthorize extends AuthMethod
             if ($identity === null) {
                 $this->handleFailure($response);
             }
+
             return $identity;
         }
 

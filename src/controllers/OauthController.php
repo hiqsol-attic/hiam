@@ -73,6 +73,7 @@ class OauthController extends \yii\web\Controller
     public function getRequestValue($name, $default = null)
     {
         $request = $this->getModule()->getRequest();
+
         return isset($request->request[$name]) ? $request->request[$name] : $request->query($name, $default);
     }
 
@@ -119,7 +120,7 @@ class OauthController extends \yii\web\Controller
         }
 
         return array_merge(array_filter($user->getAttributes()), [
-            'token' => $token
+            'token' => $token,
         ]);
     }
 
@@ -139,6 +140,7 @@ class OauthController extends \yii\web\Controller
         $id = Yii::$app->getUser()->id;
         if (!$id) {
             Yii::$app->user->setReturnUrl(Yii::$app->getRequest()->getUrl());
+
             return $this->redirect(['/site/login']);
         }
 

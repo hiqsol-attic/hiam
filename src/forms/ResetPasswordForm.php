@@ -39,7 +39,7 @@ class ResetPasswordForm extends Model
 
     /**
      * Resets password.
-     * @return boolean if password was reset.
+     * @return boolean if password was reset
      */
     public function resetPassword()
     {

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hiam\tests\units\storage;
 
 use hiam\storage\HiamRemoteUser;
@@ -34,10 +43,10 @@ class HiamRemoteUserTest extends \PHPUnit_Framework_TestCase
     {
         $model = new HiamRemoteUser(['provider' => 'g']);
 
-        $this->assertTrue ($model->isTrustedEmail('some@gmail.com'));
+        $this->assertTrue($model->isTrustedEmail('some@gmail.com'));
         $this->assertFalse($model->isTrustedEmail('some@other.net'));
 
-        $this->assertTrue ($model->isTrustedEmail('some@yandex.ru'));
+        $this->assertTrue($model->isTrustedEmail('some@yandex.ru'));
         $this->assertFalse($model->isTrustedEmail('some@other.net'));
     }
 }

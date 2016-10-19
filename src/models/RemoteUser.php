@@ -11,9 +11,6 @@
 
 namespace hiam\models;
 
-use yii\authclient\ClientInterface;
-use yii\web\IdentityInterface;
-
 /**
  * RemoteUser model.
  *
@@ -81,5 +78,4 @@ class RemoteUser extends ProxyModel
 
         return static::findOne($data) ?: new static($data);
     }
-
 }

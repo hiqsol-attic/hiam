@@ -11,8 +11,6 @@
 
 namespace hiam\storage;
 
-use Yii;
-
 /**
  * Default identity storage model.
  *

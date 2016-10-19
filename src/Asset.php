@@ -17,7 +17,7 @@ use yii\web\AssetBundle;
  * Most basic asset for the app:
  * - own hiam.css
  * - bootstrap+plugins
- * - font-awesome
+ * - font-awesome.
  */
 class Asset extends AssetBundle
 {

@@ -47,6 +47,7 @@ class HiamRemoteUser extends \yii\db\ActiveRecord
     {
         if (strlen($name) === 1) {
             $keys = array_flip(static::$_providers);
+
             return isset($keys[$name]) ? $name : null;
         }
         $key = strtolower($name);

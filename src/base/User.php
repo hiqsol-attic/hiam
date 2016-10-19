@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * Identity and Access Management server providing OAuth2, RBAC and logging
+ *
+ * @link      https://github.com/hiqdev/hiam-core
+ * @package   hiam-core
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ */
+
 namespace hiam\base;
 
 use Yii;
@@ -81,12 +90,14 @@ class User extends \yii\web\User
     public function findIdentity($id, $password = null)
     {
         $class = $this->identityClass;
+
         return $class::findIdentity($id, $password);
     }
 
     public function findIdentityByEmail($email)
     {
         $class = $this->identityClass;
+
         return $class::findIdentityByEmail($email);
     }
 
@@ -131,6 +142,7 @@ class User extends \yii\web\User
     public function getRemoteUser(ClientInterface $client)
     {
         $class = $this->remoteUserClass;
+
         return $class::findOrCreate($client->getId(), $client->getUserAttributes()['id']);
     }
 

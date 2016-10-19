@@ -6,8 +6,7 @@ use yii\helpers\Html;
 /** @var hiam\models\User $user */
 /** @var yii\mail\MessageInterface $message */
 /** @var string $token */
-
-$resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/site/not-allowed-ip', 'token' => (string)$token]);
+$resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/site/not-allowed-ip', 'token' => (string) $token]);
 
 $message->setSubject(Yii::t('hiam', 'Allow IP {ip} for {org}', ['ip' => $token->get('ip'), 'org' => Yii::$app->params['organizationName']]));
 
