@@ -38,7 +38,7 @@ return [
             'disableRestorePassword' => $params['user.disableRestorePassword'],
         ],
         'mailer' => [
-            'class' => \yii\swiftmailer\Mailer::class,
+            'class' => \hiam\base\Mailer::class,
             'viewPath' => '@hiam/mail',
             'useFileTransport' => false,
             'messageClass' => \hiam\base\Message::class,
@@ -70,6 +70,9 @@ return [
                         'restore-password' => $params['user.disableRestorePassword'],
                     ],
                 ],
+            ],
+            'pathMap' => [
+                '$themedViewPaths' => ['@hiam/views'],
             ],
         ],
         'i18n' => [

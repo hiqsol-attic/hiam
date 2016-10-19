@@ -11,11 +11,11 @@ $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 't
 
 $message->setSubject('Password reset for ' . Yii::$app->params['organizationName']);
 
-$message->renderTextBody('passwordResetToken-text', compact('user', 'resetLink'));
+$message->renderTextBody(basename(__FILE__, '.php') . '-text', compact('user', 'resetLink'));
 
 ?>
 <div class="password-reset">
-    <p>Hello <?= Html::encode($user->username) ?>,</p>
+    <p>Hello <?= Html::encode($user->name) ?>,</p>
 
     <p>Follow the link below to reset your password:</p>
 

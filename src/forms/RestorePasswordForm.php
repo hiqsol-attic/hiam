@@ -40,35 +40,13 @@ class RestorePasswordForm extends \yii\base\Model
     }
 
     /**
-     * Sends an email with a link, for resetting the password.
+     * Sends an email with a link for resetting the password.
      * @return boolean whether the email was send
      */
     public function sendEmail()
     {
         $user = Yii::$app->user->findIdentityByEmail($this->email);
 
-        if (!$user) {
-            return false;
-        }
-
-        if (Yii::$app->has('authManager')) {
-            $auth = Yii::$app->authManager;
-            if ($auth->getItem('restore-password') && !$auth->checkAccess($user->id, 'restore-password')) {
-                return false;
-            }
-        }
-
-        $token = Yii::$app->confirmator->issueToken([
-            'action'    => 'restore-password',
-            'email'     => $this->email,
-            'username'  => $user->username,
-            'notAfter'  => '+ 3 days',
-        ])->toString();
-
-        return Yii::$app->mailer->compose()
-            ->renderHtmlBody('passwordResetToken', compact('user', 'token'))
-            ->setTo($this->email)
-            ->send()
-        ;
+        return Yii::$app->mailer->sendToken($user, 'restore-password');
     }
 }
