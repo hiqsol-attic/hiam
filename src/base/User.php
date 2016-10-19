@@ -61,6 +61,23 @@ class User extends \yii\web\User
         Yii::$app->end();
     }
 
+    /**
+     * Registers new user.
+     * @return Identity|null the saved identity or null if saving fails
+     */
+    public function signup($model)
+    {
+        if (!$model->validate()) {
+            return null;
+        }
+        $class = $this->identityClass;
+        $user = new $class();
+        $user->setAttributes($model->getAttributes());
+        $user->username = isset($model->username) ? $model->username : $model->email;
+
+        return $user->save() ? $user : null;
+    }
+
     public function findIdentity($id, $password = null)
     {
         $class = $this->identityClass;

@@ -178,7 +178,7 @@ class SiteController extends \hisite\controllers\SiteController
 
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
+            if ($user = Yii::$app->user->signup($model)) {
                 if (Yii::$app->user->login($user)) {
                     if ($client) {
                         Yii::$app->user->setRemoteUser($client, $user);

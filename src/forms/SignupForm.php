@@ -54,22 +54,6 @@ class SignupForm extends \yii\base\Model
         ];
     }
 
-    /**
-     * Signs user up.
-     * @return Identity|null the saved model or null if saving fails
-     */
-    public function signup()
-    {
-        if (!$this->validate()) {
-            return null;
-        }
-        $user = new Identity;
-        $user->setAttributes($this->getAttributes());
-        $user->username = $this->email;
-
-        return $user->save() ? $user : null;
-    }
-
     public function attributeLabels()
     {
         return [
