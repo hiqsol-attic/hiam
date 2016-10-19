@@ -40,6 +40,8 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
     public $last_name;
     public $first_name;
 
+    public $allowed_ips;
+
     /**
      * {@inheritdoc}
      */
@@ -57,11 +59,18 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
             ['password',        'trim'],
             ['password',        'string', 'min' => 2, 'max' => 64],
 
+            ['allowed_ips',     'string'],
+
             [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
 
             [['first_name', 'last_name'], 'trim'],
             [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
         ];
+    }
+
+    public function getName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function getUserDetails($username)
