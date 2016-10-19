@@ -16,6 +16,7 @@ return [
     'name' => 'HIAM',
     'layout' => 'mini',
     'controllerNamespace' => 'hiam\controllers',
+    'bootstrap' => defined('YII_DEBUG') && YII_DEBUG ? ['debug'] : [],
     'components' => [
         'db' => [
             'class'     => \yii\db\Connection::class,
@@ -110,6 +111,10 @@ return [
                     'always_issue_new_refresh_token' => true,
                 ],
             ],
+        ],
+        'debug' => [
+            'class' => \yii\debug\Module::class,
+            'allowedIPs' => $params['debug.allowedIps'],
         ],
     ],
 ];
