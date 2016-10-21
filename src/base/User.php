@@ -33,6 +33,7 @@ class User extends \yii\web\User
     {
         $this->setHalfUser($identity);
         $this->validateIps($identity);
+        $this->validateTotp($identity);
 
         return parent::login($identity, isset($duration) ? $duration : $this->loginDuration);
     }
@@ -67,6 +68,19 @@ class User extends \yii\web\User
         }
 
         Yii::$app->response->redirect('/site/not-allowed-ip');
+        Yii::$app->end();
+    }
+
+    protected function validateTotp(IdentityInterface $identity)
+    {
+        if (empty($identity->totp_secret)) {
+            return;
+        }
+        if (Yii::$app->getModule('totp')->getIsVerified()) {
+            return;
+        }
+
+        Yii::$app->response->redirect('/totp/totp/check');
         Yii::$app->end();
     }
 

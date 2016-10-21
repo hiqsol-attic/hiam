@@ -41,6 +41,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
     public $first_name;
 
     public $allowed_ips;
+    public $totp_secret;
 
     /**
      * {@inheritdoc}
@@ -59,12 +60,13 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
             ['password',        'trim'],
             ['password',        'string', 'min' => 2, 'max' => 64],
 
-            ['allowed_ips',     'string'],
-
             [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
 
             [['first_name', 'last_name'], 'trim'],
             [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
+
+            ['allowed_ips',     'string'],
+            ['totp_secret',     'string'],
         ];
     }
 
