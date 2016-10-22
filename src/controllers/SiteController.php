@@ -21,6 +21,7 @@ use hisite\actions\RedirectAction;
 use hisite\actions\ValidateAction;
 use Yii;
 use yii\authclient\AuthAction;
+use yii\authclient\ClientInterface;
 use yii\filters\AccessControl;
 
 /**
@@ -41,7 +42,9 @@ class SiteController extends \hisite\controllers\SiteController
             'access' => [
                 'class' => AccessControl::class,
                 'only' => array_merge($actions, ['lockscreen']),
-                'denyCallback' => [$this, 'denyCallback'],
+                'denyCallback' => function () {
+                    return $this->redirect([$this->user->getIsGuest() ? 'login' : 'lockscreen']);
+                },
                 'rules' => [
                     // ? - guest
                     [
@@ -60,17 +63,17 @@ class SiteController extends \hisite\controllers\SiteController
         ]);
     }
 
-    public function denyCallback()
-    {
-        return $this->redirect([$this->user->getIsGuest() ? 'login' : 'lockscreen']);
-    }
-
     public function actions()
     {
         return array_merge(parent::actions(), [
             'auth' => [
                 'class' => AuthAction::class,
-                'successCallback' => [$this, 'successCallback'],
+                'successCallback' => function (ClientInterface $client) {
+                    $user = $this->user->findIdentityByAuthClient($client);
+                    if ($user) {
+                        $this->user->login($user);
+                    }
+                },
             ],
             'lockscreen' => [
                 'class' => RenderAction::class,
@@ -93,14 +96,6 @@ class SiteController extends \hisite\controllers\SiteController
     public function getUser()
     {
         return Yii::$app->user;
-    }
-
-    public function successCallback($client)
-    {
-        $user = $this->user->findIdentityByAuthClient($client);
-        if ($user) {
-            $this->user->login($user);
-        }
     }
 
     public function actionLogin($username = null)
