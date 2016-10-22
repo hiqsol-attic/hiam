@@ -36,7 +36,6 @@ class SiteController extends \hisite\controllers\SiteController
         $actions = [
             'signup', 'login', 'remote-proceed',
             'confirm-password', 'restore-password', 'reset-password',
-            'not-allowed-ip',
         ];
 
         return array_merge(parent::behaviors(), [
@@ -225,7 +224,7 @@ class SiteController extends \hisite\controllers\SiteController
         $model->email = $username;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = Yii::$app->user->findIdentityByEmail($model->email);
-            if (Yii::$app->mailer->sendToken($user, 'restore-password')) {
+            if (Yii::$app->confirmator->mailToken($user, 'restore-password')) {
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Check your email for further instructions.'));
 
                 return $this->goHome();
@@ -254,38 +253,4 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->render('resetPassword', compact('model'));
     }
 
-    public function actionNotAllowedIp($token = null)
-    {
-        $ip = Yii::$app->request->getUserIP();
-        $user = Yii::$app->user->getHalfUser();
-        if ($user && $token === 'send') {
-            if (Yii::$app->mailer->sendToken($user, 'add-allowed-ip', ['ip' => $ip])) {
-                Yii::$app->session->setFlash('success', Yii::t('hiam', 'Check your email for further instructions.'));
-            } else {
-                Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to add allowed IP for the user.'));
-            }
-
-            return $this->goHome();
-        }
-        if ($user && $token) {
-            $token = Yii::$app->confirmator->findToken($token);
-            if ($token && $token->check([
-                'username' => $user->username,
-                'action' => 'add-allowed-ip',
-                'ip' => $ip,
-            ])) {
-                $user->allowed_ips .= $user->allowed_ips ? ',' . $ip : $ip;
-                if ($user->save() && Yii::$app->user->login($user)) {
-                    Yii::$app->session->setFlash('success', Yii::t('hiam', 'Now you are allowed to login from {ip}.', ['ip' => $ip]));
-
-                    return $this->goBack();
-                }
-            }
-            Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to add allowed IP for the user.'));
-
-            return $this->goHome();
-        }
-
-        return $this->render('notAllowedIp');
-    }
 }

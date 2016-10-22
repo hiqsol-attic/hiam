@@ -39,7 +39,6 @@ return [
             'disableRestorePassword' => $params['user.disableRestorePassword'],
         ],
         'mailer' => [
-            'class' => \hiam\base\Mailer::class,
             'viewPath' => '@hiam/mail',
             'useFileTransport' => false,
             'messageClass' => \hiam\base\Message::class,
