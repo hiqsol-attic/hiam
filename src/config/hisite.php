@@ -16,7 +16,7 @@ return [
     'name' => 'HIAM',
     'layout' => 'mini',
     'controllerNamespace' => 'hiam\controllers',
-    'bootstrap' => defined('YII_DEBUG') && YII_DEBUG ? ['debug'] : [],
+    'bootstrap' => defined('YII_DEBUG') && YII_DEBUG ? ['debug' => 'debug'] : [],
     'components' => [
         'db' => [
             'class'     => \yii\db\Connection::class,
