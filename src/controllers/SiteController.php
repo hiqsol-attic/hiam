@@ -18,11 +18,10 @@ use hiam\forms\ResetPasswordForm;
 use hiam\forms\SignupForm;
 use hisite\actions\RenderAction;
 use hisite\actions\RedirectAction;
+use hisite\actions\ValidateAction;
 use Yii;
 use yii\authclient\AuthAction;
 use yii\filters\AccessControl;
-use yii\web\Response;
-use yii\widgets\ActiveForm;
 
 /**
  * Site controller.
@@ -83,6 +82,10 @@ class SiteController extends \hisite\controllers\SiteController
             'terms' => [
                 'class' => RedirectAction::class,
                 'url' => Yii::$app->params['terms_url'],
+            ],
+            'signup-validate' => [
+                'class' => ValidateAction::class,
+                'form' => SignupForm::class,
             ],
         ]);
     }
@@ -200,16 +203,6 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         return $this->render('signup', compact('model'));
-    }
-
-    public function actionSignupValidate()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
-        $model = new SignupForm();
-        $model->load(Yii::$app->request->post());
-
-        return ActiveForm::validate($model);
     }
 
     public function actionRestorePassword($username = null)
