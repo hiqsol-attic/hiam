@@ -16,7 +16,10 @@ return [
     'name' => 'HIAM',
     'layout' => 'mini',
     'controllerNamespace' => 'hiam\controllers',
-    'bootstrap' => defined('YII_DEBUG') && YII_DEBUG ? ['debug' => 'debug'] : [],
+    'bootstrap' => array_filter([
+        'language' => 'language',
+        'debug' => defined('YII_DEBUG') && YII_DEBUG ? 'debug' : null,
+    ]),
     'components' => [
         'db' => [
             'class'     => \yii\db\Connection::class,
@@ -109,6 +112,12 @@ return [
                     'class' => \OAuth2\GrantType\RefreshToken::class,
                     'always_issue_new_refresh_token' => true,
                 ],
+            ],
+        ],
+        'language' => [
+            'languages' => [
+                'ru' => 'Русский',
+                'en' => 'English',
             ],
         ],
         'debug' => [
