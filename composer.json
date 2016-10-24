@@ -55,9 +55,9 @@
         "filsh/yii2-oauth2-server": "2.0.1.x-dev@dev",
         "hiqdev/php-confirmator": "<2.0 || dev-master",
         "hiqdev/yii2-mfa": "<2.0 || dev-master",
-        "hiqdev/yii2-pnotify": "<2.0",
-        "hiqdev/yii2-language": "<2.0",
-        "hiqdev/yii2-hiam-authclient": "<2.0",
+        "hiqdev/yii2-pnotify": "<2.0 || dev-master",
+        "hiqdev/yii2-language": "<2.0 || dev-master",
+        "hiqdev/yii2-hiam-authclient": "<2.0 || dev-master",
         "hiqdev/yii2-theme-adminlte": "<2.0 || dev-master",
         "hiqdev/yii2-asset-icheck": "^1.0",
         "hiqdev/hisite-core": "<2.0 || dev-master"
