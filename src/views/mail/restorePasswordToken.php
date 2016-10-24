@@ -3,9 +3,10 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var hiam\models\User $user */
+/** @var yii\web\IdentityInterface $user */
 /** @var yii\mail\MessageInterface $message */
 /** @var string $token */
+
 $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => (string) $token]);
 
 $message->setSubject(Yii::t('hiam', 'Password reset for {org}', ['org' => Yii::$app->params['organizationName']]));
@@ -14,7 +15,7 @@ $message->renderTextBody(basename(__FILE__, '.php') . '-text', compact('user', '
 
 ?>
 <div class="password-reset">
-    <p><?= Yii::t('hiam', 'Hello {name}', ['name' => Html::encode($user->name)]) ?>,</p>
+    <p><?= Yii::t('hiam', 'Hello {name},', ['name' => Html::encode($user->name)]) ?></p>
 
     <p><?= Yii::t('hiam', 'Follow the link below to reset your password:') ?></p>
 
