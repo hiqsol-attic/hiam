@@ -42,7 +42,9 @@ return [
             'disableRestorePassword' => $params['user.disableRestorePassword'],
         ],
         'mailer' => [
-            'viewPath' => '@hiam/mail',
+            'viewPath' => '@hiam/views/mail',
+            'htmlLayout' => '@hiam/views/layouts/mail-html',
+            'textLayout' => '@hiam/views/layouts/mail-text',
             'useFileTransport' => false,
             'messageClass' => \hiam\base\Message::class,
             'messageConfig' => [

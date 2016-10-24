@@ -2,8 +2,9 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-$this->title = Yii::t('app', 'About');
+/* @var \yii\web\View $this */
+
+$this->title = Yii::t('hiam', 'About');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

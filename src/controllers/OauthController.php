@@ -154,7 +154,7 @@ class OauthController extends \yii\web\Controller
             }
 
             if (!Yii::$app->getRequest()->validateCsrfToken()) {
-                throw new BadRequestHttpException(Yii::t('yii', 'Unable to verify your data submission.'));
+                throw new BadRequestHttpException(Yii::t('hiam', 'Unable to verify your data submission.'));
             }
             $is_authorized = ($_POST['authorized'] === 'yes');
         }
