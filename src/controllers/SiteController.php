@@ -245,5 +245,4 @@ class SiteController extends \hisite\controllers\SiteController
 
         return $this->render('resetPassword', compact('model'));
     }
-
 }

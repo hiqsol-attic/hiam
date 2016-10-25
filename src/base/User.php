@@ -11,7 +11,6 @@
 
 namespace hiam\base;
 
-use Yii;
 use yii\web\IdentityInterface;
 use yii\authclient\ClientInterface;
 

@@ -6,7 +6,6 @@ use yii\helpers\Html;
 /** @var yii\web\IdentityInterface $user */
 /** @var yii\mail\MessageInterface $message */
 /** @var string $token */
-
 $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => (string) $token]);
 
 $message->setSubject(Yii::t('hiam', 'Password reset for {org}', ['org' => Yii::$app->params['organizationName']]));

@@ -1,7 +1,6 @@
 <?php
 
 /** @var yii\web\View $this */
-
 $this->title = Yii::t('hiam', 'Sign in');
 $this->params['breadcrumbs'][] = $this->title;
 
