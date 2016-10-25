@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
     'texts' => [
         'message' => Yii::t('hiam', 'Please fill out the following fields to signup'),
+        'button' => Yii::t('hiam', 'Proceed'),
     ],
     'shows' => [
         'login' => true,

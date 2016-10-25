@@ -35,6 +35,7 @@ return [
     'Please enter your password' => 'Пожалуйста, введите ваш пароль',
     'Please fill out the following fields to signup' => 'Пожалуйста, заполните поля для регистрации',
     'Please fill out your email. A link to reset password will be sent there.' => 'Пожалуйста, введите ваш email. Туда будет отправлена ссылка на восстановление пароля.',
+    'Proceed' => 'Дальше',
     'Remember me' => 'Запомнить меня',
     'Request password reset' => 'Запросить сброс пароля',
     'Reset password' => 'Переустановить пароль',
