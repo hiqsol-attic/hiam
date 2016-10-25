@@ -11,6 +11,8 @@
 
 namespace hiam\base;
 
+use Yii;
+
 class Message extends \yii\swiftmailer\Message
 {
     /**
@@ -25,7 +27,7 @@ class Message extends \yii\swiftmailer\Message
             $params['message'] = $this;
         }
 
-        return $this->setHtmlBody($this->mailer->render($view, $params, $this->mailer->htmlLayout));
+        return $this->setHtmlBody($this->render($view, $params, $this->mailer->htmlLayout));
     }
 
     /**
@@ -40,6 +42,29 @@ class Message extends \yii\swiftmailer\Message
             $params['message'] = $this;
         }
 
-        return $this->setTextBody($this->mailer->render($view, $params, $this->mailer->textLayout));
+        return $this->setTextBody($this->render($view, $params, $this->mailer->textLayout));
+    }
+
+    /**
+     * Renders the specified view with optional parameters and layout.
+     * The view will be rendered using the [[view]] component.
+     * @param string $view the view name or the path alias of the view file.
+     * @param array $params the parameters (name-value pairs) that will be extracted and made available in the view file.
+     * @param string|boolean $layout layout view name or path alias. If false, no layout will be applied.
+     * @return string the rendering result.
+     */
+    public function render($view, $params = [], $layout = false)
+    {
+        $output = $this->getView()->render($view, $params, $this->mailer);
+        if ($layout !== false) {
+            return $this->getView()->render($layout, ['content' => $output, 'message' => $this], $this->mailer);
+        } else {
+            return $output;
+        }
+    }
+
+    public function getView()
+    {
+        return Yii::$app->getView();
     }
 }
