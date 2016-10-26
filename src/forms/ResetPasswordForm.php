@@ -33,7 +33,7 @@ class ResetPasswordForm extends Model
             ['password', 'string', 'min' => 6],
 
             ['password_retype', 'required'],
-            ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+            ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => Yii::t('hiam', "Passwords don't match.")],
         ];
     }
 

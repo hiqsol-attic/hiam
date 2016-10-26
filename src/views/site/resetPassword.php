@@ -10,6 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'class' => 'LoginForm',
     'model' => $model,
     'texts' => [
+        'header' => '',
         'message' => Yii::t('hiam', 'Please choose your new password'),
     ],
 ]) ?>
