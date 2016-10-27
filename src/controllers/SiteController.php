@@ -229,20 +229,44 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->render('restorePassword', compact('model'));
     }
 
-    public function actionResetPassword()
+    public function actionResetPassword($token = null)
     {
         $model = new ResetPasswordForm();
+        $reset = $this->resetPassword($model, $token);
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->resetPassword()) {
-                Yii::$app->session->setFlash('success', 'New password was saved.');
+        if (isset($reset)) {
+            if ($reset) {
+                Yii::$app->session->setFlash('success', Yii::t('hiam', 'New password was saved.'));
             } else {
-                Yii::$app->session->setFlash('error', 'Failed reset password. Please start over.');
+                Yii::$app->session->setFlash('error', Yii::t('hiam', 'Failed reset password. Please start over.'));
             }
-
             return $this->goHome();
         }
 
-        return $this->render('resetPassword', compact('model'));
+        return $this->render('resetPassword', compact('model', 'token'));
+    }
+
+    public function resetPassword($model, $token)
+    {
+        $token = Yii::$app->confirmator->findToken($token);
+        if (!$token || !$token->check(['action' => 'restore-password'])) {
+            return false;
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user = $this->user->findIdentity($token->get('username'));
+            if (!$user) {
+                return false;
+            }
+            $user->password = $model->password;
+            $res = $user->save();
+            if ($res) {
+                $token->remove();
+            }
+
+            return $res;
+        }
+
+        return null;
     }
 }

@@ -13,4 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'header' => '',
         'message' => Yii::t('hiam', 'Please choose your new password'),
     ],
+    'options' => [
+        'action' => ['token' => (string) $token],
+    ],
 ]) ?>

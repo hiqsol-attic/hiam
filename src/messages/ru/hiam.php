@@ -1,14 +1,4 @@
 <?php
-
-/*
- * Identity and Access Management server providing OAuth2, RBAC and logging
- *
- * @link      https://github.com/hiqdev/hiam-core
- * @package   hiam-core
- * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
- */
-
 /**
  * Message translations.
  *
@@ -31,12 +21,14 @@ return [
     'Check your email for further instructions.' => 'Проверьте вашу электронную почту для получения дальнейших инструкций.',
     'Confirm password' => 'Подтвердите пароль',
     'Email' => 'Email',
+    'Failed reset password. Please start over.' => 'Не удалось переустановить пароль. Пожалуйста, попробуйте всё сначала.',
     'First Name' => 'Имя',
     'Follow the link below to reset your password:' => 'Перейдите по ссылке ниже чтобы переустановить ваш пароль:',
     'Hello {name},' => 'Здравствуйте, {name}!',
     'I agree to the' => 'Я согласен с',
     'Last Name' => 'Фамилия',
     'Login or Email' => 'Логин или Email',
+    'New password was saved.' => 'Новый пароль был сохранён.',
     'Password' => 'Пароль',
     'Password reset for {org}' => 'Восстановление пароля {org}',
     'Passwords don\'t match.' => 'Пароли не совпадают.',
