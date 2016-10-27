@@ -1,7 +1,7 @@
 HIAM
 ====
 
-**Identity and Access Management server providing OAuth2, RBAC and logging**
+**Identity and Access Management server providing OAuth2, multi-factor authentication and more**
 
 [![Latest Stable Version](https://poser.pugx.org/hiqdev/hiam-core/v/stable)](https://packagist.org/packages/hiqdev/hiam-core)
 [![Total Downloads](https://poser.pugx.org/hiqdev/hiam-core/downloads)](https://packagist.org/packages/hiqdev/hiam-core)
@@ -16,17 +16,19 @@ Provides:
 
 - [OAuth2](https://oauth.net/2/) server
 - [multi-factor authentication](https://en.wikipedia.org/wiki/Multi-factor_authentication) with:
-    - limiting access from user allowed IPs only
     - Google Authenticator compatible [TOTP](https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm)
+    - limited access from user allowed IPs only
 - Social login with Facebook, Google, VK, LinkedIn, GitHub, Live, Yandex
 - [RBAC](https://en.wikipedia.org/wiki/Role-based_access_control) - Role Based Access Control
-- Full activity logging with searching and reporting
+- Full activity logging with searching and reporting (planned)
 
 Based on:
 
-- [yiisoft/yii2](https://github.com/yiisoft/yii2)
+- [yiisoft/yii2](https://github.com/yiisoft/yii2) - Yii2 PHP framework
 - [yiisoft/yii2-authclient](https://github.com/yiisoft/yii2-authclient) - social login
 - [bshaffer/oauth2-server-php](https://github.com/bshaffer/oauth2-server-php) - OAuth2 server
+- [hiqdev/yii2-mfa](https://github.com/hiqdev/yii2-mfa) - multi-factor authentication
+- [hiqdev/php-confirmator](https://github.com/hiqdev/php-confirmator) - confirmation tokens
 
 ## Installation
 

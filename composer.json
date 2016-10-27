@@ -1,11 +1,13 @@
 {
     "name": "hiqdev/hiam-core",
     "type": "yii2-extension",
-    "description": "Identity and Access Management server providing OAuth2, RBAC and logging",
+    "description": "Identity and Access Management server providing OAuth2, multi-factor authentication and more",
     "keywords": [
         "iam",
         "oauth2",
         "rbac",
+        "multi-factor",
+        "two-factor",
         "authentication",
         "authorization",
         "audit",
