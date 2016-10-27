@@ -1,8 +1,13 @@
 hiqdev/hiam-core
 ----------------
 
-## [Under development]
+## [0.0.3] - 2016-10-27
 
+- Fixed restore password
+- Added translation to russian
+- Changed: redone with use of `hiqdev/yii2-mfa`
+- Added use of `hidev/php-confirmator` for confirmation tokens
+- Changed: redone to be generally usable
 - Changed: redone to hisite
 - Fixed signup and password reminding
 - Changed: redone with composer-config-plugin

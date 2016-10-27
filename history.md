@@ -1,9 +1,10 @@
 hiqdev/hiam-core
 ----------------
 
-## [Under development]
+## [0.0.3] - 2016-10-27
 
 - Fixed restore password
+    - [c7ec8ef] 2016-10-27 improved description [sol@hiqdev.com]
     - [4f693e1] 2016-10-27 finished restore/reset password [sol@hiqdev.com]
 - Added translation to russian
     - [d53afc0] 2016-10-27 csfixed [sol@hiqdev.com]
@@ -482,3 +483,4 @@ hiqdev/hiam-core
 [c4f1143]: https://github.com/hiqdev/hiam-core/commit/c4f1143
 [6f259df]: https://github.com/hiqdev/hiam-core/commit/6f259df
 [7f29249]: https://github.com/hiqdev/hiam-core/commit/7f29249
+[c7ec8ef]: https://github.com/hiqdev/hiam-core/commit/c7ec8ef
