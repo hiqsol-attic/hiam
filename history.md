@@ -3,6 +3,100 @@ hiqdev/hiam-core
 
 ## [Under development]
 
+- Fixed restore password
+    - [4f693e1] 2016-10-27 finished restore/reset password [sol@hiqdev.com]
+- Added translation to russian
+    - [d53afc0] 2016-10-27 csfixed [sol@hiqdev.com]
+    - [7482f9a] 2016-10-25 csfixed [sol@hiqdev.com]
+    - [4359d09] 2016-10-25 translations [sol@hiqdev.com]
+    - [bda5e2b] 2016-10-25 added translations [sol@hiqdev.com]
+    - [aecdaaa] 2016-10-25 added all views, moved from hisite-core [sol@hiqdev.com]
+    - [7004f83] 2016-10-25 changed mail rendering, used main View instead of mail own, moved mailer config to hisite-core [sol@hiqdev.com]
+    - [3a78c72] 2016-10-24 moved mail templates to views/mail and added translations [sol@hiqdev.com]
+    - [919cbd3] 2016-10-24 adding translations [sol@hiqdev.com]
+    - [d6189ab] 2016-10-24 added language bootstrapping [sol@hiqdev.com]
+- Changed: redone with use of `hiqdev/yii2-mfa`
+    - [e066369] 2016-10-24 preparing release [sol@hiqdev.com]
+    - [d437448] 2016-10-22 moved notAllowedIp view to yii2-mfa [sol@hiqdev.com]
+    - [8589bce] 2016-10-22 enabling debug [sol@hiqdev.com]
+    - [2b643b5] 2016-10-22 inlined callbacks in SiteController [sol@hiqdev.com]
+    - [1f8b5cb] 2016-10-22 added and used getUser in SiteController [sol@hiqdev.com]
+    - [d1c1325] 2016-10-22 used ValidateAction for signup-validate action [sol@hiqdev.com]
+    - [7cfbd11] 2016-10-22 removed Mailer, sendToken -> confirmator mailToken, moved totp and allowed ips checking to yii2-mfa [sol@hiqdev.com]
+    - [ceb33a6] 2016-10-21 redoing yii2-totp to yii2-mfa [sol@hiqdev.com]
+    - [bd4ff1c] 2016-10-21 added TOTP validation [sol@hiqdev.com]
+    - [f1c9b95] 2016-10-21 Changed footer-copyright css styled, removed position absolute [andreyklochok@gmail.com]
+    - [f61ebb3] 2016-10-19 + require `yii2-totp` [sol@hiqdev.com]
+- Added use of `hidev/php-confirmator` for confirmation tokens
+    - [fc5b59f] 2016-10-13 used confirmator for restore password token [sol@hiqdev.com]
+- Changed: redone to be generally usable
+    - [29dd03f] 2016-10-19 removed unused ContactForm [sol@hiqdev.com]
+    - [513254c] 2016-10-19 csfixed [sol@hiqdev.com]
+    - [2ddd559] 2016-10-19 fixed tests [sol@hiqdev.com]
+    - [5e12dc1] 2016-10-19 moved signup() to user component from SignupForm [sol@hiqdev.com]
+    - [d312c8a] 2016-10-19 added allowed ip validation and adding [sol@hiqdev.com]
+    - [70c23f6] 2016-10-19 improved about page [sol@hiqdev.com]
+    - [4bce645] 2016-10-19 + debug config [sol@hiqdev.com]
+    - [9c6a2b2] 2016-10-19 + Mailer with sendToken, used in RestorePasswordForm, renamed passwordResetToken -> restorePasswordToken for consistency [sol@hiqdev.com]
+    - [91eb95b] 2016-10-19 + getName to Identity [sol@hiqdev.com]
+    - [fe83efc] 2016-10-18 fixed HiamRemoteUser with added rules [sol@hiqdev.com]
+    - [67db162] 2016-10-18 removed last seller mentions [sol@hiqdev.com]
+    - [b7df6f1] 2016-10-18 moved ProxyModel to models [sol@hiqdev.com]
+    - [6271789] 2016-10-18 splitted out forms from models [sol@hiqdev.com]
+    - [c8932ef] 2016-10-18 redone confirm -> confirmPassword, added confirmPasswordForm [sol@hiqdev.com]
+    - [f6e67b0] 2016-10-18 improved readme [sol@hiqdev.com]
+    - [8a46dc8] 2016-10-18 added default identity storage class HiamIdentity, removed mrdp specific storage classes [sol@hiqdev.com]
+    - [3709de8] 2016-10-18 redone with ProxyModel [sol@hiqdev.com]
+    - [b14dc25] 2016-10-17 + `seller_id` to ClientQuery [sol@hiqdev.com]
+    - [78ddd05] 2016-10-17 removed name, added `first_name` and `last_name`, returned back seller [sol@hiqdev.com]
+    - [9c53efa] 2016-10-17 removed `seller/_id` from Identity [sol@hiqdev.com]
+    - [8b0b9bb] 2016-10-17 fixed rememberMe -> `remember_me` [sol@hiqdev.com]
+    - [c15c0bf] 2016-10-17 + `site/terms` action [sol@hiqdev.com]
+    - [02f4b9b] 2016-10-17 renamed findByEmail -> findIdentityByEmail [sol@hiqdev.com]
+    - [dfe5dd3] 2016-10-17 refactored findIdentity -> findIdentityByToken in OauthController, added returning token in `oauth/resource` action, fixed typo in isAuthorizedClient [sol@hiqdev.com]
+    - [f8bbc50] 2016-10-14 require `robthree/twofactorauth` instead of phpgangsta [sol@hiqdev.com]
+    - [a8968a7] 2016-10-14 + require `phpgangsta/googleauthenticator` for two factor authorization [sol@hiqdev.com]
+    - [28f0ec6] 2016-10-14 added attributeLabels to forms [sol@hiqdev.com]
+    - [1b28077] 2016-10-13 simplified login and reset-password actions [sol@hiqdev.com]
+    - [b1345f7] 2016-10-12 + require `hiqdev/php-confirmator` [sol@hiqdev.com]
+    - [13eea6d] 2016-10-11 reorganized RemoteUser [sol@hiqdev.com]
+    - [09daf33] 2016-10-11 added basic RemoteUser tests [sol@hiqdev.com]
+    - [b33555f] 2016-10-11 + tests namespace [sol@hiqdev.com]
+    - [6fd1972] 2016-10-10 renamed request password reset -> restore password [sol@hiqdev.com]
+    - [66db0bd] 2016-10-10 renamed disallowSignup/RestorePassword -> disable [sol@hiqdev.com]
+    - [f0e290e] 2016-10-10 simplified LoginForm, moved logic to controller [sol@hiqdev.com]
+    - [b40c8f0] 2016-10-10 improved use of findIdentity [sol@hiqdev.com]
+    - [9b8923f] 2016-10-09 added disallowSignup and disallowRestorePassword [sol@hiqdev.com]
+    - [b15d117] 2016-10-08 added disallowSignup config option [sol@hiqdev.com]
+    - [b6d93fa] 2016-10-07 + check access for restore-password if available [sol@hiqdev.com]
+    - [e2dc3d2] 2016-10-06 fixed sending password reset token mail [sol@hiqdev.com]
+    - [7fe9d03] 2016-10-06 enabled mailing [sol@hiqdev.com]
+    - [148be43] 2016-10-06 fixed signup again [sol@hiqdev.com]
+    - [3e4793b] 2016-10-05 added translations [sol@hiqdev.com]
+    - [b146af5] 2016-10-05 separated models and storage [sol@hiqdev.com]
+    - [77d4861] 2016-10-04 renamed findUser -> findIdentity [sol@hiqdev.com]
+    - [6a9ff3c] 2016-10-04 renamed back role -> type [sol@hiqdev.com]
+    - [d14e5a2] 2016-10-04 fixed signup [sol@hiqdev.com]
+    - [28f36e1] 2016-10-04 improved UserQuery with andWhere [sol@hiqdev.com]
+    - [041ed81] 2016-10-04 BIG redone of User with UserQuery, removed login, `seller_id`, `type_id`, `state_id` [sol@hiqdev.com]
+    - [3d5f5aa] 2016-10-04 used User::findByEmail [sol@hiqdev.com]
+    - [4f8b6a7] 2016-10-04 fixed RemoteUser::set [sol@hiqdev.com]
+    - [e90b3a4] 2016-10-03 used ClientInterface [sol@hiqdev.com]
+    - [e79cd05] 2016-10-03 removed authManager [sol@hiqdev.com]
+    - [f183798] 2016-10-03 removed old junk [sol@hiqdev.com]
+    - [0829300] 2016-09-28 yii don't follow semver [sol@hiqdev.com]
+    - [7497d69] 2016-09-28 + require `hiqdev/yii2-pnotify` [sol@hiqdev.com]
+    - [0031ade] 2016-09-28 + empty scope for GitHub oauth to require only read-only access [sol@hiqdev.com]
+    - [559b5f5] 2016-09-28 added catching exception from getUserAttributes [sol@hiqdev.com]
+    - [888f43e] 2016-09-21 simplified SiteController, extended from hisite [sol@hiqdev.com]
+    - [d90276b] 2016-09-19 + enforce state for oauth2 [sol@hiqdev.com]
+    - [398956a] 2016-09-20 Added footer-copyright class to css [andreyklochok@gmail.com]
+    - [38a60b8] 2016-09-15 used filsh/yii2-oauth2-server version 2.0.1.x-dev@dev [sol@hiqdev.com]
+    - [5e28cc4] 2016-09-15 fixed typo [sol@hiqdev.com]
+    - [1870e4b] 2016-09-15 fixed requirements constraint for filsh/yii2-oauth2-server [sol@hiqdev.com]
+    - [c4f1143] 2016-09-15 added hiam.authorizedClients param option [sol@hiqdev.com]
+    - [6f259df] 2016-09-14 removed Alert widget [sol@hiqdev.com]
+    - [7f29249] 2016-09-03 redone bumping with `chkipper` [sol@hiqdev.com]
 - Changed: redone to hisite
     - [49b442c] 2016-09-03 used empty <- isset [sol@hiqdev.com]
     - [c2333ce] 2016-09-03 used empty instead of isset [sol@hiqdev.com]
@@ -299,3 +393,92 @@ hiqdev/hiam-core
 [fdd4899]: https://github.com/hiqdev/hiam-core/commit/fdd4899
 [c2bf0ad]: https://github.com/hiqdev/hiam-core/commit/c2bf0ad
 [4ff5d91]: https://github.com/hiqdev/hiam-core/commit/4ff5d91
+[d53afc0]: https://github.com/hiqdev/hiam-core/commit/d53afc0
+[4f693e1]: https://github.com/hiqdev/hiam-core/commit/4f693e1
+[7482f9a]: https://github.com/hiqdev/hiam-core/commit/7482f9a
+[4359d09]: https://github.com/hiqdev/hiam-core/commit/4359d09
+[bda5e2b]: https://github.com/hiqdev/hiam-core/commit/bda5e2b
+[aecdaaa]: https://github.com/hiqdev/hiam-core/commit/aecdaaa
+[7004f83]: https://github.com/hiqdev/hiam-core/commit/7004f83
+[3a78c72]: https://github.com/hiqdev/hiam-core/commit/3a78c72
+[919cbd3]: https://github.com/hiqdev/hiam-core/commit/919cbd3
+[d6189ab]: https://github.com/hiqdev/hiam-core/commit/d6189ab
+[e066369]: https://github.com/hiqdev/hiam-core/commit/e066369
+[d437448]: https://github.com/hiqdev/hiam-core/commit/d437448
+[8589bce]: https://github.com/hiqdev/hiam-core/commit/8589bce
+[2b643b5]: https://github.com/hiqdev/hiam-core/commit/2b643b5
+[1f8b5cb]: https://github.com/hiqdev/hiam-core/commit/1f8b5cb
+[d1c1325]: https://github.com/hiqdev/hiam-core/commit/d1c1325
+[7cfbd11]: https://github.com/hiqdev/hiam-core/commit/7cfbd11
+[ceb33a6]: https://github.com/hiqdev/hiam-core/commit/ceb33a6
+[bd4ff1c]: https://github.com/hiqdev/hiam-core/commit/bd4ff1c
+[f1c9b95]: https://github.com/hiqdev/hiam-core/commit/f1c9b95
+[f61ebb3]: https://github.com/hiqdev/hiam-core/commit/f61ebb3
+[29dd03f]: https://github.com/hiqdev/hiam-core/commit/29dd03f
+[513254c]: https://github.com/hiqdev/hiam-core/commit/513254c
+[2ddd559]: https://github.com/hiqdev/hiam-core/commit/2ddd559
+[5e12dc1]: https://github.com/hiqdev/hiam-core/commit/5e12dc1
+[d312c8a]: https://github.com/hiqdev/hiam-core/commit/d312c8a
+[70c23f6]: https://github.com/hiqdev/hiam-core/commit/70c23f6
+[4bce645]: https://github.com/hiqdev/hiam-core/commit/4bce645
+[9c6a2b2]: https://github.com/hiqdev/hiam-core/commit/9c6a2b2
+[91eb95b]: https://github.com/hiqdev/hiam-core/commit/91eb95b
+[fe83efc]: https://github.com/hiqdev/hiam-core/commit/fe83efc
+[67db162]: https://github.com/hiqdev/hiam-core/commit/67db162
+[b7df6f1]: https://github.com/hiqdev/hiam-core/commit/b7df6f1
+[6271789]: https://github.com/hiqdev/hiam-core/commit/6271789
+[c8932ef]: https://github.com/hiqdev/hiam-core/commit/c8932ef
+[f6e67b0]: https://github.com/hiqdev/hiam-core/commit/f6e67b0
+[8a46dc8]: https://github.com/hiqdev/hiam-core/commit/8a46dc8
+[3709de8]: https://github.com/hiqdev/hiam-core/commit/3709de8
+[b14dc25]: https://github.com/hiqdev/hiam-core/commit/b14dc25
+[78ddd05]: https://github.com/hiqdev/hiam-core/commit/78ddd05
+[9c53efa]: https://github.com/hiqdev/hiam-core/commit/9c53efa
+[8b0b9bb]: https://github.com/hiqdev/hiam-core/commit/8b0b9bb
+[c15c0bf]: https://github.com/hiqdev/hiam-core/commit/c15c0bf
+[02f4b9b]: https://github.com/hiqdev/hiam-core/commit/02f4b9b
+[dfe5dd3]: https://github.com/hiqdev/hiam-core/commit/dfe5dd3
+[f8bbc50]: https://github.com/hiqdev/hiam-core/commit/f8bbc50
+[a8968a7]: https://github.com/hiqdev/hiam-core/commit/a8968a7
+[28f0ec6]: https://github.com/hiqdev/hiam-core/commit/28f0ec6
+[fc5b59f]: https://github.com/hiqdev/hiam-core/commit/fc5b59f
+[1b28077]: https://github.com/hiqdev/hiam-core/commit/1b28077
+[b1345f7]: https://github.com/hiqdev/hiam-core/commit/b1345f7
+[13eea6d]: https://github.com/hiqdev/hiam-core/commit/13eea6d
+[09daf33]: https://github.com/hiqdev/hiam-core/commit/09daf33
+[b33555f]: https://github.com/hiqdev/hiam-core/commit/b33555f
+[6fd1972]: https://github.com/hiqdev/hiam-core/commit/6fd1972
+[66db0bd]: https://github.com/hiqdev/hiam-core/commit/66db0bd
+[f0e290e]: https://github.com/hiqdev/hiam-core/commit/f0e290e
+[b40c8f0]: https://github.com/hiqdev/hiam-core/commit/b40c8f0
+[9b8923f]: https://github.com/hiqdev/hiam-core/commit/9b8923f
+[b15d117]: https://github.com/hiqdev/hiam-core/commit/b15d117
+[b6d93fa]: https://github.com/hiqdev/hiam-core/commit/b6d93fa
+[e2dc3d2]: https://github.com/hiqdev/hiam-core/commit/e2dc3d2
+[7fe9d03]: https://github.com/hiqdev/hiam-core/commit/7fe9d03
+[148be43]: https://github.com/hiqdev/hiam-core/commit/148be43
+[3e4793b]: https://github.com/hiqdev/hiam-core/commit/3e4793b
+[b146af5]: https://github.com/hiqdev/hiam-core/commit/b146af5
+[77d4861]: https://github.com/hiqdev/hiam-core/commit/77d4861
+[6a9ff3c]: https://github.com/hiqdev/hiam-core/commit/6a9ff3c
+[d14e5a2]: https://github.com/hiqdev/hiam-core/commit/d14e5a2
+[28f36e1]: https://github.com/hiqdev/hiam-core/commit/28f36e1
+[041ed81]: https://github.com/hiqdev/hiam-core/commit/041ed81
+[3d5f5aa]: https://github.com/hiqdev/hiam-core/commit/3d5f5aa
+[4f8b6a7]: https://github.com/hiqdev/hiam-core/commit/4f8b6a7
+[e90b3a4]: https://github.com/hiqdev/hiam-core/commit/e90b3a4
+[e79cd05]: https://github.com/hiqdev/hiam-core/commit/e79cd05
+[f183798]: https://github.com/hiqdev/hiam-core/commit/f183798
+[0829300]: https://github.com/hiqdev/hiam-core/commit/0829300
+[7497d69]: https://github.com/hiqdev/hiam-core/commit/7497d69
+[0031ade]: https://github.com/hiqdev/hiam-core/commit/0031ade
+[559b5f5]: https://github.com/hiqdev/hiam-core/commit/559b5f5
+[888f43e]: https://github.com/hiqdev/hiam-core/commit/888f43e
+[d90276b]: https://github.com/hiqdev/hiam-core/commit/d90276b
+[398956a]: https://github.com/hiqdev/hiam-core/commit/398956a
+[38a60b8]: https://github.com/hiqdev/hiam-core/commit/38a60b8
+[5e28cc4]: https://github.com/hiqdev/hiam-core/commit/5e28cc4
+[1870e4b]: https://github.com/hiqdev/hiam-core/commit/1870e4b
+[c4f1143]: https://github.com/hiqdev/hiam-core/commit/c4f1143
+[6f259df]: https://github.com/hiqdev/hiam-core/commit/6f259df
+[7f29249]: https://github.com/hiqdev/hiam-core/commit/7f29249
