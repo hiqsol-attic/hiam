@@ -240,6 +240,7 @@ class SiteController extends \hisite\controllers\SiteController
             } else {
                 Yii::$app->session->setFlash('error', Yii::t('hiam', 'Failed reset password. Please start over.'));
             }
+
             return $this->goHome();
         }
 
