@@ -61,10 +61,7 @@ return [
             ],
         ],
         'themeManager' => [
-            'assets' => [
-                \hiam\Asset::class,
-                \hiqdev\assets\icheck\iCheckAsset::class,
-            ],
+            'assets' => [],
             'widgets' => [
                 'LoginForm' => [
                     'disables' => [
