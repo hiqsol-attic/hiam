@@ -12,6 +12,7 @@
 $authClients = require __DIR__ . '/authClients.php';
 
 return [
+    'class' => \hiam\base\Application::class,
     'id' => 'hiam',
     'name' => 'HIAM',
     'layout' => 'mini',
