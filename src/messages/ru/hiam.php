@@ -61,4 +61,5 @@ return [
     'Unable to verify your data submission.' => 'Не удалось проверить переданные данные.',
     'Your account has been successfully created.' => 'Аккаунт был создан успешно.',
     'terms' => 'правилами',
+    'The entered value is not an email address.' => 'Введенное значение не является емейл адресом.',
 ];

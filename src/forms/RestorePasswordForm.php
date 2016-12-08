@@ -27,7 +27,7 @@ class RestorePasswordForm extends \yii\base\Model
     {
         return [
             ['email', 'trim'],
-            ['email', 'email'],
+            ['email', 'email', 'message' => Yii::t('hiam', 'The entered value is not an email address.')],
             ['email', 'required'],
         ];
     }
