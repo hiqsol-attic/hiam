@@ -109,12 +109,20 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
             $cond['password'] = $password;
         }
 
-        return static::findOne($cond);
+        return static::findActive($cond);
     }
 
     public static function findIdentityByEmail($email)
     {
-        return static::findOne(compact('email'));
+        return static::findActive(compact('email'));
+    }
+
+    /**
+     * This function is here for redifining to change behaviour.
+     */
+    public static function findActive($cond)
+    {
+        return static::findOne($cond);
     }
 
     public static function primaryKey()
@@ -130,23 +138,6 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
         $token = OauthAccessTokens::findOne(compact('access_token'));
 
         return static::findIdentity($token->user_id);
-    }
-
-    /**
-     * Finds out if password reset token is valid.
-     * @param string $token password reset token
-     * @return boolean
-     */
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        $parts = explode('_', $token);
-        $timestamp = (int) end($parts);
-
-        return $timestamp + $expire >= time();
     }
 
     /**
