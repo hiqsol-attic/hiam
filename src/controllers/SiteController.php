@@ -285,6 +285,6 @@ class SiteController extends \hisite\controllers\SiteController
             $this->user->login($user);
         }
 
-        return $this->goHome();
+        return $this->goBack();
     }
 }
