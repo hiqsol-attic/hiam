@@ -1,7 +1,6 @@
 <?php
-
-/*
- * Identity and Access Management server providing OAuth2, RBAC and logging
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
  *
  * @link      https://github.com/hiqdev/hiam-core
  * @package   hiam-core

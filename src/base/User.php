@@ -1,7 +1,6 @@
 <?php
-
-/*
- * Identity and Access Management server providing OAuth2, RBAC and logging
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
  *
  * @link      https://github.com/hiqdev/hiam-core
  * @package   hiam-core
@@ -11,8 +10,8 @@
 
 namespace hiam\base;
 
-use yii\web\IdentityInterface;
 use yii\authclient\ClientInterface;
+use yii\web\IdentityInterface;
 
 class User extends \yii\web\User
 {
@@ -109,9 +108,9 @@ class User extends \yii\web\User
 
     public function getStorageClass($name)
     {
-        if ($name == $this->identityClass) {
+        if ($name === $this->identityClass) {
             $name = 'identity';
-        } elseif ($name == $this->remoteUserClass) {
+        } elseif ($name === $this->remoteUserClass) {
             $name = 'remoteUser';
         }
         if (!isset($this->storageClasses[$name])) {

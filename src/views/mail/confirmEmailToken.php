@@ -6,7 +6,6 @@ use yii\helpers\Html;
 /** @var yii\web\IdentityInterface $user */
 /** @var yii\mail\MessageInterface $message */
 /** @var string $token */
-
 $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['site/confirm-email', 'token' => (string) $token]);
 
 $message->setSubject(Yii::t('hiam', '[{org}] Please confirm your email address', ['org' => Yii::$app->params['organizationName']]));

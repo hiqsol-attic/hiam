@@ -1,7 +1,6 @@
 <?php
-
-/*
- * Identity and Access Management server providing OAuth2, RBAC and logging
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
  *
  * @link      https://github.com/hiqdev/hiam-core
  * @package   hiam-core
@@ -11,13 +10,13 @@
 
 namespace hiam\controllers;
 
-use hiam\forms\LoginForm;
 use hiam\forms\ConfirmPasswordForm;
-use hiam\forms\RestorePasswordForm;
+use hiam\forms\LoginForm;
 use hiam\forms\ResetPasswordForm;
+use hiam\forms\RestorePasswordForm;
 use hiam\forms\SignupForm;
-use hisite\actions\RenderAction;
 use hisite\actions\RedirectAction;
+use hisite\actions\RenderAction;
 use hisite\actions\ValidateAction;
 use Yii;
 use yii\authclient\AuthAction;

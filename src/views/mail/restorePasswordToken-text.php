@@ -3,7 +3,6 @@
 /** @var yii\web\View $this */
 /** @var yii\web\IdentityInterface $user */
 /** @var string $resetLink */
-
 ?>
 <?= Yii::t('hiam', 'Hello {name},', ['name' => $user->name]) ?>
 
