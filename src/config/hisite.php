@@ -40,6 +40,7 @@ return [
             'enableAutoLogin' => $params['user.enableAutoLogin'],
             'disableSignup'   => $params['user.disableSignup'],
             'disableRestorePassword' => $params['user.disableRestorePassword'],
+            'on beforeLogin'  => [[\hiam\models\Identity::class, 'onBeforeLogin']],
         ],
         'mailer' => [
             'useFileTransport' => false,

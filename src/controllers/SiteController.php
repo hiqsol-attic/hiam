@@ -270,4 +270,21 @@ class SiteController extends \hisite\controllers\SiteController
 
         return null;
     }
+
+    public function actionConfirmEmail($token)
+    {
+        $token = Yii::$app->confirmator->findToken($token);
+        if ($token && $token->check(['action' => 'confirm-email'])) {
+            $user = $this->user->findIdentity($token->get('username'));
+        }
+        if (empty($user)) {
+            Yii::$app->session->setFlash('error', Yii::t('hiam', 'Failed confirm email. Please start over.'));
+        } else {
+            $user->setEmailConfirmed($token->get('email'));
+            Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your email was confirmed.'));
+            $this->user->login($user);
+        }
+
+        return $this->goHome();
+    }
 }

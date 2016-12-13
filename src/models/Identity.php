@@ -14,6 +14,7 @@ namespace hiam\models;
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
+use yii\base\Event;
 use yii\web\IdentityInterface;
 
 /**
@@ -192,5 +193,43 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
     public function generatePasswordResetToken()
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    /**
+     * This function is here for redifining to change behaviour.
+     * @see beforeLogin
+     */
+    public function isEmailConfirmed()
+    {
+        return true;
+    }
+
+    public function setEmailConfirmed()
+    {
+        return true;
+    }
+
+    public static function onBeforeLogin(Event $event)
+    {
+        return static::beforeLogin($event);
+    }
+
+    public static function beforeLogin(Event $event)
+    {
+        $identity = $event->identity;
+        if ($identity->isEmailConfirmed()) {
+            return;
+        }
+        if (Yii::$app->confirmator->mailToken($identity, 'confirm-email')) {
+            Yii::$app->session->setFlash('error',
+                Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
+                Yii::t('hiam', 'An email with confirmation instructions was sent to <b>{email}</b>', ['email' => $identity->email])
+            );
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to confirm your email.'));
+        }
+
+        Yii::$app->response->redirect(Yii::$app->getHomeUrl());
+        Yii::$app->end();
     }
 }
