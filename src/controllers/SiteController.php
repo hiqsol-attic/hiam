@@ -281,7 +281,7 @@ class SiteController extends \hisite\controllers\SiteController
             Yii::$app->session->setFlash('error', Yii::t('hiam', 'Failed confirm email. Please start over.'));
         } else {
             $user->setEmailConfirmed($token->get('email'));
-            Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your email was confirmed.'));
+            Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your email was confirmed!'));
             $this->user->login($user);
         }
 
