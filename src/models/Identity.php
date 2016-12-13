@@ -213,6 +213,9 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
         return static::beforeLogin($event);
     }
 
+    /**
+     * This function is here for redifining to change behaviour.
+     */
     public static function beforeLogin(Event $event)
     {
         $identity = $event->identity;
