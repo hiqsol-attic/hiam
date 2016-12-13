@@ -45,6 +45,13 @@ hiqdev/hiam-core
 
 ## [Development started] - 2014-12-13
 
+[@hiqsol]: https://github.com/hiqsol
+[sol@hiqdev.com]: https://github.com/hiqsol
+[andrii.vasyliev@gmail.com]: https://github.com/hiqsol
+[@tafid]: https://github.com/tafid
+[andreyklochok@gmail.com]: https://github.com/tafid
+[@SilverFire]: https://github.com/silverfire
+[d.naumenko.a@gmail.com]: https://github.com/silverfire
 [Under development]: https://github.com/hiqdev/hiam-core/compare/0.0.3...HEAD
 [0.0.3]: https://github.com/hiqdev/hiam-core/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/hiqdev/hiam-core/compare/0.0.1-alpha...0.0.2
