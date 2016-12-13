@@ -1,6 +1,11 @@
 hiqdev/hiam-core
 ----------------
 
+## [Under development]
+
+- Added email confirmation
+- Removed all assets to theme
+
 ## [0.0.3] - 2016-10-27
 
 - Fixed restore password
@@ -39,3 +44,8 @@ hiqdev/hiam-core
 - Added basic functional
 
 ## [Development started] - 2014-12-13
+
+[Under development]: https://github.com/hiqdev/hiam-core/compare/0.0.3...HEAD
+[0.0.3]: https://github.com/hiqdev/hiam-core/compare/0.0.2...0.0.3
+[0.0.2]: https://github.com/hiqdev/hiam-core/compare/0.0.1-alpha...0.0.2
+[0.0.1-alpha]: https://github.com/hiqdev/hiam-core/releases/tag/0.0.1-alpha

@@ -1,6 +1,21 @@
 hiqdev/hiam-core
 ----------------
 
+## [Under development]
+
+- Added email confirmation
+    - [8b1bd8b] 2016-12-13 + proper flashes at registration [sol@hiqdev.com]
+    - [a745b52] 2016-12-13 csfixed [sol@hiqdev.com]
+    - [80911a9] 2016-12-13 translation [sol@hiqdev.com]
+    - [ba78ce9] 2016-12-13 + return back after email confirmation [sol@hiqdev.com]
+    - [a6a57e9] 2016-12-13 added email confirmation [sol@hiqdev.com]
+    - [ab852e5] 2016-12-12 + Identity::findActive to find find only active users if needed [sol@hiqdev.com]
+    - [5af3245] 2016-12-08 Added new validation message for email check [andreyklochok@gmail.com]
+    - [f123cc2] 2016-12-12 removed local Application [sol@hiqdev.com]
+    - [0ea7251] 2016-11-19 + own Application with setDefinitions() [sol@hiqdev.com]
+- Removed all assets to theme
+    - [7959faf] 2016-11-04 Removed all assets [andreyklochok@gmail.com]
+
 ## [0.0.3] - 2016-10-27
 
 - Fixed restore password
@@ -484,3 +499,17 @@ hiqdev/hiam-core
 [6f259df]: https://github.com/hiqdev/hiam-core/commit/6f259df
 [7f29249]: https://github.com/hiqdev/hiam-core/commit/7f29249
 [c7ec8ef]: https://github.com/hiqdev/hiam-core/commit/c7ec8ef
+[8b1bd8b]: https://github.com/hiqdev/hiam-core/commit/8b1bd8b
+[a745b52]: https://github.com/hiqdev/hiam-core/commit/a745b52
+[80911a9]: https://github.com/hiqdev/hiam-core/commit/80911a9
+[ba78ce9]: https://github.com/hiqdev/hiam-core/commit/ba78ce9
+[a6a57e9]: https://github.com/hiqdev/hiam-core/commit/a6a57e9
+[ab852e5]: https://github.com/hiqdev/hiam-core/commit/ab852e5
+[f123cc2]: https://github.com/hiqdev/hiam-core/commit/f123cc2
+[5af3245]: https://github.com/hiqdev/hiam-core/commit/5af3245
+[0ea7251]: https://github.com/hiqdev/hiam-core/commit/0ea7251
+[7959faf]: https://github.com/hiqdev/hiam-core/commit/7959faf
+[Under development]: https://github.com/hiqdev/hiam-core/compare/0.0.3...HEAD
+[0.0.3]: https://github.com/hiqdev/hiam-core/compare/0.0.2...0.0.3
+[0.0.2]: https://github.com/hiqdev/hiam-core/compare/0.0.1-alpha...0.0.2
+[0.0.1-alpha]: https://github.com/hiqdev/hiam-core/releases/tag/0.0.1-alpha
