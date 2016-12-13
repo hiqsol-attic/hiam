@@ -14,6 +14,7 @@ HIAM is Identity and Access Management server.
 
 Provides:
 
+- Login, registration, email verification, password restore
 - [OAuth2](https://oauth.net/2/) server
 - [multi-factor authentication](https://en.wikipedia.org/wiki/Multi-factor_authentication) with:
     - Google Authenticator compatible [TOTP](https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm)
