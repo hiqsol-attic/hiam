@@ -3,45 +3,45 @@ hiqdev/hiam-core
 
 ## [Under development]
 
-- Added email confirmation
-- Removed all assets to theme
+- Added email confirmation ([@hiqsol], [@tafid])
+- Removed all assets to theme ([@tafid])
 
 ## [0.0.3] - 2016-10-27
 
-- Fixed restore password
-- Added translation to russian
-- Changed: redone with use of `hiqdev/yii2-mfa`
-- Added use of `hidev/php-confirmator` for confirmation tokens
-- Changed: redone to be generally usable
-- Changed: redone to hisite
-- Fixed signup and password reminding
-- Changed: redone with composer-config-plugin
+- Fixed restore password ([@hiqsol])
+- Added translation to russian ([@hiqsol])
+- Changed: redone with use of `hiqdev/yii2-mfa` ([@hiqsol], [@tafid])
+- Added use of `hidev/php-confirmator` for confirmation tokens ([@hiqsol])
+- Changed: redone to be generally usable ([@hiqsol], [@tafid])
+- Changed: redone to hisite ([@hiqsol])
+- Fixed signup and password reminding ([@SilverFire], [@hiqsol])
+- Changed: redone with composer-config-plugin ([@hiqsol])
 
 ## [0.0.2] - 2016-05-04
 
-- Changed: redone to `hisite` style
-- Removed templates to yii2-theme-adminlte
-- Changed DB dsn to connect locally
-- Fixed attributes() at User model
-- Fixed LoginForm to get user with configured identityClass
-- Fixed ./yii to work, migration got working
-- Changed configuring
-- Removed WindowsLive login
-- Changed: renamed table `hi3a_remote_user` -> `hiam_remote_user`
-- Fixed requires
-- Added use of yii2-asset-icheck
-- Added use of plugin/theme/menu managers
-- Changed to yii2-extension
-- Fixed assets and theme
-- Changed: renamed to hiam-core, moved to src and turned to yii2-extension
-- Fixed google social button
-- Fixed: small fixes for production
-- Changed: renamed to hiam
+- Changed: redone to `hisite` style ([@hiqsol])
+- Removed templates to yii2-theme-adminlte ([@hiqsol])
+- Changed DB dsn to connect locally ([@hiqsol])
+- Fixed attributes() at User model ([@hiqsol])
+- Fixed LoginForm to get user with configured identityClass ([@hiqsol])
+- Fixed ./yii to work, migration got working ([@hiqsol])
+- Changed configuring ([@hiqsol])
+- Removed WindowsLive login ([@hiqsol])
+- Changed: renamed table `hi3a_remote_user` -> `hiam_remote_user` ([@hiqsol])
+- Fixed requires ([@hiqsol])
+- Added use of yii2-asset-icheck ([@hiqsol])
+- Added use of plugin/theme/menu managers ([@hiqsol])
+- Changed to yii2-extension ([@hiqsol])
+- Fixed assets and theme ([@hiqsol])
+- Changed: renamed to hiam-core, moved to src and turned to yii2-extension ([@hiqsol])
+- Fixed google social button ([@hiqsol])
+- Fixed: small fixes for production ([@hiqsol])
+- Changed: renamed to hiam ([@hiqsol])
 
 ## [0.0.1-alpha] - 2015-04-19
 
-- Added social login
-- Added basic functional
+- Added social login ([@hiqsol], [@tafid])
+- Added basic functional ([@hiqsol], [@tafid])
 
 ## [Development started] - 2014-12-13
 
