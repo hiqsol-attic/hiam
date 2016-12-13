@@ -223,7 +223,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
             return;
         }
         if (Yii::$app->confirmator->mailToken($identity, 'confirm-email')) {
-            Yii::$app->session->setFlash('error',
+            Yii::$app->session->setFlash('warning',
                 Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
                 Yii::t('hiam', 'An email with confirmation instructions was sent to <b>{email}</b>', ['email' => $identity->email])
             );

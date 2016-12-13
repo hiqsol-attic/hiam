@@ -181,12 +181,11 @@ class SiteController extends \hisite\controllers\SiteController
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $this->user->signup($model)) {
+                if ($client) {
+                    $this->user->setRemoteUser($client, $user);
+                }
+                Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
                 if ($this->user->login($user)) {
-                    if ($client) {
-                        $this->user->setRemoteUser($client, $user);
-                    }
-                    Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
-
                     return $this->goBack();
                 }
             }
@@ -281,7 +280,9 @@ class SiteController extends \hisite\controllers\SiteController
         } else {
             $user->setEmailConfirmed($token->get('email'));
             Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your email was confirmed!'));
-            $this->user->login($user);
+            if ($this->user->login($user)) {
+                $token->remove();
+            }
         }
 
         return $this->goBack();
