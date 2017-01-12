@@ -17,7 +17,6 @@ return [
     'controllerNamespace' => 'hiam\controllers',
     'bootstrap' => array_filter([
         'language' => 'language',
-        'debug' => defined('YII_DEBUG') && YII_DEBUG ? 'debug' : null,
     ]),
     'components' => [
         'db' => [
@@ -61,15 +60,6 @@ return [
             ],
         ],
         'themeManager' => [
-            'assets' => [],
-            'widgets' => [
-                'LoginForm' => [
-                    'disables' => [
-                        'signup' => $params['user.disableSignup'],
-                        'restore-password' => $params['user.disableRestorePassword'],
-                    ],
-                ],
-            ],
             'pathMap' => [
                 '$themedViewPaths' => ['@hiam/views'],
             ],
@@ -115,10 +105,6 @@ return [
                 'ru' => 'Русский',
                 'en' => 'English',
             ],
-        ],
-        'debug' => [
-            'class' => \yii\debug\Module::class,
-            'allowedIPs' => $params['debug.allowedIps'],
         ],
     ],
 ];
