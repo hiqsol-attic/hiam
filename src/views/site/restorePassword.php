@@ -1,14 +1,15 @@
 <?php
 
-/* @var $this yii\web\View */
+use hiqdev\thememanager\widgets\LoginForm;
+
+/** @var yii\web\View $this */
 
 $this->title = Yii::t('hiam', 'Request password reset');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<?= Yii::$app->themeManager->widget([
-    'class' => 'LoginForm',
+<?= LoginForm::widget([
     'model' => $model,
     'texts' => [
         'header' => '',

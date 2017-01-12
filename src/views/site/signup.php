@@ -1,13 +1,14 @@
 <?php
 
-/* @var $this yii\web\View */
+use hiqdev\thememanager\widgets\LoginForm;
+
+/** @var yii\web\View $this */
 
 $this->title = Yii::t('hiam', 'Signup');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= Yii::$app->themeManager->widget([
-    'class' => 'LoginForm',
+<?= LoginForm::widget([
     'model' => $model,
     'options' => [
         'validationUrl' => '/site/signup-validate',
