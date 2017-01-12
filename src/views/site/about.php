@@ -5,7 +5,6 @@ use hiqdev\thememanager\widgets\PoweredBy;
 use yii\helpers\Html;
 
 /** @var \yii\web\View $this */
-
 $this->title = Yii::t('hiam', 'About');
 $this->params['breadcrumbs'][] = $this->title;
 

@@ -6,7 +6,7 @@ Identity and Access Management server providing OAuth2, multi-factor authenticat
 @link      https://github.com/hiqdev/hiam-core
 @package   hiam-core
 @license   BSD-3-Clause
-@copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+@copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
 EOF;
 
 return PhpCsFixer\Config::create()

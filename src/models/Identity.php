@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hiam-core
  * @package   hiam-core
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2016, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\models;
@@ -13,7 +13,6 @@ namespace hiam\models;
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
-use yii\base\Event;
 use yii\web\IdentityInterface;
 
 /**

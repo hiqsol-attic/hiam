@@ -3,7 +3,6 @@
 use hiqdev\thememanager\widgets\LoginForm;
 
 /** @var yii\web\View $this */
-
 $this->title = Yii::t('hiam', 'Signup');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
