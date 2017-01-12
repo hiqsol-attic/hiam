@@ -107,4 +107,14 @@ return [
             ],
         ],
     ],
+    'container' => [
+        'definitions' => [
+            \hiqdev\thememanager\widgets\LoginForm::class => [
+                'disables' => [
+                    'signup' => $params['user.disableSignup'],
+                    'restore-password' => $params['user.disableRestorePassword'],
+                ],
+            ],
+        ],
+    ],
 ];
