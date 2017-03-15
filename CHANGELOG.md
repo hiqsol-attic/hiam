@@ -1,8 +1,10 @@
 hiqdev/hiam-core
 ----------------
 
-## [Under development]
+## [0.1.0] - 2017-03-15
 
+- Added use of `hiqdev/yii2-error-notifier` ([@hiqsol])
+- Fixed use of widgets ([@hiqsol])
 - Added email confirmation ([@hiqsol], [@tafid])
 - Removed all assets to theme ([@tafid])
 
@@ -45,6 +47,8 @@ hiqdev/hiam-core
 
 ## [Development started] - 2014-12-13
 
+[@BladeRoot]: https://github.com/BladeRoot
+[bladeroot@gmail.com]: https://github.com/BladeRoot
 [@hiqsol]: https://github.com/hiqsol
 [sol@hiqdev.com]: https://github.com/hiqsol
 [andrii.vasyliev@gmail.com]: https://github.com/hiqsol
@@ -56,3 +60,4 @@ hiqdev/hiam-core
 [0.0.3]: https://github.com/hiqdev/hiam-core/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/hiqdev/hiam-core/compare/0.0.1-alpha...0.0.2
 [0.0.1-alpha]: https://github.com/hiqdev/hiam-core/releases/tag/0.0.1-alpha
+[0.1.0]: https://github.com/hiqdev/hiam-core/compare/0.0.3...0.1.0

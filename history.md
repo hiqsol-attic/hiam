@@ -1,9 +1,20 @@
 hiqdev/hiam-core
 ----------------
 
-## [Under development]
+## [0.1.0] - 2017-03-15
 
+- Added use of `hiqdev/yii2-error-notifier`
+    - [cd7f498] 2017-03-13 added require `hiqdev/yii2-error-notifier` [@hiqsol]
+- Fixed use of widgets
+    - [94a6ee6] 2017-03-15 csfixed [@hiqsol]
+    - [bd1424a] 2017-03-15 fixed invoking widgets, removed use ot themeManager [@hiqsol]
+    - [773d5a8] 2017-01-12 added di config for LoginForm widget: disable signup/restore password options [@hiqsol]
+    - [9730ba7] 2017-01-12 renamed db params to db.key <- `db_key` [@hiqsol]
+    - [e7cdaa7] 2017-01-12 removed debug from config cause it is done by hisite-core [@hiqsol]
+    - [0953676] 2017-01-12 csfixed [@hiqsol]
+    - [fc8e863] 2017-01-12 fixed use of LoginForm widget [@hiqsol]
 - Added email confirmation
+    - [c3195bc] 2016-12-23 added CheckEmailConfirmed behavior instead of onBeforeLogin event on Identity [@hiqsol]
     - [8b1bd8b] 2016-12-13 + proper flashes at registration [@hiqsol]
     - [a745b52] 2016-12-13 csfixed [@hiqsol]
     - [80911a9] 2016-12-13 translation [@hiqsol]
@@ -277,6 +288,8 @@ hiqdev/hiam-core
 
 ## [Development started] - 2014-12-13
 
+[@BladeRoot]: https://github.com/BladeRoot
+[bladeroot@gmail.com]: https://github.com/BladeRoot
 [@hiqsol]: https://github.com/hiqsol
 [sol@hiqdev.com]: https://github.com/hiqsol
 [andrii.vasyliev@gmail.com]: https://github.com/hiqsol
@@ -520,3 +533,13 @@ hiqdev/hiam-core
 [0.0.3]: https://github.com/hiqdev/hiam-core/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/hiqdev/hiam-core/compare/0.0.1-alpha...0.0.2
 [0.0.1-alpha]: https://github.com/hiqdev/hiam-core/releases/tag/0.0.1-alpha
+[94a6ee6]: https://github.com/hiqdev/hiam-core/commit/94a6ee6
+[bd1424a]: https://github.com/hiqdev/hiam-core/commit/bd1424a
+[cd7f498]: https://github.com/hiqdev/hiam-core/commit/cd7f498
+[773d5a8]: https://github.com/hiqdev/hiam-core/commit/773d5a8
+[9730ba7]: https://github.com/hiqdev/hiam-core/commit/9730ba7
+[e7cdaa7]: https://github.com/hiqdev/hiam-core/commit/e7cdaa7
+[0953676]: https://github.com/hiqdev/hiam-core/commit/0953676
+[fc8e863]: https://github.com/hiqdev/hiam-core/commit/fc8e863
+[c3195bc]: https://github.com/hiqdev/hiam-core/commit/c3195bc
+[0.1.0]: https://github.com/hiqdev/hiam-core/compare/0.0.3...0.1.0
