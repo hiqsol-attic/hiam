@@ -3,6 +3,7 @@
 use hiqdev\thememanager\widgets\LoginForm;
 
 /** @var yii\web\View $this */
+
 $this->title = Yii::t('hiam', 'Request password reset');
 $this->params['breadcrumbs'][] = $this->title;
 
