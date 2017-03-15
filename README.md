@@ -1,5 +1,4 @@
-HIAM
-====
+# HIAM
 
 **Identity and Access Management server providing OAuth2, multi-factor authentication and more**
 
