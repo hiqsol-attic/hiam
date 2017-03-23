@@ -184,6 +184,7 @@ class SiteController extends \hisite\controllers\SiteController
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
                 }
+                Yii::$app->confirmator->mailToken($user, 'confirm-email');
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
                 if ($this->user->login($user)) {
                     return $this->goBack();
