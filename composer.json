@@ -62,7 +62,7 @@
         "hiqdev/yii2-hiam-authclient": "<2.0 || dev-master",
         "hiqdev/yii2-theme-adminlte": "<2.0 || dev-master",
         "hiqdev/yii2-asset-icheck": "^1.0",
-        "hiqdev/yii2-error-notifier": "<2.0",
+        "hiqdev/yii2-monitoring": "<2.0",
         "hiqdev/hisite-core": "<2.0 || dev-master"
     },
     "require-dev": {
