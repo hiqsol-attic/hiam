@@ -1,5 +1,5 @@
 {
-    "name": "hiqdev/hiam-core",
+    "name": "hiqdev/hiam",
     "type": "yii2-extension",
     "description": "Identity and Access Management server providing OAuth2, multi-factor authentication and more",
     "keywords": [
@@ -13,13 +13,13 @@
         "audit",
         "yii2"
     ],
-    "homepage": "https://github.com/hiqdev/hiam-core",
+    "homepage": "https://github.com/hiqdev/hiam",
     "license": "BSD-3-Clause",
     "support": {
         "email": "support@hiqdev.com",
-        "source": "https://github.com/hiqdev/hiam-core",
-        "issues": "https://github.com/hiqdev/hiam-core/issues",
-        "wiki": "https://github.com/hiqdev/hiam-core/wiki",
+        "source": "https://github.com/hiqdev/hiam",
+        "issues": "https://github.com/hiqdev/hiam/issues",
+        "wiki": "https://github.com/hiqdev/hiam/wiki",
         "forum": "https://forum.hiqdev.com/hiam"
     },
     "authors": [
@@ -63,7 +63,7 @@
         "hiqdev/yii2-theme-adminlte": "<2.0 || dev-master",
         "hiqdev/yii2-asset-icheck": "^1.0",
         "hiqdev/yii2-monitoring": "<2.0",
-        "hiqdev/hisite-core": "<2.0 || dev-master"
+        "hiqdev/hisite": "<2.0 || dev-master"
     },
     "require-dev": {
         "hiqdev/hidev-php": "<2.0",

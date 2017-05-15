@@ -3,8 +3,8 @@
 $header = <<<EOF
 Identity and Access Management server providing OAuth2, multi-factor authentication and more
 
-@link      https://github.com/hiqdev/hiam-core
-@package   hiam-core
+@link      https://github.com/hiqdev/hiam
+@package   hiam
 @license   BSD-3-Clause
 @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
 EOF;
@@ -26,6 +26,7 @@ return PhpCsFixer\Config::create()
         ],
         'concat_space'                               =>  ['spacing' => 'one'],
         'array_syntax'                               =>  ['syntax' => 'short'],
+        'phpdoc_no_alias_tag'                        =>  ['replacements' => ['type' => 'var']],
         'blank_line_before_return'                   =>  false,
         'phpdoc_align'                               =>  false,
         'phpdoc_scalar'                              =>  false,
