@@ -11,17 +11,15 @@
 return [
     'logoUrl'           => '/site/back',
 
-    'poweredByName'     => 'HIAM',
-    'poweredByUrl'      => 'https://github.com/hiqdev/hiam-core',
+    'poweredBy.name'    => 'HIAM',
+    'poweredBy.url'     => 'https://github.com/hiqdev/hiam',
 
-    'supportEmail'      => 'support@email',
-    'organizationName'  => 'Organization',
+    'supportEmail'      => '',
+    'organizationName'  => '',
 
     'user.loginDuration'            => 3600 * 24 * 31,
     'user.passwordResetTokenExpire' => 3600,
     'user.enableAutoLogin'          => true,
     'user.disableSignup'            => false,
     'user.disableRestorePassword'   => false,
-
-    'debug.allowedIps'  => [],
 ];
