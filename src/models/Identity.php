@@ -202,7 +202,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
         return true;
     }
 
-    public function setEmailConfirmed()
+    public function setEmailConfirmed($email)
     {
         return true;
     }
