@@ -40,6 +40,13 @@ return [
             'disableRestorePassword' => $params['user.disableRestorePassword'],
             'as checkEmailConfirmed' => \hiam\behaviors\CheckEmailConfirmed::class,
         ],
+        'session' => isset($params['session.db']) ? [
+            'class' => \hiam\session\DbSession::class,
+            'db' => $params['session.db'],
+            'sessionTable' => isset($params['session.table']) ? $params['session.table'] : 'hiam_session',
+        ] : [
+            'class' => \yii\web\Session::class,
+        ],
         'mailer' => [
             'useFileTransport' => false,
             'messageClass' => \hiam\base\Message::class,

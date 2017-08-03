@@ -206,4 +206,9 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
     {
         return true;
     }
+
+    public function __sleep()
+    {
+        return $this->attributes();
+    }
 }
