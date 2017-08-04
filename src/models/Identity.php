@@ -26,7 +26,6 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $last_name
  * @property string $first_name
- * @property string $auth_key
  */
 class Identity extends ProxyModel implements IdentityInterface, UserCredentialsInterface
 {
@@ -38,6 +37,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
     public $username;
     public $last_name;
     public $first_name;
+    public $auth_key;
 
     public $allowed_ips;
     public $totp_secret;
@@ -66,6 +66,8 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
 
             ['allowed_ips',     'string'],
             ['totp_secret',     'string'],
+
+            ['auth_key',        'string']
         ];
     }
 
@@ -152,8 +154,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
      */
     public function getAuthKey()
     {
-        return 'DUMMY';
-        //return $this->auth_key;
+        return $this->auth_key;
     }
 
     /**
@@ -174,15 +175,6 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
         $model = static::findIdentity($this->username, $password);
 
         return (bool) $model->id;
-    }
-
-    /**
-     * Generates "remember me" authentication key.
-     */
-    public function generateAuthKey()
-    {
-        //$this->auth_key = Yii::$app->security->generateRandomString();
-        $this->auth_key = 'DUMMY';
     }
 
     /**

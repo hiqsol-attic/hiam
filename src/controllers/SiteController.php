@@ -15,6 +15,7 @@ use hiam\forms\LoginForm;
 use hiam\forms\ResetPasswordForm;
 use hiam\forms\RestorePasswordForm;
 use hiam\forms\SignupForm;
+use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use hisite\actions\RedirectAction;
 use hisite\actions\RenderAction;
 use hisite\actions\ValidateAction;
@@ -59,6 +60,10 @@ class SiteController extends \hisite\controllers\SiteController
                     ],
                 ],
             ],
+            'validateAuthentication' => [
+                'class' => ValidateAuthenticationFilter::class,
+                'only' => ['lockscreen', 'auth']
+            ]
         ]);
     }
 

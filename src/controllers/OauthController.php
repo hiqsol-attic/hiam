@@ -10,11 +10,14 @@
 
 namespace hiam\controllers;
 
-use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
+use hiam\base\User;
+use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use Yii;
 use yii\filters\ContentNegotiator;
 use yii\helpers\ArrayHelper;
+use yii\web\BadRequestHttpException;
+use yii\web\IdentityInterface;
 use yii\web\Response;
 
 class OauthController extends \yii\web\Controller
@@ -32,17 +35,18 @@ class OauthController extends \yii\web\Controller
                 'only' => ['resource'],
                 'formats' => [
                     'application/json' => Response::FORMAT_JSON,
-//                  'application/xml' => Response::FORMAT_XML,
                 ],
             ],
-/*
-            'exceptionFilter' => [
-                'class' => ErrorToExceptionFilter::className()
+            'validateAuthentication' => [
+                'class' => ValidateAuthenticationFilter::class,
+                'only' => ['authorize'],
             ],
-*/
         ]);
     }
 
+    /**
+     * @return \filsh\yii2\oauth2server\Module
+     */
     public function getModule()
     {
         return Yii::$app->getModule('oauth2');
@@ -65,6 +69,7 @@ class OauthController extends \yii\web\Controller
 
     /**
      * Get request parameter from POST then GET.
+     *
      * @param string $name
      * @param string $default
      * @return string
@@ -81,6 +86,10 @@ class OauthController extends \yii\web\Controller
         return $this->getServer()->getConfig('token_param_name');
     }
 
+    /**
+     * @param OauthAccessTokens $token
+     * @return IdentityInterface|User
+     */
     public function findIdentityByToken(OauthAccessTokens $token)
     {
         return Yii::$app->user->findIdentity($token->user_id);
