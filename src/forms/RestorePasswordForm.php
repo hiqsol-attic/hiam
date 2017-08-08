@@ -17,7 +17,7 @@ use Yii;
  */
 class RestorePasswordForm extends \yii\base\Model
 {
-    public $email;
+    public $username;
 
     /**
      * {@inheritdoc}
@@ -25,16 +25,38 @@ class RestorePasswordForm extends \yii\base\Model
     public function rules()
     {
         return [
-            ['email', 'trim'],
-            ['email', 'email', 'message' => Yii::t('hiam', 'The entered value is not an email address.')],
-            ['email', 'required'],
+            ['username', 'trim'],
+            ['username', 'string', 'min' => 2, 'max' => 128],
+            ['username', 'required'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('hiam', 'Email'),
+            'username' => Yii::t('hiam', 'Login or email'),
         ];
+    }
+
+    public function maskEmail($email)
+    {
+        if (empty($email)) {
+            return '';
+        }
+
+        $result = mb_substr($email, 0, 1); // First letter
+        $result .= str_repeat('*', rand(5, 10)); // Mask
+
+        $localLength = mb_strpos($email, '@'); // When login is longer than 3 chars - show
+        if ($localLength > 3) {
+            $result .= mb_substr($email, $localLength-1, 1);
+        }
+        $result .= '@';
+        $result .= mb_substr($email, mb_strpos($email, '@')+1, 1);
+        $result .= mb_substr($email, mb_strlen($email));
+        $result .= str_repeat('*', rand(2, 5));
+        $result .= mb_substr($email, mb_strrpos($email, '.'));
+
+        return $result;
     }
 }

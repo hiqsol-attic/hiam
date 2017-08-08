@@ -61,6 +61,13 @@ class User extends \yii\web\User
         return $class::findIdentityByEmail($email);
     }
 
+    public function findIdentityByUsername($username)
+    {
+        $class = $this->identityClass;
+
+        return $class::findIdentityByUsername($username);
+    }
+
     /**
      * Finds user through RemoteUser.
      * @return IdentityInterface

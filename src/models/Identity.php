@@ -118,6 +118,11 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
         return static::findActive(compact('email'));
     }
 
+    public static function findIdentityByUsername($username)
+    {
+        return static::findActive(compact('username'));
+    }
+
     /**
      * This function is here for redifining to change behaviour.
      */

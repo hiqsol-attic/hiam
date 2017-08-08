@@ -10,6 +10,7 @@
 
 namespace hiam\controllers;
 
+use hiam\base\User;
 use hiam\forms\ConfirmPasswordForm;
 use hiam\forms\LoginForm;
 use hiam\forms\ResetPasswordForm;
@@ -26,6 +27,8 @@ use yii\filters\AccessControl;
 
 /**
  * Site controller.
+ *
+ * @property User $user
  */
 class SiteController extends \hisite\controllers\SiteController
 {
@@ -62,7 +65,7 @@ class SiteController extends \hisite\controllers\SiteController
             ],
             'validateAuthentication' => [
                 'class' => ValidateAuthenticationFilter::class,
-                'only' => ['lockscreen', 'auth']
+                'only' => ['lockscreen']
             ]
         ]);
     }
@@ -97,6 +100,9 @@ class SiteController extends \hisite\controllers\SiteController
         ]);
     }
 
+    /**
+     * @return User
+     */
     public function getUser()
     {
         return Yii::$app->user;
@@ -122,7 +128,7 @@ class SiteController extends \hisite\controllers\SiteController
                     return $this->goBack();
                 }
             }
-            $model->addError('password', 'Incorrect username or password.');
+            $model->addError('password', Yii::t('hiam', 'Incorrect username or password.'));
             $model->password = null;
         }
 
@@ -218,15 +224,19 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         $model = new RestorePasswordForm();
-        $model->email = $username;
+        $model->username = $username;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $user = $this->user->findIdentityByEmail($model->email);
+            $user = $this->user->findIdentityByUsername($model->username);
             if (Yii::$app->confirmator->mailToken($user, 'restore-password')) {
-                Yii::$app->session->setFlash('success', Yii::t('hiam', 'Check your email for further instructions.'));
+                Yii::$app->session->setFlash('success',
+                    Yii::t('hiam', 'Check your email {maskedMail} for further instructions.', [
+                        'maskedMail' => $model->maskEmail($user->email)
+                    ])
+                );
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to reset password for email provided.'));
+                Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to reset password the provided username or email. Try to contact support team.'));
             }
         }
 
