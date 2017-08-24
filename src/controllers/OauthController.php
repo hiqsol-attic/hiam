@@ -147,7 +147,11 @@ class OauthController extends \yii\web\Controller
 
         $id = Yii::$app->getUser()->id;
         if (!$id) {
-            Yii::$app->user->setReturnUrl(Yii::$app->getRequest()->getUrl());
+            /*$back = Yii::$app->request->get('return_uri');
+            if ($back) {
+                Yii::$app->user->setReturnUrl($back);
+            }*/
+            # Yii::$app->user->setReturnUrl(Yii::$app->getRequest()->getUrl());
 
             return $this->redirect(['/site/login']);
         }
