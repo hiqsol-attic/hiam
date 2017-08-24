@@ -11,7 +11,7 @@ class DbSession extends \yii\web\DbSession
         if ($this->writeCallback === null) {
             $this->writeCallback = function ($fields) {
                 return [
-                    'client_id' => Yii::$app->user->isGuest ? null : Yii::$app->user->id,
+                    'client_id' => Yii::$app->user->getIsGuest() ? null : Yii::$app->user->id,
                     'ip' => Yii::$app->request->getUserIp(),
                 ];
             };
