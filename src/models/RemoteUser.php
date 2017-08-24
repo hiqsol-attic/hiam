@@ -61,7 +61,7 @@ class RemoteUser extends ProxyModel
         return false;
     }
 
-    public function toProvider($name)
+    public static function toProvider($name)
     {
         $class = static::getStorageClass();
 
