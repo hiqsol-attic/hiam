@@ -108,17 +108,6 @@ class SiteController extends \hisite\controllers\SiteController
         return Yii::$app->user;
     }
 
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-        $back = Yii::$app->request->post('back') ?: Yii::$app->request->get('back');
-        if ($back) {
-            Yii::$app->getUser()->setReturnUrl($back);
-        }
-
-        return $back ? $this->redirect($back) : $this->goHome();
-    }
-
     public function actionLogin($username = null)
     {
         $client = Yii::$app->authClientCollection->getActiveClient();
