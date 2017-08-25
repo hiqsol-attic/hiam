@@ -18,6 +18,7 @@ return [
     'bootstrap' => array_filter([
         'language' => 'language',
     ]),
+    'as setReturnUrl' => \hiam\behaviors\SetReturnUrl::class,
     'components' => [
         'db' => [
             'class'     => \yii\db\Connection::class,
