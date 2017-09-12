@@ -123,6 +123,13 @@ return [
                     'restore-password' => $params['user.disableRestorePassword'],
                 ],
             ],
+            \hiam\components\AuthKeyGenerator::class => [
+                [],
+                [
+                    $params['user.authKeySecret'],
+                    $params['user.authKeyCipher']
+                ]
+            ]
         ],
     ],
 ];

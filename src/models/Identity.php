@@ -11,6 +11,7 @@
 namespace hiam\models;
 
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
+use hiam\components\AuthKeyGenerator;
 use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
 use yii\web\IdentityInterface;
@@ -37,7 +38,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
     public $username;
     public $last_name;
     public $first_name;
-    public $auth_key;
+    public $password_hash;
 
     public $allowed_ips;
     public $totp_secret;
@@ -67,7 +68,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
             ['allowed_ips',     'string'],
             ['totp_secret',     'string'],
 
-            ['auth_key',        'string']
+            ['password_hash',        'string']
         ];
     }
 
@@ -155,11 +156,19 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
     }
 
     /**
+     * @return AuthKeyGenerator
+     */
+    protected function getAuthKeyGenerator()
+    {
+        return Yii::createObject(AuthKeyGenerator::class);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getAuthKey()
     {
-        return $this->auth_key;
+        return $this->getAuthKeyGenerator()->generateForUser($this->id, $this->password_hash);
     }
 
     /**
@@ -167,7 +176,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
      */
     public function validateAuthKey($authKey)
     {
-        return $this->getAuthKey() === $authKey;
+        return $this->getAuthKeyGenerator()->validateForUser($this->id, $this->password_hash, $authKey);
     }
 
     /**
