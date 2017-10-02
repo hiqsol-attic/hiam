@@ -84,6 +84,14 @@ return [
     'modules' => [
         'oauth2' => [
             'class' => \filsh\yii2\oauth2server\Module::class,
+            'components' => [
+                'request' => function () {
+                    return \filsh\yii2\oauth2server\Request::createFromGlobals();
+                },
+                'response' => [
+                    'class' => \filsh\yii2\oauth2server\Response::class,
+                ],
+            ],
             'options' => [
                 'enforce_state'     => true,
                 'access_lifetime'   => 3600 * 24,
