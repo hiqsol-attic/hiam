@@ -52,7 +52,7 @@ return [
             'useFileTransport' => false,
             'messageClass' => \hiam\base\Message::class,
             'messageConfig' => [
-                'from' => [$params['supportEmail'] => $params['organizationName']],
+                'from' => [$params['supportEmail'] => $params['organization.name']],
                 'bcc'  => ['sol@hiqdev.com'],
             ],
         ],

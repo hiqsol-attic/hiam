@@ -8,7 +8,9 @@ use yii\helpers\Html;
 /** @var string $token */
 $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['site/confirm-email', 'token' => (string) $token]);
 
-$message->setSubject(Yii::t('hiam', '[{org}] Please confirm your email address', ['org' => Yii::$app->params['organizationName']]));
+$org = Yii::$app->params['organization.name'];
+
+$message->setSubject(Yii::t('hiam', '[{org}] Please confirm your email address', ['org' => $org]));
 
 $message->renderTextBody(basename(__FILE__, '.php') . '-text', compact('user', 'confirmLink'));
 

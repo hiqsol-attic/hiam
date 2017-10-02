@@ -27,7 +27,6 @@ return [
     'Login or Email' => 'Логин или Email',
     'New password was saved.' => 'Новый пароль был сохранён.',
     'Password' => 'Пароль',
-    'Password reset for {org}' => 'Восстановление пароля {org}',
     'Passwords don\'t match.' => 'Пароли не совпадают.',
     'Please choose your new password' => 'Пожалуйста, выберите новый пароль',
     'Please confirm your email address!' => 'Пожалуйста, подтвердите ваш email!',
@@ -52,6 +51,7 @@ return [
     'Your account has been successfully created.' => 'Аккаунт был создан успешно.',
     'Your email was confirmed!' => 'Ваш email был подтверждён!',
     '[{org}] Please confirm your email address' => '[{org}] Пожалуйста, подтвердите ваш email',
+    '[{org}] Password reset request' => '[{org}] Восстановление пароля',
     'terms' => 'правилами',
     'Incorrect username or password.' => 'Неверный логин или пароль.',
 ];

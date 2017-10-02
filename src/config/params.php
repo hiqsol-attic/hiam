@@ -14,8 +14,9 @@ return [
     'poweredBy.name'    => 'HIAM',
     'poweredBy.url'     => 'https://github.com/hiqdev/hiam',
 
+    'organization.name' => '',
+
     'supportEmail'      => '',
-    'organizationName'  => '',
 
     'user.loginDuration'            => 3600 * 24 * 31,
     'user.passwordResetTokenExpire' => 3600,
