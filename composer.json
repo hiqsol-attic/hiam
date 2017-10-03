@@ -60,8 +60,6 @@
         "hiqdev/yii2-pnotify": "<2.0 || dev-master",
         "hiqdev/yii2-language": "<2.0 || dev-master",
         "hiqdev/yii2-hiam-authclient": "<2.0 || dev-master",
-        "hiqdev/yii2-theme-adminlte": "<2.0 || dev-master",
-        "hiqdev/yii2-asset-icheck": "^1.0",
         "hiqdev/yii2-monitoring": "<2.0",
         "hiqdev/hisite": "<2.0 || dev-master"
     },
