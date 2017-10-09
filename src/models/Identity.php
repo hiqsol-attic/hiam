@@ -68,7 +68,7 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
             ['allowed_ips',     'string'],
             ['totp_secret',     'string'],
 
-            ['password_hash',        'string']
+            ['password_hash',        'string'],
         ];
     }
 

@@ -65,8 +65,8 @@ class SiteController extends \hisite\controllers\SiteController
             ],
             'validateAuthentication' => [
                 'class' => ValidateAuthenticationFilter::class,
-                'only' => ['lockscreen']
-            ]
+                'only' => ['lockscreen'],
+            ],
         ]);
     }
 
@@ -230,7 +230,7 @@ class SiteController extends \hisite\controllers\SiteController
             if (Yii::$app->confirmator->mailToken($user, 'restore-password')) {
                 Yii::$app->session->setFlash('success',
                     Yii::t('hiam', 'Check your email {maskedMail} for further instructions.', [
-                        'maskedMail' => $model->maskEmail($user->email)
+                        'maskedMail' => $model->maskEmail($user->email),
                     ])
                 );
 

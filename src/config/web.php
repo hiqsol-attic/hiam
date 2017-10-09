@@ -135,9 +135,9 @@ return [
                 [],
                 [
                     $params['user.authKeySecret'],
-                    $params['user.authKeyCipher']
-                ]
-            ]
+                    $params['user.authKeyCipher'],
+                ],
+            ],
         ],
     ],
 ];

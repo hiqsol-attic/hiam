@@ -1,4 +1,12 @@
 <?php
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
+ *
+ * @link      https://github.com/hiqdev/hiam
+ * @package   hiam
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hiam\components;
 
@@ -19,7 +27,7 @@ class AuthKeyGenerator
         if (empty($secret)) {
             throw new InvalidConfigException('Secret is missing');
         }
-        if (!in_array($cipher, openssl_get_cipher_methods())) {
+        if (!in_array($cipher, openssl_get_cipher_methods(), true)) {
             throw new InvalidConfigException('Cipher "' . $cipher . '" is not supported by local OpenSSL');
         }
 
@@ -33,7 +41,7 @@ class AuthKeyGenerator
      */
     protected function buildIv($password_hash)
     {
-        $iv = base64_decode($password_hash);
+        $iv = base64_decode($password_hash, true);
         if ($iv === false) {
             throw new InvalidParamException('Wrong password hash');
         }
@@ -54,13 +62,14 @@ class AuthKeyGenerator
     public function generateForUser($user_id, $password_hash)
     {
         $iv = $this->buildIv($password_hash);
-        $encrypted = openssl_encrypt((string)$user_id, $this->cipher, $this->secret, 0, $iv, $tag);
+        $encrypted = openssl_encrypt((string) $user_id, $this->cipher, $this->secret, 0, $iv, $tag);
+
         return implode('.', [$encrypted, base64_encode($tag)]);
     }
 
     /**
      * Method validates that provided $token was generated for the $user_id
-     * and is valid only while its' password hash equals $password_hash
+     * and is valid only while its' password hash equals $password_hash.
      *
      * @param string $user_id
      * @param string $password_hash
@@ -71,7 +80,8 @@ class AuthKeyGenerator
     {
         list($encrypted, $tag) = explode('.', $token);
         $iv = $this->buildIv($password_hash);
-        $decrypted = openssl_decrypt($encrypted, $this->cipher, $this->secret, 0, $iv, base64_decode($tag));
-        return $decrypted === (string)$user_id;
+        $decrypted = openssl_decrypt($encrypted, $this->cipher, $this->secret, 0, $iv, base64_decode($tag, true));
+
+        return $decrypted === (string) $user_id;
     }
 }

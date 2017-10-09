@@ -10,7 +10,6 @@
 
 namespace hiam\behaviors;
 
-use hiam\base\User;
 use Yii;
 use yii\base\Application;
 use yii\base\Event;
