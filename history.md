@@ -1,5 +1,36 @@
-hiqdev/hiam-core
-----------------
+# hiqdev/hiam-core
+
+## [0.2.0] - 2017-10-09
+
+- Removed require theme and assets
+    - [3a8231d] 2017-10-09 csfixed [@hiqsol]
+    - [1b90599] 2017-10-03 removed require theme and asset [@hiqsol]
+    - [4299b8a] 2017-10-03 csfixed [@hiqsol]
+- Fixed sending mail and typos
+    - [69a5b98] 2017-10-02 fixed `organization.name` <- organizationName and email templates [@hiqsol]
+    - [1ccc6c4] 2017-08-24 fixed typo missed static for RemoteUser::toProvider [@hiqsol]
+    - [7d42546] 2017-08-08 Enhanced password restoring, other minor changes [@SilverFire]
+    - [a1ede86] 2017-07-10 Fixed Identity::setEmailComfirmed() to be compatible with hiam-mrdp [@SilverFire]
+    - [6ea88d6] 2017-05-16 fixed poweredBy params [@hiqsol]
+    - [cfe6bb8] 2017-03-23 added sending email confirmation on registration [@hiqsol]
+- Added oauth2 request and response components config to fix problem after yii2 core change
+    - [2e8fb36] 2017-10-02 added request and response components config for oauth2 module to fix problem after yii2 core changes [@hiqsol]
+    - [73d11cb] 2017-09-12 Enhanced security by providing identity tokens using openssl [@SilverFire]
+- Fixed returning back to site after authorizing
+    - [f69ef50] 2017-08-25 removed old junk about returning back to site [@hiqsol]
+    - [f0f675e] 2017-08-25 fixing returning back to site after authorizing [@hiqsol]
+    - [387246c] 2017-08-24 quickfixed redirecting back to hipanel NOT FINISHED [@hiqsol]
+- Added `auth_key`
+    - [9145c39] 2017-08-04 Added `auth_key` for cookies verification, enhanced protection [@SilverFire]
+- Added DB session support
+    - [754c613] 2017-08-03 Added DB session support [@SilverFire]
+- Renamed to `hiam` <- hiam-core
+    - [e2a990a] 2017-05-15 renamed to `hiam` [@hiqsol]
+    - [ca32d65] 2017-05-15 csfixed [@hiqsol]
+    - [9b628bd] 2017-05-12 required `yii2-monitoring` <- yii2-error-notifier [@hiqsol]
+    - [5859876] 2017-05-12 renamed `config/web` <- config/hisite [@hiqsol]
+    - [591ccdf] 2017-05-12 csfixed [@hiqsol]
+    - [90d532c] 2017-05-12 renamed `hidev.yml` [@hiqsol]
 
 ## [0.1.0] - 2017-03-15
 
@@ -529,7 +560,7 @@ hiqdev/hiam-core
 [5af3245]: https://github.com/hiqdev/hiam-core/commit/5af3245
 [0ea7251]: https://github.com/hiqdev/hiam-core/commit/0ea7251
 [7959faf]: https://github.com/hiqdev/hiam-core/commit/7959faf
-[Under development]: https://github.com/hiqdev/hiam-core/compare/0.0.3...HEAD
+[Under development]: https://github.com/hiqdev/hiam/compare/0.1.0...HEAD
 [0.0.3]: https://github.com/hiqdev/hiam-core/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/hiqdev/hiam-core/compare/0.0.1-alpha...0.0.2
 [0.0.1-alpha]: https://github.com/hiqdev/hiam-core/releases/tag/0.0.1-alpha
@@ -543,3 +574,26 @@ hiqdev/hiam-core
 [fc8e863]: https://github.com/hiqdev/hiam-core/commit/fc8e863
 [c3195bc]: https://github.com/hiqdev/hiam-core/commit/c3195bc
 [0.1.0]: https://github.com/hiqdev/hiam-core/compare/0.0.3...0.1.0
+[3a8231d]: https://github.com/hiqdev/hiam/commit/3a8231d
+[1b90599]: https://github.com/hiqdev/hiam/commit/1b90599
+[4299b8a]: https://github.com/hiqdev/hiam/commit/4299b8a
+[69a5b98]: https://github.com/hiqdev/hiam/commit/69a5b98
+[2e8fb36]: https://github.com/hiqdev/hiam/commit/2e8fb36
+[73d11cb]: https://github.com/hiqdev/hiam/commit/73d11cb
+[f69ef50]: https://github.com/hiqdev/hiam/commit/f69ef50
+[f0f675e]: https://github.com/hiqdev/hiam/commit/f0f675e
+[387246c]: https://github.com/hiqdev/hiam/commit/387246c
+[1ccc6c4]: https://github.com/hiqdev/hiam/commit/1ccc6c4
+[7d42546]: https://github.com/hiqdev/hiam/commit/7d42546
+[9145c39]: https://github.com/hiqdev/hiam/commit/9145c39
+[754c613]: https://github.com/hiqdev/hiam/commit/754c613
+[a1ede86]: https://github.com/hiqdev/hiam/commit/a1ede86
+[6ea88d6]: https://github.com/hiqdev/hiam/commit/6ea88d6
+[e2a990a]: https://github.com/hiqdev/hiam/commit/e2a990a
+[ca32d65]: https://github.com/hiqdev/hiam/commit/ca32d65
+[9b628bd]: https://github.com/hiqdev/hiam/commit/9b628bd
+[5859876]: https://github.com/hiqdev/hiam/commit/5859876
+[591ccdf]: https://github.com/hiqdev/hiam/commit/591ccdf
+[90d532c]: https://github.com/hiqdev/hiam/commit/90d532c
+[cfe6bb8]: https://github.com/hiqdev/hiam/commit/cfe6bb8
+[0.2.0]: https://github.com/hiqdev/hiam/compare/0.1.0...0.2.0

@@ -1,5 +1,14 @@
-hiqdev/hiam-core
-----------------
+# hiqdev/hiam-core
+
+## [0.2.0] - 2017-10-09
+
+- Removed require theme and assets ([@hiqsol])
+- Fixed sending mail and typos ([@hiqsol], [@SilverFire])
+- Added oauth2 request and response components config to fix problem after yii2 core change ([@hiqsol], [@SilverFire])
+- Fixed returning back to site after authorizing ([@hiqsol])
+- Added `auth_key` ([@SilverFire])
+- Added DB session support ([@SilverFire])
+- Renamed to `hiam` <- hiam-core ([@hiqsol])
 
 ## [0.1.0] - 2017-03-15
 
@@ -56,8 +65,9 @@ hiqdev/hiam-core
 [andreyklochok@gmail.com]: https://github.com/tafid
 [@SilverFire]: https://github.com/silverfire
 [d.naumenko.a@gmail.com]: https://github.com/silverfire
-[Under development]: https://github.com/hiqdev/hiam-core/compare/0.0.3...HEAD
+[Under development]: https://github.com/hiqdev/hiam/compare/0.1.0...HEAD
 [0.0.3]: https://github.com/hiqdev/hiam-core/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/hiqdev/hiam-core/compare/0.0.1-alpha...0.0.2
 [0.0.1-alpha]: https://github.com/hiqdev/hiam-core/releases/tag/0.0.1-alpha
 [0.1.0]: https://github.com/hiqdev/hiam-core/compare/0.0.3...0.1.0
+[0.2.0]: https://github.com/hiqdev/hiam/compare/0.1.0...0.2.0
