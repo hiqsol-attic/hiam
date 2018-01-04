@@ -11,6 +11,7 @@
 namespace hiam\controllers;
 
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
+use filsh\yii2\oauth2server\Request;
 use hiam\base\User;
 use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use Yii;
@@ -57,11 +58,17 @@ class OauthController extends \yii\web\Controller
         return $this->getModule()->getServer();
     }
 
+    /**
+     * @return Request
+     */
     public function getRequest()
     {
         return $this->getModule()->getRequest();
     }
 
+    /**
+     * @return \filsh\yii2\oauth2server\Response
+     */
     public function getResponse()
     {
         return $this->getModule()->getResponse();
@@ -151,7 +158,6 @@ class OauthController extends \yii\web\Controller
         }
 
         $is_authorized = $this->isAuthorizedClient($this->getRequestValue('client_id'));
-
         if (!$is_authorized) {
             if (empty($_POST)) {
                 return $this->render('authorizeClient', [
@@ -165,8 +171,17 @@ class OauthController extends \yii\web\Controller
             $is_authorized = ($_POST['authorized'] === 'yes');
         }
 
+        if ($request->query('user_id') && $this->canImpersonate()) {
+            $id = $request->query('user_id');
+        }
+
         $this->getServer()->handleAuthorizeRequest($request, $response, $is_authorized, $id);
 
         return $response->send();
+    }
+
+    private function canImpersonate()
+    {
+        return Yii::$app->user->can('client.impersonate'); // TODO: more wise check
     }
 }
