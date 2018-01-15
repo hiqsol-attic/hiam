@@ -23,7 +23,10 @@ return [
         'db' => [
             'class'     => \yii\db\Connection::class,
             'charset'   => 'utf8',
-            'dsn'       => 'pgsql:dbname=' . (empty($params['db.name']) ? 'hiam' : $params['db.name']),
+            'dsn'       => 'pgsql:'
+                                . 'dbname=' . (empty($params['db.name']) ? 'hiam' : $params['db.name'])
+                                . (!empty($params['db.host']) ? (';host=' . $params['db.host']) : '')
+                                . (!empty($params['db.port']) ? (';port=' . $params['db.port']) : ''),
             'username'  => empty($params['db.user']) ? 'hiam' : $params['db.user'],
             'password'  => empty($params['db.password']) ? '*' : $params['db.password'],
         ],
