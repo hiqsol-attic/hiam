@@ -12,6 +12,7 @@ namespace hiam\base;
 
 use yii\authclient\ClientInterface;
 use yii\web\IdentityInterface;
+use Yii;
 
 class User extends \yii\web\User
 {
@@ -43,8 +44,24 @@ class User extends \yii\web\User
         $user = new $class();
         $user->setAttributes($model->getAttributes());
         $user->username = isset($model->username) ? $model->username : $model->email;
+        $ok = $user->save();
 
-        return $user->save() ? $user : null;
+        if ($user->save()) {
+            $this->notifySignup($user);
+            return $user;
+        }
+
+        return null;
+    }
+
+    protected function notifySignup($user)
+    {
+        $params = Yii::$app->params;
+
+        return Yii::$app->mailer->compose()
+            ->renderHtmlBody('userSignup', compact('user'))
+            ->setTo($params['signupEmail'] ?? $params['supportEmail'] ?? $params['adminEmail'])
+            ->send();
     }
 
     public function findIdentity($id, $password = null)
