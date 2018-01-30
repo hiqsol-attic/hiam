@@ -24,5 +24,6 @@ $message->renderTextBody(basename(__FILE__, '.php') . '-text', compact('user'));
         email: <?= $user->email ?><br>
         first name: <?= $user->first_name ?><br>
         last name: <?= $user->last_name ?><br>
+        ip: <?= Yii::$app->request->getRemoteIP() ?><br>
     </p>
 </div>
