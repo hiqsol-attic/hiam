@@ -8,8 +8,14 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: 'http://hiam.transmedia.com.ua.local'
+            url: ''
         - Asserts
         - \Helper\Acceptance
         - \Helper\TestMails
 
+env:
+    tofid:
+        modules:
+            config:
+                PhpBrowser:
+                    url: http://hipanel.ahnames.com.local
