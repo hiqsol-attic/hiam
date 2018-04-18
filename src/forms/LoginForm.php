@@ -27,6 +27,8 @@ class LoginForm extends \yii\base\Model
     public function rules()
     {
         return [
+            ['username', 'filter', 'filter' => 'strtolower'],
+            [['username', 'password'], 'trim'],
             [['username', 'password'], 'required'],
             ['remember_me', 'boolean'],
         ];

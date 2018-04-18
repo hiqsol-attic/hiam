@@ -31,11 +31,11 @@ class SignupForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['first_name', 'last_name'], 'trim'],
-            [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
+            [['first_name', 'last_name' , 'email', 'password'], 'trim'],
+            [['first_name', 'last_name', 'password'], 'string', 'min' => 2, 'max' => 64],
 
-            ['email', 'trim'],
             ['email', 'email'],
+            ['email', 'filter', 'filter' => 'strtolower'],
             ['email', 'string', 'min' => 2, 'max' => 255],
             ['email', function ($attribute) {
                 if (!empty(Yii::$app->user->findIdentityByEmail($this->email))) {
@@ -43,7 +43,6 @@ class SignupForm extends \yii\base\Model
                 }
             }],
 
-            ['password',        'string', 'min' => 6],
             ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => Yii::t('hiam', "Passwords don't match.")],
 
             [['first_name', 'last_name', 'email', 'password', 'password_retype'], 'required'],

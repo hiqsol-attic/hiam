@@ -51,19 +51,12 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
         return [
             ['id',              'integer'],
 
-            ['username',        'trim'],
-            ['username',        'string', 'min' => 2, 'max' => 64],
-
-            ['email',           'trim'],
-            ['email',           'email'],
-
-            ['password',        'trim'],
-            ['password',        'string', 'min' => 2, 'max' => 64],
+            [['username', 'email', 'password', 'first_name', 'last_name'], 'filter', 'filter' => 'trim'],
+            [['username', 'email'], 'filter', 'filter' => 'strtolower'],
+            [['username', 'password', 'first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
+            ['email', 'email'],
 
             [['type', 'state'], 'string', 'min' => 2, 'max' => 10],
-
-            [['first_name', 'last_name'], 'trim'],
-            [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 64],
 
             ['allowed_ips',     'string'],
             ['totp_secret',     'string'],
