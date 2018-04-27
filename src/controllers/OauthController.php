@@ -107,6 +107,18 @@ class OauthController extends \yii\web\Controller
         return OauthAccessTokens::findOne($access_token);
     }
 
+    private function sendResponse($oauthResponse)
+    {
+        $response = Yii::$app->response;
+
+        foreach ($oauthResponse->getHttpHeaders() as $name => $value) {
+            $response->headers->set($name, $value);
+        }
+        $response->setStatusCode($oauthResponse->getStatusCode(), $oauthResponse->getStatusText());
+
+        return $oauthResponse->getResponseBody();
+    }
+
     public function actionToken()
     {
         $response = $this->getServer()->handleTokenRequest($this->getRequest());
@@ -117,14 +129,14 @@ class OauthController extends \yii\web\Controller
             $response->addParameters(compact('user_attributes'));
         }
 
-        return $response->send();
+        return $this->sendResponse($response);
     }
 
     public function actionResource()
     {
         $ok = $this->getServer()->verifyResourceRequest($this->request);
         if (!$ok) {
-            return $this->getServer()->getResponse()->send();
+            return $this->sendResponse($this->getServer()->getResponse());
         }
         $access_token = $this->getRequestValue($this->getTokenParamName());
         $token = $this->findToken($access_token);
@@ -149,7 +161,7 @@ class OauthController extends \yii\web\Controller
         $request = $this->getRequest();
         $response = $this->getResponse();
         if (!$this->getServer()->validateAuthorizeRequest($request, $response)) {
-            return $response->send();
+            return $this->sendResponse($response);
         }
 
         $id = Yii::$app->getUser()->id;
@@ -177,7 +189,7 @@ class OauthController extends \yii\web\Controller
 
         $this->getServer()->handleAuthorizeRequest($request, $response, $is_authorized, $id);
 
-        return $response->send();
+        return $this->sendResponse($response);
     }
 
     private function canImpersonate()
