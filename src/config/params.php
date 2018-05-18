@@ -16,6 +16,12 @@ return [
 
     'organization.name' => '',
 
+    'db.name'           => null,
+    'db.user'           => null,
+    'db.password'       => null,
+    'db.host'           => null,
+    'db.port'           => null,
+
     'supportEmail'      => '',
 
     'user.loginDuration'            => 3600 * 24 * 31,
