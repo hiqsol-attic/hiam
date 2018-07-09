@@ -24,6 +24,12 @@ return [
 
     'supportEmail'      => '',
 
+    'db.host'           => '',
+    'db.port'           => '',
+    'db.name'           => '',
+    'db.user'           => '',
+    'db.password'       => '',
+
     'user.loginDuration'            => 3600 * 24 * 31,
     'user.passwordResetTokenExpire' => 3600,
     'user.enableAutoLogin'          => true,
