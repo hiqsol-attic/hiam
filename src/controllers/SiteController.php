@@ -16,6 +16,7 @@ use hiam\forms\LoginForm;
 use hiam\forms\ResetPasswordForm;
 use hiam\forms\RestorePasswordForm;
 use hiam\forms\SignupForm;
+use hiam\models\Identity;
 use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use hisite\actions\RedirectAction;
 use hisite\actions\RenderAction;
@@ -118,21 +119,36 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->doLogin(new LoginForm(), 'login', $username);
     }
 
-    protected function doLogin($model, $view, $username = null)
+    protected function doLogin(LoginForm $model, $view, $username = null)
     {
         $model->username = $username;
+        /** @noinspection NotOptimalIfConditionsInspection */
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $user = $this->user->findIdentity($model->username, $model->password);
-            if ($user) {
-                if ($this->user->login($user, !empty($model->remember_me) ? null : 0)) {
-                    return $this->goBack();
-                }
+            $identity = $this->user->findIdentity($model->username, $model->password);
+            if ($identity && $this->login($identity, $model->remember_me)) {
+                return $this->goBack();
             }
+
             $model->addError('password', Yii::t('hiam', 'Incorrect username or password.'));
             $model->password = null;
         }
 
         return $this->render($view, compact('model'));
+    }
+
+    /**
+     * Logs user in and preserves return URL
+     */
+    private function login(Identity $identity, $sessionDuration = 0): bool
+    {
+        $returnUrl = $this->user->getReturnUrl();
+
+        $result = $this->user->login($identity, $sessionDuration ? null : 0);
+        if ($result && $returnUrl !== null) {
+            $this->user->setReturnUrl($returnUrl);
+        }
+
+        return $result;
     }
 
     public function actionConfirmPassword()
