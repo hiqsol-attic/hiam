@@ -10,6 +10,7 @@
 
 namespace hiam\base;
 
+use hiam\models\Identity;
 use yii\authclient\ClientInterface;
 use yii\web\IdentityInterface;
 use Yii;
@@ -28,14 +29,14 @@ class User extends \yii\web\User
 
     public function login(IdentityInterface $identity, $duration = null)
     {
-        return parent::login($identity, isset($duration) ? $duration : $this->loginDuration);
+        return parent::login($identity, $duration ?? $this->loginDuration);
     }
 
     /**
      * Registers new user.
      * @return Identity|null the saved identity or null if saving fails
      */
-    public function signup($model)
+    public function signup(User $model)
     {
         if (!$model->validate()) {
             return null;
@@ -43,7 +44,7 @@ class User extends \yii\web\User
         $class = $this->identityClass;
         $user = new $class();
         $user->setAttributes($model->getAttributes());
-        $user->username = isset($model->username) ? $model->username : $model->email;
+        $user->username = $model->username ?? $model->email;
         $ok = $user->save();
 
         if ($user->save()) {
