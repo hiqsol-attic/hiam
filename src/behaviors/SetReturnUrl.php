@@ -39,8 +39,6 @@ class SetReturnUrl extends \yii\base\Behavior
             return;
         }
 
-        $res = parse_url($back);
-        $url = $res['scheme'] . '://' . $res['host'];
-        Yii::$app->user->setReturnUrl($url);
+        Yii::$app->user->setReturnUrl($back);
     }
 }
