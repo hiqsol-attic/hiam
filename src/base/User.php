@@ -36,7 +36,7 @@ class User extends \yii\web\User
      * Registers new user.
      * @return Identity|null the saved identity or null if saving fails
      */
-    public function signup(User $model)
+    public function signup($model)
     {
         if (!$model->validate()) {
             return null;
