@@ -5,17 +5,8 @@
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
 actor: AcceptanceTester
+namespace: hiam\tests\_support
+extends: '%COMMON_ACCEPTANCE_SUITE%'
 modules:
     enabled:
-        - PhpBrowser:
-            url: ''
-        - Asserts
-        - \Helper\Acceptance
-        - \Helper\TestMails
-
-env:
-    tofid:
-        modules:
-            config:
-                PhpBrowser:
-                    url: http://hipanel.ahnames.com.local
+        - hiam\tests\_support\Helper\TestMails

@@ -66,15 +66,12 @@
     },
     "require-dev": {
         "hiqdev/hidev-php": "<2.0",
-        "hiqdev/hidev-hiqdev": "<2.0"
+        "hiqdev/hidev-hiqdev": "<2.0",
+        "codeception/codeception": "^2.4"
     },
     "autoload": {
         "psr-4": {
-            "hiam\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
+            "hiam\\": "src",
             "hiam\\tests\\": "tests"
         }
     },

@@ -1,15 +1,12 @@
 <?php
 /**
- * Identity and Access Management server providing OAuth2, multi-factor authentication and more
+ * Client module for HiPanel
  *
- * @link      https://github.com/hiqdev/hiam
- * @package   hiam
+ * @link      https://github.com/hiqdev/hipanel-module-client
+ * @package   hipanel-module-client
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2015-2018, HiQDev (http://hiqdev.com/)
  */
-
 error_reporting(E_ALL & ~E_NOTICE);
 
-$bootstrap = __DIR__ . '/../src/config/bootstrap.php';
-
-require_once file_exists($bootstrap) ? $bootstrap : __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
