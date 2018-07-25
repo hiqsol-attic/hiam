@@ -25,17 +25,16 @@ class HiamBasicFunctionsCest
         $I->wantTo('signup to hiam');
         $I->amOnPage('/site/signup');
         $I->see('Signup');
-        $I->submitForm('#login-form', [
-            // TODO: !!!!!!!!!!!! It has never worked !!!!!!!!!!!!!!!
-            'SignupForm' => [
-                'first_name' => 'Test First Name',
-                'last_name' => 'Test Last Name',
-                'email' => $this->username,
-                'password' => $this->password,
-                'password_retype' => $this->password,
-                'i_agree' => true,
-            ]
-        ]);
+        $I->fillField(['name' => 'SignupForm[first_name]'], 'Test User First Name');
+        $I->fillField(['name' => 'SignupForm[last_name]'], 'Test User Last Name');
+        $I->fillField(['name' => 'SignupForm[email]'], $this->username);
+        $I->fillField(['name' => 'SignupForm[password]'], $this->password);
+        $I->fillField(['name' => 'SignupForm[password_retype]'], $this->password);
+        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree']);
+        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_privacy_policy']);
+        $I->wait(1);
+        $I->clickWithLeftButton(['css' => '#login-form button']);
+        $I->wait(2);
         $I->seeElement('#login-form');
         $token = $this->_findLastToken();
         $I->assertNotEmpty($token, 'token exists');
@@ -49,6 +48,7 @@ class HiamBasicFunctionsCest
     public function emailConfirm(AcceptanceTester $I)
     {
         $I->amOnPage('/site/confirm-email?token=' . $this->token);
+        $I->wait(2);
         $I->see($this->username);
     }
 
@@ -66,6 +66,11 @@ class HiamBasicFunctionsCest
                 'password' => $this->password,
             ]
         ]);
+        $I->fillField(['name' => 'LoginForm[username]'], $this->username);
+        $I->fillField(['name' => 'LoginForm[password]'], $this->password);
+        $I->wait(1);
+        $I->clickWithLeftButton(['css' => '#login-form button']);
+        $I->wait(1);
         $I->see($this->username);
         $this->identity = $I->grabCookie('_identity');
     }
@@ -78,8 +83,10 @@ class HiamBasicFunctionsCest
         $I->wantTo('Logout from hiam');
         $I->setCookie('_identity', $this->identity);
         $I->amOnPage('/site/lockscreen');
+        $I->wait(1);
         $I->see($this->username);
         $I->click('a[href="/site/logout"]');
+        $I->wait(1);
         $I->see('Sign in');
     }
 
@@ -90,23 +97,23 @@ class HiamBasicFunctionsCest
     {
         $I->wantTo('Restore passwrod');
         $I->amOnPage('/site/restore-password');
-        $I->submitForm('#login-form', [
-            'RestorePasswordForm' => [
-                'username' => $this->username,
-            ]
-        ]);
-        $I->see('Sign in');
+        $I->wait(1);
+        $I->fillField(['name' => 'RestorePasswordForm[username]'], $this->username);
+        $I->wait(1);
+        $I->clickWithLeftButton(['css' => '#login-form button']);
+        $I->wait(2);
+//        $I->see('Sign in'); // todo:
         $message = $this->getLastMessage();
         $resetTokenLink = $this->getResetTokenUrl($message);
         $I->amOnUrl($resetTokenLink);
+        $I->wait(1);
         $I->seeElement('#login-form');
         $this->password = '654321';
-        $I->submitForm('#login-form', [
-            'ResetPasswordForm' => [
-                'password' => $this->password,
-                'password_retype' => $this->password,
-            ]
-        ]);
+        $I->fillField(['name' => 'ResetPasswordForm[password]'], $this->password);
+        $I->fillField(['name' => 'ResetPasswordForm[password_retype]'], $this->password);
+        $I->wait(1);
+        $I->clickWithLeftButton(['css' => '#login-form button']);
+        $I->wait(1);
         $I->seeElement('#login-form');
         $this->clearMessages();
     }
