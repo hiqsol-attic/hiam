@@ -1,5 +1,5 @@
 <?php
-
+namespace hiam\tests\_support;
 
 /**
  * Inherited Methods

@@ -1,3 +1,4 @@
+namespace: hiam\tests
 paths:
     tests: tests
     output: "%COMMON_TESTS_LOCATION%/_output"

@@ -10,3 +10,4 @@ extends: '%COMMON_ACCEPTANCE_SUITE%'
 modules:
     enabled:
         - hiam\tests\_support\Helper\TestMails
+        - Asserts

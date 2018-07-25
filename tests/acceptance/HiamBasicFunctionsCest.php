@@ -1,21 +1,22 @@
 <?php
 
+use hiam\tests\_support\AcceptanceTester;
+
 class HiamBasicFunctionsCest
 {
     private $username;
 
     private $password = '123456';
 
-    private $token = null;
+    private $token;
 
-    private $identity = null;
+    private $identity;
 
     private $mailsDir;
 
     public function __construct()
     {
         $this->username = mt_rand(100000, 999999) . "+testuser@example.com";
-//        $this->username = 'testuser111@example.com';
         $this->mailsDir = getcwd() . '/runtime/debug/mail';
     }
 
@@ -25,6 +26,7 @@ class HiamBasicFunctionsCest
         $I->amOnPage('/site/signup');
         $I->see('Signup');
         $I->submitForm('#login-form', [
+            // TODO: !!!!!!!!!!!! It has never worked !!!!!!!!!!!!!!!
             'SignupForm' => [
                 'first_name' => 'Test First Name',
                 'last_name' => 'Test Last Name',
@@ -36,7 +38,7 @@ class HiamBasicFunctionsCest
         ]);
         $I->seeElement('#login-form');
         $token = $this->_findLastToken();
-        $I->assertTrue(isset($token), 'token exists');
+        $I->assertNotEmpty($token, 'token exists');
         $this->token = $token;
     }
 
@@ -159,14 +161,15 @@ class HiamBasicFunctionsCest
     {
         $files = glob($this->mailsDir . '/*');
         foreach ($files as $file) {
-            if (is_file($file))
+            if (is_file($file)) {
                 unlink($file);
+            }
         }
     }
 
     private function _findLastToken()
     {
-        return exec('cd runtime/tokens && cd "$(ls -Art | tail -n 1)" && ls -Art | tail -n 1');
+        return exec('find runtime/tokens -type f -cmin -1 | cut -sd / -f 4 | tail -1');
     }
 }
 
