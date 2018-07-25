@@ -95,6 +95,10 @@ class SiteController extends \hisite\controllers\SiteController
                 'class' => RedirectAction::class,
                 'url' => Yii::$app->params['terms_url'],
             ],
+            'privacy-policy' => [
+                'class' => RedirectAction::class,
+                'url' => Yii::$app->params['legals.privacyPolicyUrl'],
+            ],
             'signup-validate' => [
                 'class' => ValidateAction::class,
                 'form' => SignupForm::class,

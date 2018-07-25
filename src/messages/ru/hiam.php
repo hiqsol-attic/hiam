@@ -54,4 +54,6 @@ return [
     '[{org}] Password reset request' => '[{org}] Восстановление пароля',
     'terms' => 'правилами',
     'Incorrect username or password.' => 'Неверный логин или пароль.',
+    'Privacy Policy' => 'Политикой Конфиденциальности',
+    'Please consider Privacy Policy.' => 'Пожалуйста, учтите Политику Конфиденциальности.',
 ];
