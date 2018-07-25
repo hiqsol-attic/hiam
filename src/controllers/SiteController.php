@@ -25,6 +25,7 @@ use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Site controller.
@@ -211,7 +212,9 @@ class SiteController extends \hisite\controllers\SiteController
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
                 }
-                Yii::$app->confirmator->mailToken($user, 'confirm-email');
+                if (!Yii::$app->confirmator->mailToken($user, 'confirm-email')) {
+                    Yii::error('Failed to send email confirmation letter', __METHOD__);
+                }
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
                 if ($this->user->login($user)) {
                     return $this->goBack();
