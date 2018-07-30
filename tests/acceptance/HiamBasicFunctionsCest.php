@@ -56,6 +56,7 @@ class HiamBasicFunctionsCest
 
     /**
      * @before cleanUp
+     * @depends signup
      */
     public function login(AcceptanceTester $I)
     {
