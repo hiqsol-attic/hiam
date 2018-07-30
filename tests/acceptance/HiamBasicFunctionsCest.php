@@ -16,13 +16,12 @@ class HiamBasicFunctionsCest
     public function __construct()
     {
         $this->username = mt_rand(100000, 999999) . "+testuser@example.com";
-        $this->mailsDir = getcwd() . '/runtime/mail';
     }
 
-    public function cleanUp()
+    public function cleanUp(AcceptanceTester $I)
     {
         try {
-            FileHelper::removeDirectory(Yii::getAlias('@runtime/mail'));
+            FileHelper::removeDirectory($I->getMailsDir());
             FileHelper::removeDirectory(Yii::getAlias('@runtime/tokens'));
         } catch (Exception $exception) {
             // seems to be already removed. it's fine
@@ -94,9 +93,9 @@ class HiamBasicFunctionsCest
         $I->amOnPage('/site/restore-password');
         $I->fillField(['name' => 'RestorePasswordForm[username]'], $this->username);
         $I->clickWithLeftButton(['css' => '#login-form button']);
-        $message = $this->getLastMessage();
+        $message = $I->getLastMessage();
         $I->assertNotEmpty($message);
-        $resetTokenLink = $this->getResetTokenUrl($message);
+        $resetTokenLink = $I->getResetTokenUrl($message);
         $I->assertNotEmpty($resetTokenLink);
         $I->amOnUrl($resetTokenLink);
         $I->seeElement('#login-form');
@@ -105,70 +104,7 @@ class HiamBasicFunctionsCest
         $I->fillField(['name' => 'ResetPasswordForm[password_retype]'], $this->password);
         $I->clickWithLeftButton(['css' => '#login-form button']);
         $I->seeElement('#login-form');
-        $this->clearMessages();
-    }
-
-    protected function getResetTokenUrl($f)
-    {
-        if (preg_match("|<a.*(?=href=\"([^\"]*)\")[^>]*>([^<]*)</a>|i", $f['body'], $matches)) {
-            return $matches[1];
-        }
-
-        return false;
-    }
-
-    protected function getMessages()
-    {
-        $ignored = ['.', '..', '.svn', '.htaccess'];
-        $files = [];
-        $tries = 0;
-        while (!file_exists($this->mailsDir)) {
-            if ($tries++ > 15) {
-                return null;
-            }
-            sleep(1);
-        }
-        foreach (scandir($this->mailsDir) as $file) {
-            if (in_array($file, $ignored)) continue;
-            $files[$file] = filemtime($this->mailsDir . '/' . $file);
-        }
-
-        arsort($files);
-        $files = array_keys($files);
-
-        return $files ? $files : null;
-    }
-
-    protected function getLastMessage()
-    {
-        $messages = $this->getMessages();
-
-        if ($messages) {
-            $f = $this->mailsDir . '/' . reset($messages);
-            $mime = mailparse_msg_parse_file($f);
-            $struct = mailparse_msg_get_structure($mime);
-            if (in_array('1.1', $struct)) {
-                $info = mailparse_msg_get_part_data(mailparse_msg_get_part($mime, '1'));
-                ob_start();
-                mailparse_msg_extract_part_file(mailparse_msg_get_part($mime, '1.2'), $f);
-                $body = ob_get_contents();
-                ob_end_clean();
-
-                return compact('info', 'body');
-            }
-        }
-
-        return false;
-    }
-
-    protected function clearMessages(): void
-    {
-        $files = glob($this->mailsDir . '/*');
-        foreach ($files as $file) {
-            if (is_file($file)) {
-                unlink($file);
-            }
-        }
+        $I->clearMessages();
     }
 
     private function _findLastToken()
