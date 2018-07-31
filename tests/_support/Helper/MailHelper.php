@@ -11,9 +11,9 @@ use Yii;
  */
 class MailHelper extends \Codeception\Module
 {
-    private $_mailsDir;
+    private $mailsDir;
 
-    public function getMessages()
+    public function getMessages(): ?string
     {
         $ignored = ['.', '..', '.svn', '.htaccess'];
         $files = [];
@@ -35,7 +35,7 @@ class MailHelper extends \Codeception\Module
         return $files ? $files : null;
     }
 
-    public function getLastMessage()
+    public function getLastMessage(): ?string
     {
         $messages = $this->getMessages();
 
@@ -54,7 +54,7 @@ class MailHelper extends \Codeception\Module
             }
         }
 
-        return false;
+        return null;
     }
 
     public function getResetTokenUrl($f): ?string
@@ -84,11 +84,10 @@ class MailHelper extends \Codeception\Module
 
     public function getMailsDir(): string
     {
-        if (!$this->_mailsDir) {
-            $this->_mailsDir = Yii::getAlias('@runtime/mail');
+        if (!$this->mailsDir) {
+            $this->mailsDir = Yii::getAlias('@runtime/mail');
         }
 
-        return $this->_mailsDir;
+        return $this->mailsDir;
     }
-
 }

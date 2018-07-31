@@ -45,7 +45,7 @@ class HiamBasicFunctionsCest
         $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_privacy_policy']);
         $I->clickWithLeftButton(['css' => '#login-form button']);
         $I->seeElement('#login-form');
-        $token = $this->_findLastToken();
+        $token = $this->findLastToken();
         $I->assertNotEmpty($token, 'token exists');
 
         $I->amOnPage('/site/confirm-email?token=' . $token);
@@ -108,7 +108,7 @@ class HiamBasicFunctionsCest
         $I->clearMessages();
     }
 
-    private function _findLastToken()
+    private function findLastToken()
     {
         foreach (range(1, 15) as $try) {
             sleep(2);
