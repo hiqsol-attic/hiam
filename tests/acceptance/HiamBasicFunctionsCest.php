@@ -11,8 +11,6 @@ class HiamBasicFunctionsCest
 
     private $identity;
 
-    private $mailsDir;
-
     public function __construct()
     {
         $this->username = mt_rand(100000, 999999) . "+testuser@example.com";
@@ -108,7 +106,7 @@ class HiamBasicFunctionsCest
         $I->clearMessages();
     }
 
-    private function findLastToken()
+    private function findLastToken(): ?string
     {
         foreach (range(1, 15) as $try) {
             sleep(2);
