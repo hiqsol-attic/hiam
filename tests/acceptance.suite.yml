@@ -9,5 +9,5 @@ namespace: hiam\tests\_support
 extends: '%COMMON_ACCEPTANCE_SUITE%'
 modules:
     enabled:
-        - hiam\tests\_support\Helper\TestMails
+        - hiam\tests\_support\Helper\MailHelper
         - Asserts
