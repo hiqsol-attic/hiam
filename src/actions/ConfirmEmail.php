@@ -2,8 +2,11 @@
 
 namespace hiam\actions;
 
+use hiqdev\php\confirmator\ServiceInterface;
 use Yii;
 use yii\base\Action;
+use yii\web\Session;
+use yii\web\User;
 
 class ConfirmEmail extends Action
 {
@@ -32,18 +35,41 @@ class ConfirmEmail extends Action
      */
     public $errorMessage;
 
+    /**
+     * @var ServiceInterface
+     */
+    private $confirmator;
+
+    /**
+     * @var User
+     */
+    private $user;
+
+    /**
+     * @var Session
+     */
+    private $session;
+
+    public function __construct($id, $controller, ServiceInterface $confirmator, User $user, Session $session, $config = [])
+    {
+        $this->confirmator = $confirmator;
+        $this->user = $user;
+        $this->session = $session;
+        parent::__construct($id, $controller, $config);
+    }
+
     public function run()
     {
-        $token = Yii::$app->confirmator->findToken(Yii::$app->request->get('token'));
+        $token = $this->confirmator->findToken(Yii::$app->request->get('token'));
         if ($token && $token->check([$this->actionAttributeName => $this->actionAttributeValue])) {
-            $user = Yii::$app->user->findIdentity($token->get($this->usernameAttributeName));
+            $user = $this->user->findIdentity($token->get($this->usernameAttributeName));
         }
         if (empty($user)) {
-            Yii::$app->session->addFlash('error', $this->getErrorMessage());
+            $this->session->addFlash('error', $this->getErrorMessage());
         } else {
             $user->setEmailConfirmed($token->get('email'));
-            Yii::$app->session->addFlash('success', $this->getSuccessMessage());
-            if (Yii::$app->user->login($user)) {
+            $this->session->addFlash('success', $this->getSuccessMessage());
+            if ($this->user->login($user)) {
                 $token->remove();
             }
         }

@@ -18,6 +18,7 @@ use hiam\forms\RestorePasswordForm;
 use hiam\forms\SignupForm;
 use hiam\models\Identity;
 use hiam\actions\ConfirmEmail;
+use hiqdev\php\confirmator\ServiceInterface;
 use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use hisite\actions\RedirectAction;
 use hisite\actions\RenderAction;
@@ -35,6 +36,17 @@ use yii\filters\AccessControl;
 class SiteController extends \hisite\controllers\SiteController
 {
     public $defaultAction = 'lockscreen';
+    /**
+     * @var ServiceInterface
+     */
+    private $confirmator;
+
+    public function __construct($id, $module, ServiceInterface $confirmator, $config = [])
+    {
+        parent::__construct($id, $module, $config = []);
+
+        $this->confirmator = $confirmator;
+    }
 
     public function behaviors()
     {
@@ -219,7 +231,7 @@ class SiteController extends \hisite\controllers\SiteController
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
                 }
-                if (!Yii::$app->confirmator->mailToken($user, 'confirm-email')) {
+                if (!$this->confirmator->mailToken($user, 'confirm-email')) {
                     Yii::error('Failed to send email confirmation letter', __METHOD__);
                 }
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
@@ -253,7 +265,7 @@ class SiteController extends \hisite\controllers\SiteController
         $model->username = $username;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = $this->user->findIdentityByUsername($model->username);
-            if (Yii::$app->confirmator->mailToken($user, 'restore-password')) {
+            if ($this->confirmator->mailToken($user, 'restore-password')) {
                 Yii::$app->session->setFlash('success',
                     Yii::t('hiam', 'Check your email {maskedMail} for further instructions.', [
                         'maskedMail' => $model->maskEmail($user->email),
@@ -289,7 +301,7 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function resetPassword($model, $token)
     {
-        $token = Yii::$app->confirmator->findToken($token);
+        $token = $this->confirmator->findToken($token);
         if (!$token || !$token->check(['action' => 'restore-password'])) {
             return false;
         }

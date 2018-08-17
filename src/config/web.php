@@ -30,27 +30,6 @@ return [
             'username'  => empty($params['db.user']) ? 'hiam' : $params['db.user'],
             'password'  => empty($params['db.password']) ? '*' : $params['db.password'],
         ],
-        'user' => [
-            'class'           => \hiam\base\User::class,
-            'identityClass'   => \hiam\models\Identity::class,
-            'remoteUserClass' => \hiam\models\RemoteUser::class,
-            'storageClasses'  => [
-                'identity'   => \hiam\storage\HiamIdentity::class,
-                'remoteUser' => \hiam\storage\HiamRemoteUser::class,
-            ],
-            'loginDuration'   => $params['user.loginDuration'],
-            'enableAutoLogin' => $params['user.enableAutoLogin'],
-            'disableSignup'   => $params['user.disableSignup'],
-            'disableRestorePassword' => $params['user.disableRestorePassword'],
-            'as checkEmailConfirmed' => \hiam\behaviors\CheckEmailConfirmed::class,
-        ],
-        'session' => isset($params['session.db']) ? [
-            'class' => \hiam\session\DbSession::class,
-            'db' => $params['session.db'],
-            'sessionTable' => isset($params['session.table']) ? $params['session.table'] : 'hiam_session',
-        ] : [
-            'class' => \yii\web\Session::class,
-        ],
         'mailer' => [
             'useFileTransport' => false,
             'messageClass' => \hiam\base\Message::class,
@@ -62,13 +41,6 @@ return [
         'authClientCollection' => [
             'class' => \hiam\authclient\Collection::class,
             'clients' => $authClients,
-        ],
-        'confirmator' => [
-            'class' => \hiqdev\yii2\confirmator\Service::class,
-            'storage' => [
-                'class' => \hiqdev\php\confirmator\FileStorage::class,
-                'path' => '@runtime/tokens',
-            ],
         ],
         'themeManager' => [
             'pathMap' => [
@@ -141,6 +113,44 @@ return [
                     $params['user.authKeyCipher'],
                 ],
             ],
+        ],
+        'singletons' => [
+            \hiqdev\php\confirmator\ServiceInterface::class => function () {
+                return Yii::createObject([
+                    'class' => \hiqdev\yii2\confirmator\Service::class,
+                    'storage' => [
+                        'class' => \hiqdev\php\confirmator\FileStorage::class,
+                        'path' => '@runtime/tokens',
+                    ],
+                ]);
+            },
+            \yii\web\Session::class => function () use ($params) {
+                if (isset($params['session.db'])) {
+                    return Yii::createObject([
+                        'class' => \hiam\session\DbSession::class,
+                        'db' => $params['session.db'],
+                        'sessionTable' => isset($params['session.table']) ? $params['session.table'] : 'hiam_session',
+                    ]);
+                }
+
+                return new \yii\web\Session();
+            },
+            \yii\web\User::class => function () use ($params) {
+                return Yii::createObject([
+                    'class'           => \hiam\base\User::class,
+                    'identityClass'   => \hiam\models\Identity::class,
+                    'remoteUserClass' => \hiam\models\RemoteUser::class,
+                    'storageClasses'  => [
+                        'identity'   => \hiam\storage\HiamIdentity::class,
+                        'remoteUser' => \hiam\storage\HiamRemoteUser::class,
+                    ],
+                    'loginDuration'   => $params['user.loginDuration'],
+                    'enableAutoLogin' => $params['user.enableAutoLogin'],
+                    'disableSignup'   => $params['user.disableSignup'],
+                    'disableRestorePassword' => $params['user.disableRestorePassword'],
+                    'as checkEmailConfirmed' => \hiam\behaviors\CheckEmailConfirmed::class,
+                ]);
+            }
         ],
     ],
 ];
