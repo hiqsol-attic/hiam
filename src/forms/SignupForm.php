@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\forms;
@@ -32,7 +32,7 @@ class SignupForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['first_name', 'last_name' , 'email', 'password'], 'trim'],
+            [['first_name', 'last_name', 'email', 'password'], 'trim'],
             [['first_name', 'last_name', 'password'], 'string', 'min' => 2, 'max' => 64],
 
             ['email', 'email'],

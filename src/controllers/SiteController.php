@@ -5,11 +5,12 @@
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\controllers;
 
+use hiam\actions\ConfirmEmail;
 use hiam\base\User;
 use hiam\forms\ConfirmPasswordForm;
 use hiam\forms\LoginForm;
@@ -17,7 +18,6 @@ use hiam\forms\ResetPasswordForm;
 use hiam\forms\RestorePasswordForm;
 use hiam\forms\SignupForm;
 use hiam\models\Identity;
-use hiam\actions\ConfirmEmail;
 use hiqdev\php\confirmator\ServiceInterface;
 use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use hisite\actions\RedirectAction;
@@ -117,7 +117,7 @@ class SiteController extends \hisite\controllers\SiteController
             ],
             'confirm-email' => [
                 'class' => ConfirmEmail::class,
-            ]
+            ],
         ]);
     }
 
@@ -157,7 +157,7 @@ class SiteController extends \hisite\controllers\SiteController
     }
 
     /**
-     * Logs user in and preserves return URL
+     * Logs user in and preserves return URL.
      */
     private function login(Identity $identity, $sessionDuration = 0): bool
     {

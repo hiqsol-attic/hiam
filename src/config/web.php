@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
  */
 
 $authClients = require __DIR__ . '/authClients.php';
@@ -134,10 +134,10 @@ return [
             ],
             \hiqdev\php\confirmator\StorageInterface::class => [
                 ['class' => \hiqdev\php\confirmator\FileStorage::class],
-                ['@runtime/tokens']
+                ['@runtime/tokens'],
             ],
             \yii\web\Session::class => function (\yii\di\Container $container, $diParams, $config) use ($params) {
-                if(isset($params['session.db'])) {
+                if (isset($params['session.db'])) {
                     return $container->get(\yii\web\DbSession::class, [], array_merge([
                         'db' => $params['session.db'],
                         'sessionTable' => $params['session.table'] ?? 'hiam_session',

@@ -1,12 +1,10 @@
 <?php
 
-use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var yii\web\IdentityInterface $user */
 /** @var yii\mail\MessageInterface $message */
 /** @var string $token */
-
 $org = Yii::$app->params['organization.name'];
 
 $message->setSubject(Yii::t('hiam', '[{org}] New user signup', ['org' => $org]));

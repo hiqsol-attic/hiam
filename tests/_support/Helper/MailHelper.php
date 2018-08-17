@@ -1,11 +1,19 @@
 <?php
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
+ *
+ * @link      https://github.com/hiqdev/hiam
+ * @package   hiam
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hiam\tests\_support\Helper;
 
 use Yii;
 
 /**
- * Class TestMails
+ * Class TestMails.
  *
  * @author Andrey Klochok <andreyklochok@gmail.com>
  */
@@ -25,7 +33,9 @@ class MailHelper extends \Codeception\Module
             sleep(1);
         }
         foreach (scandir($this->getMailsDir()) as $file) {
-            if (in_array($file, $ignored)) continue;
+            if (in_array($file, $ignored, true)) {
+                continue;
+            }
             $files[$file] = filemtime($this->getMailsDir() . DIRECTORY_SEPARATOR . $file);
         }
 
@@ -43,7 +53,7 @@ class MailHelper extends \Codeception\Module
             $f = $this->getMailsDir() . DIRECTORY_SEPARATOR . reset($messages);
             $mime = mailparse_msg_parse_file($f);
             $struct = mailparse_msg_get_structure($mime);
-            if (in_array('1.1', $struct)) {
+            if (in_array('1.1', $struct, true)) {
                 $info = mailparse_msg_get_part_data(mailparse_msg_get_part($mime, '1'));
                 ob_start();
                 mailparse_msg_extract_part_file(mailparse_msg_get_part($mime, '1.2'), $f);
@@ -59,7 +69,7 @@ class MailHelper extends \Codeception\Module
 
     public function getResetTokenUrl($f): ?string
     {
-        if (preg_match("|<a.*(?=href=\"([^\"]*)\")[^>]*>([^<]*)</a>|i", $f['body'], $matches)) {
+        if (preg_match('|<a.*(?=href="([^"]*)")[^>]*>([^<]*)</a>|i', $f['body'], $matches)) {
             return $matches[1];
         }
 
@@ -70,7 +80,6 @@ class MailHelper extends \Codeception\Module
     {
         // todo
     }
-
 
     public function clearMessages(): void
     {
