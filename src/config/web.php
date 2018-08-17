@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
  */
 
 $authClients = require __DIR__ . '/authClients.php';
@@ -44,13 +44,6 @@ return [
             'disableRestorePassword' => $params['user.disableRestorePassword'],
             'as checkEmailConfirmed' => \hiam\behaviors\CheckEmailConfirmed::class,
         ],
-        'session' => isset($params['session.db']) ? [
-            'class' => \hiam\session\DbSession::class,
-            'db' => $params['session.db'],
-            'sessionTable' => isset($params['session.table']) ? $params['session.table'] : 'hiam_session',
-        ] : [
-            'class' => \yii\web\Session::class,
-        ],
         'mailer' => [
             'useFileTransport' => false,
             'messageClass' => \hiam\base\Message::class,
@@ -62,13 +55,6 @@ return [
         'authClientCollection' => [
             'class' => \hiam\authclient\Collection::class,
             'clients' => $authClients,
-        ],
-        'confirmator' => [
-            'class' => \hiqdev\yii2\confirmator\Service::class,
-            'storage' => [
-                'class' => \hiqdev\php\confirmator\FileStorage::class,
-                'path' => '@runtime/tokens',
-            ],
         ],
         'themeManager' => [
             'pathMap' => [
@@ -141,6 +127,28 @@ return [
                     $params['user.authKeyCipher'],
                 ],
             ],
+        ],
+        'singletons' =>     [
+            \hiqdev\php\confirmator\ServiceInterface::class => [
+                'class' => \hiqdev\php\confirmator\Service::class,
+            ],
+            \hiqdev\php\confirmator\StorageInterface::class => [
+                ['class' => \hiqdev\php\confirmator\FileStorage::class],
+                ['@runtime/tokens'],
+            ],
+            \yii\web\Session::class => function (\yii\di\Container $container, $diParams, $config) use ($params) {
+                if (isset($params['session.db'])) {
+                    return $container->get(\yii\web\DbSession::class, [], array_merge([
+                        'db' => $params['session.db'],
+                        'sessionTable' => $params['session.table'] ?? 'hiam_session',
+                    ], $config));
+                }
+
+                return new \yii\web\Session($config);
+            },
+            \yii\web\User::class => function ($container, $params, $config) {
+                return Yii::$app->getUser();
+            },
         ],
     ],
 ];

@@ -5,11 +5,12 @@
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\controllers;
 
+use hiam\actions\ConfirmEmail;
 use hiam\base\User;
 use hiam\forms\ConfirmPasswordForm;
 use hiam\forms\LoginForm;
@@ -17,6 +18,7 @@ use hiam\forms\ResetPasswordForm;
 use hiam\forms\RestorePasswordForm;
 use hiam\forms\SignupForm;
 use hiam\models\Identity;
+use hiqdev\php\confirmator\ServiceInterface;
 use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use hisite\actions\RedirectAction;
 use hisite\actions\RenderAction;
@@ -25,7 +27,6 @@ use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
 use yii\filters\AccessControl;
-use yii\web\ForbiddenHttpException;
 
 /**
  * Site controller.
@@ -35,6 +36,17 @@ use yii\web\ForbiddenHttpException;
 class SiteController extends \hisite\controllers\SiteController
 {
     public $defaultAction = 'lockscreen';
+    /**
+     * @var ServiceInterface
+     */
+    private $confirmator;
+
+    public function __construct($id, $module, ServiceInterface $confirmator, $config = [])
+    {
+        parent::__construct($id, $module, $config = []);
+
+        $this->confirmator = $confirmator;
+    }
 
     public function behaviors()
     {
@@ -103,6 +115,9 @@ class SiteController extends \hisite\controllers\SiteController
                 'class' => ValidateAction::class,
                 'form' => SignupForm::class,
             ],
+            'confirm-email' => [
+                'class' => ConfirmEmail::class,
+            ],
         ]);
     }
 
@@ -142,7 +157,7 @@ class SiteController extends \hisite\controllers\SiteController
     }
 
     /**
-     * Logs user in and preserves return URL
+     * Logs user in and preserves return URL.
      */
     private function login(Identity $identity, $sessionDuration = 0): bool
     {
@@ -216,7 +231,7 @@ class SiteController extends \hisite\controllers\SiteController
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
                 }
-                if (!Yii::$app->confirmator->mailToken($user, 'confirm-email')) {
+                if (!$this->confirmator->mailToken($user, 'confirm-email')) {
                     Yii::error('Failed to send email confirmation letter', __METHOD__);
                 }
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
@@ -250,7 +265,7 @@ class SiteController extends \hisite\controllers\SiteController
         $model->username = $username;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = $this->user->findIdentityByUsername($model->username);
-            if (Yii::$app->confirmator->mailToken($user, 'restore-password')) {
+            if ($this->confirmator->mailToken($user, 'restore-password')) {
                 Yii::$app->session->setFlash('success',
                     Yii::t('hiam', 'Check your email {maskedMail} for further instructions.', [
                         'maskedMail' => $model->maskEmail($user->email),
@@ -286,7 +301,7 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function resetPassword($model, $token)
     {
-        $token = Yii::$app->confirmator->findToken($token);
+        $token = $this->confirmator->findToken($token);
         if (!$token || !$token->check(['action' => 'restore-password'])) {
             return false;
         }
@@ -306,24 +321,5 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         return null;
-    }
-
-    public function actionConfirmEmail($token)
-    {
-        $token = Yii::$app->confirmator->findToken($token);
-        if ($token && $token->check(['action' => 'confirm-email'])) {
-            $user = $this->user->findIdentity($token->get('username'));
-        }
-        if (empty($user)) {
-            Yii::$app->session->setFlash('error', Yii::t('hiam', 'Failed confirm email. Please start over.'));
-        } else {
-            $user->setEmailConfirmed($token->get('email'));
-            Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your email was confirmed!'));
-            if ($this->user->login($user)) {
-                $token->remove();
-            }
-        }
-
-        return $this->goBack();
     }
 }

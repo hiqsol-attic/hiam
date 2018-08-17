@@ -5,7 +5,7 @@
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
  * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2017, HiQDev (http://hiqdev.com/)
+ * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
  */
 
 return [
@@ -15,12 +15,6 @@ return [
     'poweredBy.url'     => 'https://github.com/hiqdev/hiam',
 
     'organization.name' => '',
-
-    'db.name'           => null,
-    'db.user'           => null,
-    'db.password'       => null,
-    'db.host'           => null,
-    'db.port'           => null,
 
     'supportEmail'      => '',
 

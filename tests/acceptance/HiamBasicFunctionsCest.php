@@ -1,4 +1,12 @@
 <?php
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
+ *
+ * @link      https://github.com/hiqdev/hiam
+ * @package   hiam
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
+ */
 
 use hiam\tests\_support\AcceptanceTester;
 use yii\helpers\FileHelper;
@@ -13,7 +21,7 @@ class HiamBasicFunctionsCest
 
     public function __construct()
     {
-        $this->username = mt_rand(100000, 999999) . "+testuser@example.com";
+        $this->username = mt_rand(100000, 999999) . '+testuser@example.com';
     }
 
     public function cleanUp(AcceptanceTester $I)
@@ -111,10 +119,11 @@ class HiamBasicFunctionsCest
         foreach (range(1, 15) as $try) {
             sleep(2);
             $res = exec('find runtime/tokens -type f -cmin -1 | cut -sd / -f 4 | tail -1');
-            if ($res) return $res;
+            if ($res) {
+                return $res;
+            }
         }
 
         return null;
     }
 }
-
