@@ -16,12 +16,6 @@ return [
 
     'organization.name' => '',
 
-    'db.name'           => null,
-    'db.user'           => null,
-    'db.password'       => null,
-    'db.host'           => null,
-    'db.port'           => null,
-
     'supportEmail'      => '',
 
     'db.host'           => '',

@@ -30,6 +30,20 @@ return [
             'username'  => empty($params['db.user']) ? 'hiam' : $params['db.user'],
             'password'  => empty($params['db.password']) ? '*' : $params['db.password'],
         ],
+        'user' => [
+            'class'           => \hiam\base\User::class,
+            'identityClass'   => \hiam\models\Identity::class,
+            'remoteUserClass' => \hiam\models\RemoteUser::class,
+            'storageClasses'  => [
+                'identity'   => \hiam\storage\HiamIdentity::class,
+                'remoteUser' => \hiam\storage\HiamRemoteUser::class,
+            ],
+            'loginDuration'   => $params['user.loginDuration'],
+            'enableAutoLogin' => $params['user.enableAutoLogin'],
+            'disableSignup'   => $params['user.disableSignup'],
+            'disableRestorePassword' => $params['user.disableRestorePassword'],
+            'as checkEmailConfirmed' => \hiam\behaviors\CheckEmailConfirmed::class,
+        ],
         'mailer' => [
             'useFileTransport' => false,
             'messageClass' => \hiam\base\Message::class,
@@ -114,43 +128,27 @@ return [
                 ],
             ],
         ],
-        'singletons' => [
-            \hiqdev\php\confirmator\ServiceInterface::class => function () {
-                return Yii::createObject([
-                    'class' => \hiqdev\yii2\confirmator\Service::class,
-                    'storage' => [
-                        'class' => \hiqdev\php\confirmator\FileStorage::class,
-                        'path' => '@runtime/tokens',
-                    ],
-                ]);
-            },
-            \yii\web\Session::class => function () use ($params) {
-                if (isset($params['session.db'])) {
-                    return Yii::createObject([
-                        'class' => \hiam\session\DbSession::class,
+        'singletons' =>     [
+            \hiqdev\php\confirmator\ServiceInterface::class => [
+                'class' => \hiqdev\php\confirmator\Service::class,
+            ],
+            \hiqdev\php\confirmator\StorageInterface::class => [
+                ['class' => \hiqdev\php\confirmator\FileStorage::class],
+                ['@runtime/tokens']
+            ],
+            \yii\web\Session::class => function (\yii\di\Container $container, $diParams, $config) use ($params) {
+                if(isset($params['session.db'])) {
+                    return $container->get(\yii\web\DbSession::class, [], array_merge([
                         'db' => $params['session.db'],
-                        'sessionTable' => isset($params['session.table']) ? $params['session.table'] : 'hiam_session',
-                    ]);
+                        'sessionTable' => $params['session.table'] ?? 'hiam_session',
+                    ], $config));
                 }
 
-                return new \yii\web\Session();
+                return new \yii\web\Session($config);
             },
-            \yii\web\User::class => function () use ($params) {
-                return Yii::createObject([
-                    'class'           => \hiam\base\User::class,
-                    'identityClass'   => \hiam\models\Identity::class,
-                    'remoteUserClass' => \hiam\models\RemoteUser::class,
-                    'storageClasses'  => [
-                        'identity'   => \hiam\storage\HiamIdentity::class,
-                        'remoteUser' => \hiam\storage\HiamRemoteUser::class,
-                    ],
-                    'loginDuration'   => $params['user.loginDuration'],
-                    'enableAutoLogin' => $params['user.enableAutoLogin'],
-                    'disableSignup'   => $params['user.disableSignup'],
-                    'disableRestorePassword' => $params['user.disableRestorePassword'],
-                    'as checkEmailConfirmed' => \hiam\behaviors\CheckEmailConfirmed::class,
-                ]);
-            }
+            \yii\web\User::class => function ($container, $params, $config) {
+                return Yii::$app->getUser();
+            },
         ],
     ],
 ];

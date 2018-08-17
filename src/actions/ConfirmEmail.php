@@ -52,10 +52,10 @@ class ConfirmEmail extends Action
 
     public function __construct($id, $controller, ServiceInterface $confirmator, User $user, Session $session, $config = [])
     {
+        parent::__construct($id, $controller, $config);
         $this->confirmator = $confirmator;
         $this->user = $user;
         $this->session = $session;
-        parent::__construct($id, $controller, $config);
     }
 
     public function run()
