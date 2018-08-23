@@ -130,7 +130,7 @@ return [
         ],
         'singletons' =>     [
             \hiqdev\php\confirmator\ServiceInterface::class => [
-                'class' => \hiqdev\php\confirmator\Service::class,
+                'class' => \hiqdev\yii2\confirmator\Service::class,
             ],
             \hiqdev\php\confirmator\StorageInterface::class => [
                 ['class' => \hiqdev\php\confirmator\FileStorage::class],
