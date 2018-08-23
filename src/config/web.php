@@ -129,13 +129,14 @@ return [
             ],
         ],
         'singletons' =>     [
-            \hiqdev\php\confirmator\ServiceInterface::class => [
-                'class' => \hiqdev\php\confirmator\Service::class,
-            ],
-            \hiqdev\php\confirmator\StorageInterface::class => [
-                ['class' => \hiqdev\php\confirmator\FileStorage::class],
-                ['@runtime/tokens'],
-            ],
+            \hiqdev\php\confirmator\ServiceInterface::class => function (\yii\di\Container $container, $diParams, $config) {
+                return $container->get(\hiqdev\yii2\confirmator\Service::class, [], array_merge([
+                    'storage' => [
+                        'class' => \hiqdev\php\confirmator\FileStorage::class,
+                        'path' => '@runtime/tokens',
+                    ],
+                ], $config));
+            },
             \yii\web\Session::class => function (\yii\di\Container $container, $diParams, $config) use ($params) {
                 if (isset($params['session.db'])) {
                     return $container->get(\yii\web\DbSession::class, [], array_merge([
