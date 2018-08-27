@@ -28,7 +28,7 @@ class HiamBasicFunctionsCest
     {
         try {
             FileHelper::removeDirectory($I->getMailsDir());
-            FileHelper::removeDirectory(Yii::getAlias('@runtime/tokens'));
+            FileHelper::removeDirectory($this->getTokensDir());
         } catch (Exception $exception) {
             // seems to be already removed. it's fine
         }
@@ -101,9 +101,9 @@ class HiamBasicFunctionsCest
         $I->fillField(['name' => 'RestorePasswordForm[username]'], $this->username);
         $I->clickWithLeftButton(['css' => '#login-form button']);
         $message = $I->getLastMessage();
-        $I->assertNotEmpty($message);
+        $I->assertNotEmpty($message, 'make sure that the mail received');
         $resetTokenLink = $I->getResetTokenUrl($message);
-        $I->assertNotEmpty($resetTokenLink);
+        $I->assertNotEmpty($resetTokenLink, 'make sure that reset token link received');
         $I->amOnUrl($resetTokenLink);
         $I->seeElement('#login-form');
         $this->password = '654321';
@@ -116,14 +116,21 @@ class HiamBasicFunctionsCest
 
     private function findLastToken(): ?string
     {
-        foreach (range(1, 15) as $try) {
+        foreach (range(1, 31) as $try) {
+            codecept_debug($try . ' try to get Token by path: ' . $this->getTokensDir());
             sleep(2);
-            $res = exec('find runtime/tokens -type f -cmin -1 | cut -sd / -f 4 | tail -1');
+            $res = exec('find ' . $this->getTokensDir() . '  -type f -cmin -1 | cut -sd / -f 4 | tail -1');
+
             if ($res) {
                 return $res;
             }
         }
 
         return null;
+    }
+
+    private function getTokensDir()
+    {
+        return Yii::getAlias('@runtime/tokens');
     }
 }
