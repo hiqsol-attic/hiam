@@ -21,7 +21,7 @@ class MailHelper extends \Codeception\Module
 {
     private $mailsDir;
 
-    public function getMessages(): ?string
+    public function getMessages(): ?array
     {
         $ignored = ['.', '..', '.svn', '.htaccess'];
         $files = [];
@@ -45,7 +45,7 @@ class MailHelper extends \Codeception\Module
         return $files ? $files : null;
     }
 
-    public function getLastMessage(): ?string
+    public function getLastMessage(): ?array
     {
         $messages = $this->getMessages();
 
@@ -94,7 +94,7 @@ class MailHelper extends \Codeception\Module
     public function getMailsDir(): string
     {
         if (!$this->mailsDir) {
-            $this->mailsDir = Yii::getAlias('@runtime/mail');
+            $this->mailsDir = Yii::getAlias('@runtime/debug/mail');
         }
 
         return $this->mailsDir;

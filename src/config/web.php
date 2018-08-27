@@ -133,7 +133,7 @@ return [
                 'class' => \hiqdev\yii2\confirmator\Service::class,
             ],
             \hiqdev\php\confirmator\StorageInterface::class => [
-                ['class' => \hiqdev\php\confirmator\FileStorage::class],
+                ['class' => \hiqdev\yii2\confirmator\FileStorage::class],
                 ['@runtime/tokens'],
             ],
             \yii\web\Session::class => function (\yii\di\Container $container, $diParams, $config) use ($params) {
