@@ -10,6 +10,7 @@
 
 use hiam\tests\_support\AcceptanceTester;
 use yii\helpers\FileHelper;
+use Yii;
 
 class HiamBasicFunctionsCest
 {
