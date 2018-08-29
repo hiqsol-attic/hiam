@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
  */
 
+namespace hiam\tests\acceptance;
+
 use hiam\tests\_support\AcceptanceTester;
 use yii\helpers\FileHelper;
 use Yii;
@@ -30,7 +32,7 @@ class HiamBasicFunctionsCest
         try {
             FileHelper::removeDirectory($I->getMailsDir());
             FileHelper::removeDirectory($this->getTokensDir());
-        } catch (Exception $exception) {
+        } catch (\Throwable $exception) {
             // seems to be already removed. it's fine
         }
     }
