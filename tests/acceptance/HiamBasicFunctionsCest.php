@@ -56,10 +56,9 @@ class HiamBasicFunctionsCest
         $I->seeElement('#login-form');
         $token = $this->findLastToken();
         $I->assertNotEmpty($token, 'token exists');
-
+        $I->waitForText('Your account has been successfully created.');
         $I->amOnPage('/site/confirm-email?token=' . $token);
-        $I->makeScreenshot();
-        $I->waitForText($this->username);
+        $I->waitForText('Your email was confirmed!');
         $I->see($this->username);
     }
 
@@ -122,7 +121,7 @@ class HiamBasicFunctionsCest
         foreach (range(1, 31) as $try) {
             codecept_debug($try . ' try to get Token by path: ' . $this->getTokensDir());
             sleep(2);
-            $res = exec('find ' . $this->getTokensDir() . '  -type f -cmin -1 | cut -sd / -f 4 | tail -1');
+            $res = exec('find ' . $this->getTokensDir() . '  -type f -cmin -1 -exec basename {} \; | tail -1');
 
             if ($res) {
                 return $res;
