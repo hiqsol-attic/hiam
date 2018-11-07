@@ -9,6 +9,8 @@
  */
 
 return [
+    'hiapi.var_dir'     => dirname(__DIR__, 5) . '/../HIAPI_VAR',
+
     'logoUrl'           => '/site/back',
 
     'poweredBy.name'    => 'HIAM',
