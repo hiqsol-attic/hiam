@@ -13,7 +13,7 @@ namespace hiam\behaviors;
 use hiam\base\User;
 use hiqdev\php\confirmator\ServiceInterface;
 use Yii;
-use yii\base\Event;
+use yii\web\UserEvent;
 
 /**
  * CheckEmailConfirmed behavior.
@@ -38,12 +38,21 @@ class CheckEmailConfirmed extends \yii\base\Behavior
         ];
     }
 
-    public function beforeLogin(Event $event)
+    public function beforeLogin(UserEvent $event)
     {
+        if ($event->cookieBased) {
+            return;
+        }
+
         $identity = $event->identity;
         if ($identity->isEmailConfirmed()) {
             return;
         }
+
+        if (empty($identity->email)) {
+            return;
+        }
+
         if ($this->confirmator->mailToken($identity, 'confirm-email')) {
             Yii::$app->session->setFlash('warning',
                 Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
