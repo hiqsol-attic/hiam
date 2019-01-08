@@ -12,7 +12,7 @@ namespace hiam\tests\units\storage;
 
 use hiam\storage\HiamRemoteUser;
 
-class HiamRemoteUserTest extends \PHPUnit_Framework_TestCase
+class HiamRemoteUserTest extends \PHPUnit\Framework\TestCase
 {
     public function testToProvider()
     {
