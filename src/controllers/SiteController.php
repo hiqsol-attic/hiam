@@ -231,13 +231,20 @@ class SiteController extends \hisite\controllers\SiteController
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
                 }
-                if (!$this->confirmator->mailToken($user, 'confirm-email')) {
+                if ($this->confirmator->mailToken($user, 'confirm-email')) {
+                    Yii::$app->session->setFlash('warning',
+                        Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
+                        Yii::t('hiam',
+                            'An email with confirmation instructions was sent to <b>{email}</b>',
+                            ['email' => $user->email]
+                        )
+                    );
+                } else {
                     Yii::error('Failed to send email confirmation letter', __METHOD__);
                 }
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
-                if ($this->user->login($user)) {
-                    return $this->goBack();
-                }
+
+                return $this->goBack();
             }
         } else {
             if ($client) {
