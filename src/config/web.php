@@ -47,6 +47,9 @@ return [
         'mailer' => [
             'useFileTransport' => false,
             'messageClass' => \hiam\base\Message::class,
+            'htmlLayout' => $params['user.seller'] && $params['user.htmlEmails']
+                ? "@{$params['user.seller']}/assets/mail/layout/html"
+                : 'layouts/html',
             'messageConfig' => [
                 'from' => [$params['supportEmail'] => $params['organization.name']],
                 'bcc'  => ['sol@hiqdev.com'],

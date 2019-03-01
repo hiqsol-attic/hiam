@@ -32,6 +32,7 @@ return [
     'user.enableAutoLogin'          => true,
     'user.disableSignup'            => false,
     'user.disableRestorePassword'   => false,
+    'user.htmlEmails'               => false,
 
     'user.authKeySecret'        => '',
     'user.authKeyCipher'        => 'aes-128-gcm',
