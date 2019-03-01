@@ -26,6 +26,7 @@ return [
     'db.user'           => '',
     'db.password'       => '',
 
+    'user.seller'                   => '',
     'user.loginDuration'            => 3600 * 24 * 31,
     'user.passwordResetTokenExpire' => 3600,
     'user.enableAutoLogin'          => true,
