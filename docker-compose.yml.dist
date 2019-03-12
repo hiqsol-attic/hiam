@@ -10,15 +10,15 @@ services:
             - ./.docker/nginx/etc/nginx/conf.d:/etc/nginx/conf.d
             - ./.docker/nginx/var/log/nginx:/var/log/nginx
         networks:
-            - local-network
             - proxy-network
+            - local-network
         environment:
             - "VIRTUAL_HOST=${HOSTS}"
             - "LETSENCRYPT_HOST=${HOSTS}"
             - "LETSENCRYPT_EMAIL=devteam@hiqdev.com"
 
     php-fpm:
-        image: hiqdev/php:7.1-fpm
+        image: hiqdev/php:7.2-fpm
         volumes:
             - ./:/app
             - ./.docker/php/var/log/php:/var/log/php
@@ -33,4 +33,3 @@ networks:
     proxy-network:
         external:
             name: "nginx-proxy-network-${REAL_IP}"
-
