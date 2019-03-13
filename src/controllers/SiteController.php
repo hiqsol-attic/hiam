@@ -53,6 +53,7 @@ class SiteController extends \hisite\controllers\SiteController
         $actions = [
             'signup', 'login', 'remote-proceed',
             'confirm-password', 'restore-password', 'reset-password',
+            'terms', 'privacy-policy',
         ];
 
         return array_merge(parent::behaviors(), [
@@ -71,7 +72,7 @@ class SiteController extends \hisite\controllers\SiteController
                     ],
                     // @ - authenticated
                     [
-                        'actions' => ['lockscreen'],
+                        'actions' => ['lockscreen', 'privacy-policy', 'terms'],
                         'roles' => ['@'],
                         'allow' => true,
                     ],
