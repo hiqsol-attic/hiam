@@ -1,11 +1,11 @@
 <?php
 /**
- * hiam.0domain.name
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
  *
- * @link      http://hiam.0domain.name/
- * @package   hiam.0domain.name
- * @license   proprietary
- * @copyright Copyright (c) 2017-2018, AHnames (https://ahnames.com/)
+ * @link      https://github.com/hiqdev/hiam
+ * @package   hiam
+ * @license   BSD-3-Clause
+ * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
  */
 
 if (!defined('WEBAPP_ROOT_DIR')) {
