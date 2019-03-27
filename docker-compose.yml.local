@@ -4,11 +4,12 @@ services:
     nginx:
         image: nginx:latest
         ports:
-            - "${IPS}:80:80"
+            - "80"
         links:
             - php-fpm
         networks:
             local-network:
+            proxy-network:
             hiapi-network:
                 aliases:
                     - "${HIAM_SITE}"
@@ -42,6 +43,9 @@ networks:
     pgsql-network:
         external:
             name: "pgsql-${HIAPI_SITE}"
+    proxy-network:
+        external:
+            name: "nginx-proxy-network-${REAL_IP}"
 
 volumes:
     hiapi-var:
