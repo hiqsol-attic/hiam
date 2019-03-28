@@ -7,6 +7,7 @@
 # local config
 /.env
 /hidev-local.yml
+/docker-compose.yml
 
 # IDE & OS files
 .*.swp
@@ -37,9 +38,11 @@ chkipper.phar
 composer.phar
 ocular.phar
 php-cs-fixer.phar
+phpstan.phar
 phpunit-skelgen.phar
 phpunit.phar
 
-# generated files
-/src/config/bootstrap.php
-/web/index.php
+# log files
+.docker/nginx/var/log/nginx/access.log
+.docker/nginx/var/log/nginx/error.log
+.docker/php/var/log/php/php.log
