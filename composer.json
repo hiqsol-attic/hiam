@@ -79,6 +79,7 @@
         "config-plugin": {
             "params": "config/params.php",
             "common": "config/common.php",
+            "test": "config/test.php",
             "web": "config/web.php"
         },
         "acceptance": "config/acceptance.php",
