@@ -80,7 +80,11 @@
             "params": "config/params.php",
             "common": "config/common.php",
             "test": "config/test.php",
-            "web": "config/web.php"
+            "web": "config/web.php",
+            "web-test": [
+                "$web",
+                "$test"
+            ]
         },
         "acceptance": "config/acceptance.php",
         "codeception": "config/codeception.php"
