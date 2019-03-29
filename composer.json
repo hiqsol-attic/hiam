@@ -80,7 +80,9 @@
             "params": "config/params.php",
             "common": "config/common.php",
             "web": "config/web.php"
-        }
+        },
+        "acceptance": "config/acceptance.php",
+        "codeception": "config/codeception.php"
     },
     "minimum-stability": "dev",
     "repositories": [
