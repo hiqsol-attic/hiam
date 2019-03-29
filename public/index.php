@@ -10,6 +10,10 @@
 
 require __DIR__ . '/../config/bootstrap.php';
 
-$config = require \hiqdev\composer\config\Builder::path('hisite');
+$config = require \hiqdev\composer\config\Builder::path( //'hisite'
+    $_ENV['ENV'] === 'dev'
+            ? 'web-test'
+            : 'web-test'
+);
 
 (new \yii\web\Application($config))->run();

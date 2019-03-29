@@ -6,8 +6,16 @@
 
 actor: AcceptanceTester
 namespace: hiam\tests\_support
-extends: '%COMMON_ACCEPTANCE_SUITE%'
 modules:
-    enabled:
-        - hiam\tests\_support\Helper\MailHelper
-        - Asserts
+  enabled:
+    - WebDriver:
+        url: '%URL%'
+        browser: '%BROWSER%'
+        host: '%SELENIUM_HOST%'
+        window_size: 1920x1080
+    - Yii2:
+        part: init
+        cleanup: false
+        configFile: '%YII2_CONFIG_LOCATION%'
+    - hiam\tests\_support\Helper\MailHelper
+    - Asserts
