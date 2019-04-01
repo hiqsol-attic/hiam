@@ -5,6 +5,14 @@ services:
         image: nginx:latest
         ports:
             - "80"
+        links:
+            - php-fpm
+        networks:
+            proxy-network:
+            local-network:
+            hiapi-network:
+                aliases:
+                    - "${HIAM_SITE}"
         volumes:
             - ./:/app
             - ./.docker/nginx/etc/nginx/conf.d:/etc/nginx/conf.d
@@ -22,14 +30,27 @@ services:
         volumes:
             - ./:/app
             - ./.docker/php/var/log/php:/var/log/php
+            - var-volume:/HIAPI_VAR
         networks:
             - local-network
+            - pgsql-network
         environment:
             - "ENV=${ENV}"
 
 networks:
     local-network:
         driver: bridge
+    hiapi-network:
+        external:
+            name: "${HIAPI_SITE}"
+    pgsql-network:
+        external:
+            name: "pgsql-${HIAPI_SITE}"
     proxy-network:
         external:
             name: "nginx-proxy-network-${REAL_IP}"
+
+volumes:
+    var-volume:
+        external:
+            name: "var-${HIAPI_SITE}"
