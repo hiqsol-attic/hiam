@@ -8,12 +8,15 @@
  * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
  */
 
-require __DIR__ . '/../config/bootstrap.php';
+use hiqdev\composer\config\Builder;
+use yii\web\Application;
 
-$config = require \hiqdev\composer\config\Builder::path( //'hisite'
-    $_ENV['ENV'] === 'dev'
-            ? 'web-test'
-            : 'web-test'
-);
+(function () {
+    require __DIR__ . '/../config/bootstrap.php';
 
-(new \yii\web\Application($config))->run();
+    $config = require Builder::path(
+		$_ENV['ENV'] === 'test' ? 'web-test' : 'web'
+    );
+
+    (new Application($config))->run();
+})();
