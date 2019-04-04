@@ -135,10 +135,9 @@ return [
             \hiqdev\php\confirmator\ServiceInterface::class => [
                 'class' => \hiqdev\yii2\confirmator\Service::class,
             ],
-            \hiqdev\php\confirmator\StorageInterface::class => [
-                ['class' => \hiqdev\yii2\confirmator\FileStorage::class],
-                ['@runtime/tokens'],
-            ],
+            \hiqdev\php\confirmator\StorageInterface::class => function () {
+                return new \hiqdev\php\confirmator\FileStorage(\hiqdev\yii\compat\yii::getAlias('@runtime/tokens'));
+            },
             \yii\web\Session::class => function (\yii\di\Container $container, $diParams, $config) use ($params) {
                 if (isset($params['session.db'])) {
                     return $container->get(\yii\web\DbSession::class, [], array_merge([
