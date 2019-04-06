@@ -3,27 +3,31 @@ version: '3'
 services:
   nginx:
     image: nginx:latest
+    ports:
+      - "80"
+    links:
+      - php-fpm
+    networks:
+      local-network:
+      proxy-network:
+      hiapi-network:
+        aliases:
+          - "${HIAM_SITE}"
     volumes:
       - ./:/app
       - ./.docker/nginx/etc/nginx/conf.d:/etc/nginx/conf.d
       - ./.docker/nginx/var/log/nginx:/var/log/nginx
-    networks:
-      proxy-network:
-      local-network:
-      hiapi-network:
-        aliases:
-          - "${HIAM_SITE}"
     environment:
       - "VIRTUAL_HOST=${HOSTS}"
       - "LETSENCRYPT_HOST=${HOSTS}"
       - "LETSENCRYPT_EMAIL=devteam@hiqdev.com"
 
   php-fpm:
-    image: hiqdev/php:7.1-fpm
+    image: hiqdev/php:7.2-fpm
     volumes:
       - ./:/app
       - ./.docker/php/var/log/php:/var/log/php
-      - hiapi-var:/HIAPI_VAR
+      - var-volume:/HIAPI_VAR
     networks:
       - local-network
       - pgsql-network
@@ -44,6 +48,6 @@ networks:
       name: "nginx-proxy-network-${REAL_IP}"
 
 volumes:
-  hiapi-var:
+  var-volume:
     external:
       name: "var-${HIAPI_SITE}"

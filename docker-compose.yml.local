@@ -27,7 +27,7 @@ services:
     volumes:
       - ./:/app
       - ./.docker/php/var/log/php:/var/log/php
-      - hiapi-var:/HIAPI_VAR
+      - var-volume:/HIAPI_VAR
     networks:
       - local-network
       - pgsql-network
@@ -48,6 +48,6 @@ networks:
       name: "nginx-proxy-network-${REAL_IP}"
 
 volumes:
-  hiapi-var:
+  var-volume:
     external:
       name: "var-${HIAPI_SITE}"

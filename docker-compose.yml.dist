@@ -8,8 +8,8 @@ services:
     links:
       - php-fpm
     networks:
-      proxy-network:
       local-network:
+      proxy-network:
       hiapi-network:
         aliases:
           - "${HIAM_SITE}"
@@ -17,9 +17,6 @@ services:
       - ./:/app
       - ./.docker/nginx/etc/nginx/conf.d:/etc/nginx/conf.d
       - ./.docker/nginx/var/log/nginx:/var/log/nginx
-    networks:
-      - proxy-network
-      - local-network
     environment:
       - "VIRTUAL_HOST=${HOSTS}"
       - "LETSENCRYPT_HOST=${HOSTS}"
