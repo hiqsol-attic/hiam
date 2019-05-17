@@ -33,6 +33,7 @@ services:
       - pgsql-network
     environment:
       - "ENV=${ENV}"
+      - "PHP_IDE_CONFIG=serverName=${HOSTS}"
 
 networks:
   local-network:
