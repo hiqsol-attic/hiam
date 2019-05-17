@@ -2,6 +2,7 @@
 
 namespace hiam\forms;
 
+use hiam\validators\PasswordValidatorInterface;
 use Yii;
 use yii\base\Model;
 
@@ -28,6 +29,21 @@ class ChangePasswordForm extends Model
     public $confirm_password;
 
     /**
+     * @var PasswordValidatorInterface
+     */
+    private $passwordValidator;
+
+    /**
+     * @param PasswordValidatorInterface $passwordValidator
+     * @param array $config
+     */
+    public function __construct(PasswordValidatorInterface $passwordValidator, $config = [])
+    {
+        parent::__construct($config);
+        $this->passwordValidator = $passwordValidator;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules(): array
@@ -35,23 +51,7 @@ class ChangePasswordForm extends Model
         return [
             [['login', 'current_password', 'new_password', 'confirm_password'], 'string'],
             [['login', 'current_password', 'new_password', 'confirm_password'], 'required'],
-            [
-                'current_password',
-                function ($attribute, $params) {
-                    $check = Yii::$app->db->createCommand("
-                    SELECT      zc.obj_id
-                    FROM        zclient zc
-                    WHERE       zc.state_id = ANY(state_ids('client', 'ok,active,new'))
-                                AND NOT check_password('', zc.password)
-                                AND login = :login AND check_password(:password, zc.password)
-                ")->bindValues([
-                        ':login' => $this->login,
-                        ':password' => $this->current_password,
-                    ])->queryScalar();
-                    if (!$check) {
-                        $this->addError($attribute, Yii::t('hiam', 'The current password is incorrect'));
-                    }
-                }],
+            ['current_password', get_class($this->passwordValidator)],
             ['confirm_password', 'compare', 'compareAttribute' => 'new_password'],
         ];
     }

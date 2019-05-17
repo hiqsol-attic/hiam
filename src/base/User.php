@@ -168,13 +168,9 @@ class User extends \yii\web\User
         if (!$model->validate()) {
             return false;
         }
-        try {
-            if (Yii::$app->db->createCommand()->update('zclient', ['email' => $model->email], 'login = :login')->bindValue(':login', $model->login)->execute()) {
-                return true;
-            }
-        } catch (Exception $e) {
-        }
+        $class = $this->getStorageClass('identity');
+        $user = $class::find()->whereId(Yii::$app->user->id)->one();
 
-        return false;
+        return $user->updateEmail($model->email);
     }
 }

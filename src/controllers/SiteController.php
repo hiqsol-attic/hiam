@@ -312,7 +312,7 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function actionChangePassword()
     {
-        $model = new ChangePasswordForm();
+        $model = Yii::createObject(['class' => ChangePasswordForm::class]);
         $model->login = Yii::$app->user->identity->username;
 
         return $this->changeRoutine($model);
@@ -361,12 +361,12 @@ class SiteController extends \hisite\controllers\SiteController
             ChangePasswordForm::class => [
                 'method' => 'changePassword',
                 'view' => 'change-password',
-                'label' => 'Password',
+                'label' => Yii::t('hiam', 'Password'),
             ],
             ChangeEmailForm::class => [
                 'method' => 'changeEmail',
                 'view' => 'change-email',
-                'label' => 'Email',
+                'label' => Yii::t('hiam', 'Email'),
             ],
         ];
         $sender = $map[get_class($model)];
@@ -374,16 +374,15 @@ class SiteController extends \hisite\controllers\SiteController
 
         if ($request->isPost) {
             if ($model->load($request->post()) && $model->validate() && $this->user->{$sender['method']}($model)) {
-                Yii::$app->session->setFlash('success', Yii::t('hiam', "{$sender['label']} has been successfully changed"));
+                Yii::$app->session->setFlash('success', Yii::t('hiam', '{label} has been successfully changed', ['label' => $sender['label']]));
 
                 return $this->goBack();
-            } else {
-                $errors = implode("; \n", $model->getFirstErrors());
-                if (!$errors) {
-                    $errors = Yii::t('hiam', "{$sender['label']} has not been changed");
-                }
-                Yii::$app->session->setFlash('error', $errors);
             }
+            $errors = implode("; \n", $model->getFirstErrors());
+            if (!$errors) {
+                $errors = Yii::t('hiam', "{label} has not been changed", ['label' => $sender['label']]);
+            }
+            Yii::$app->session->setFlash('error', $errors);
         }
 
         return $this->render($sender['view'], ['model' => $model]);

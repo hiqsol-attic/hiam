@@ -2,12 +2,10 @@
 
 /** @var \hiam\forms\ChangePasswordForm $model */
 
-use hiqdev\thememanager\widgets\ChangePasswordForm;
+use hiam\widgets\ChangePasswordForm;
 
 $this->title = Yii::t('hiam', 'Change password');
 
 ?>
 
-<?= ChangePasswordForm::widget([
-    'model' => $model,
-]) ?>
+<?= ChangePasswordForm::widget(['model' => $model]) ?>

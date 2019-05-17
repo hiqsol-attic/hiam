@@ -1,7 +1,11 @@
 <?php
 
+/** @var \hiam\forms\ChangeEmailForm $model */
+
+use hiam\widgets\ChangeEmailForm;
+
 $this->title = Yii::t('hiam', 'Change email');
 
 ?>
 
-<?= \hiqdev\thememanager\widgets\ChangeEmailForm::widget(['model' => $model]) ?>
+<?= ChangeEmailForm::widget(['model' => $model]) ?>
