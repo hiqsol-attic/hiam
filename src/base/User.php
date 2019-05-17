@@ -10,10 +10,13 @@
 
 namespace hiam\base;
 
+use hiam\forms\ChangeEmailForm;
+use hiam\forms\ChangePasswordForm;
 use hiam\models\Identity;
 use Yii;
 use yii\authclient\ClientInterface;
 use yii\web\IdentityInterface;
+use \yii\db\Exception;
 
 class User extends \yii\web\User
 {
@@ -144,5 +147,34 @@ class User extends \yii\web\User
         }
 
         return $this->storageClasses[$name];
+    }
+
+    public function changePassword(ChangePasswordForm $model): bool
+    {
+        if (!$model->validate()) {
+            return false;
+        }
+        $user = $this->findIdentityByUsername($model->login);
+        $user->password = $model->new_password;
+        if ($user->save()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function changeEmail(ChangeEmailForm $model): bool
+    {
+        if (!$model->validate()) {
+            return false;
+        }
+        try {
+            if (Yii::$app->db->createCommand()->update('zclient', ['email' => $model->email], 'login = :login')->bindValue(':login', $model->login)->execute()) {
+                return true;
+            }
+        } catch (Exception $e) {
+        }
+
+        return false;
     }
 }

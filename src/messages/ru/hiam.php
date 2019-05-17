@@ -60,4 +60,8 @@ return [
     'Error. Email has not been confirmed!' => 'Ошибка. Email не был подтвержден!',
     'Thank you, now you can {link}.' => 'Спасибо, теперь Вы можете {link}.',
     'return to panel' => 'вернуться в панель',
+    'Change password' => 'Изменить пароль',
+    'Change email' => 'Изменить е-мейл',
+    'Current password' => 'Текущий пароль',
+    'New password' => 'Новый пароль',
 ];

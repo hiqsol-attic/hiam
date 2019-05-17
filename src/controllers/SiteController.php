@@ -12,6 +12,7 @@ namespace hiam\controllers;
 
 use hiam\actions\ConfirmEmail;
 use hiam\base\User;
+use hiam\forms\ChangeEmailForm;
 use hiam\forms\ConfirmPasswordForm;
 use hiam\forms\LoginForm;
 use hiam\forms\ResetPasswordForm;
@@ -27,6 +28,7 @@ use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
 use yii\filters\AccessControl;
+use hiam\forms\ChangePasswordForm;
 
 /**
  * Site controller.
@@ -36,6 +38,7 @@ use yii\filters\AccessControl;
 class SiteController extends \hisite\controllers\SiteController
 {
     public $defaultAction = 'lockscreen';
+
     /**
      * @var ServiceInterface
      */
@@ -307,6 +310,24 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->render('resetPassword', compact('model', 'token'));
     }
 
+    public function actionChangePassword()
+    {
+        $model = new ChangePasswordForm();
+        $model->login = Yii::$app->user->identity->username;
+
+        return $this->changeRoutine($model);
+    }
+
+    public function actionChangeEmail()
+    {
+        $model = new ChangeEmailForm();
+        $identity = Yii::$app->user->identity;
+        $model->seller_id = $identity->seller_id;
+        $model->login = $identity->username;
+
+        return $this->changeRoutine($model);
+    }
+
     public function resetPassword($model, $token)
     {
         $token = $this->confirmator->findToken($token);
@@ -329,5 +350,42 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         return null;
+    }
+
+    /**
+     * @param ChangePasswordForm|ChangeEmailForm $model
+     */
+    private function changeRoutine($model)
+    {
+        $map = [
+            ChangePasswordForm::class => [
+                'method' => 'changePassword',
+                'view' => 'change-password',
+                'label' => 'Password',
+            ],
+            ChangeEmailForm::class => [
+                'method' => 'changeEmail',
+                'view' => 'change-email',
+                'label' => 'Email',
+            ],
+        ];
+        $sender = $map[get_class($model)];
+        $request = Yii::$app->request;
+
+        if ($request->isPost) {
+            if ($model->load($request->post()) && $model->validate() && $this->user->{$sender['method']}($model)) {
+                Yii::$app->session->setFlash('success', Yii::t('hiam', "{$sender['label']} has been successfully changed"));
+
+                return $this->goBack();
+            } else {
+                $errors = implode("; \n", $model->getFirstErrors());
+                if (!$errors) {
+                    $errors = Yii::t('hiam', "{$sender['label']} has not been changed");
+                }
+                Yii::$app->session->setFlash('error', $errors);
+            }
+        }
+
+        return $this->render($sender['view'], ['model' => $model]);
     }
 }
