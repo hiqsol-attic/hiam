@@ -83,7 +83,7 @@ class SiteController extends \hisite\controllers\SiteController
             ],
             'validateAuthentication' => [
                 'class' => ValidateAuthenticationFilter::class,
-                'only' => ['lockscreen'],
+                'only' => ['lockscreen', 'change-password', 'change-email'],
             ],
         ]);
     }

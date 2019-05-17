@@ -37,6 +37,9 @@ class ChangeEmailForm extends Model
                 'targetClass' => Yii::$app->user->storageClasses['identity'],
                 'targetAttribute' => ['email', 'seller_id'],
                 'message' => Yii::t('yii', '{attribute} "{value}" has already been taken.'),
+                'when' => function () {
+                    return $this->login && $this->seller_id;
+                },
             ],
         ];
     }
