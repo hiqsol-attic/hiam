@@ -19,6 +19,7 @@ class ConfirmPasswordForm extends \yii\base\Model
 {
     public $username;
     public $password;
+    public $remember_me = true;
 
     /**
      * {@inheritdoc}
