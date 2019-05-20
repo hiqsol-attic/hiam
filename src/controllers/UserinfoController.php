@@ -62,7 +62,7 @@ class UserinfoController extends Controller
         $identityClass = Yii::$app->user->identityClass;
         $user = $identityClass::findIdentity($token->user_id);
 
-        $result = $this->claimsProvider->getClaims($user, $token->scope);
+        $result = $this->claimsProvider->getClaims($user, $token->scope ?? 'email');
         $result->sub = (string)$token->user_id;
 
         return $result;
