@@ -10,6 +10,12 @@ servers:
   - url: https://hiam.hipanel.com/
     description: will be available later
 
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
 paths:
   /oauth/authorize:
     get:
@@ -57,11 +63,15 @@ paths:
       parameters:
         - name: grant_type
           in: formData
-          description: Value MUST be set to "client_credentials" as per RFC
+          description: Supports all standard OAuth2 grant types
           required: true
           type: string
           enum: 
+            - authorization_code
             - client_credentials
+            - refresh_token
+            - password
+            - implicit
       tags:
         - oauth2
       responses:
@@ -107,10 +117,8 @@ paths:
     get:
       summary: User Info Request
       description: Get user information
-      headers:
-        Authentication:
-          schema:
-            type: string
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: JSON with user info according to available scope
