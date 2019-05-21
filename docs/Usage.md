@@ -21,7 +21,7 @@ after performorming needed actions at authorization server.
 Eg. after logging in or changing password.
 
 Return URL is passed with `back` GET parameter.
-Eg. `https://hiam.hipanel.com/site/login?back=https://my.site.com/some/page`
+Eg. `https://hiam.hipanel.com/site/login?back=https://my.domain.com/some/page`
 
 ## OAuth2 entry points
 
@@ -48,7 +48,7 @@ Authorization code request uses standard OAuth2 parameters:
 - `redirect_uri`
 - `response_type`
 - `state`
-- `scope` (at the moment only `email` is supported)
+- `scope` (available scopes: email, profile, roles)
 
 ## Access token request
 
@@ -67,6 +67,25 @@ User info request must provide HTTP Authorization Bearer header with token.
 Example request:
 
 ```
-GET https://id.advancedhosting.com/userinfo
+GET https://hiam.hipanel.com/userinfo
 Authorization: Bearer be2911ab56ffedf74da3090b0bb1b0a56d07c5b9
 ```
+
+Example response for `email` scope:
+
+```json
+{
+  "email": "sol@advancedhosters.com",
+  "sub": "1000361"
+}
+```
+
+## Available grant types
+
+The authorization server provides all standard grant types:
+
+- `authorization_code`
+- `client_credentials`
+- `refresh_token`
+- `password`
+- `implicit`
