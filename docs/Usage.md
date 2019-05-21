@@ -17,11 +17,11 @@
 ## Return URL
 
 Return URL is used to return user back to application (main site)
-after performing needed actions at authorization server.
-Eg. after logging in or changing password.
+after performing needed actions at authorization server,
+e.g. after logging in or changing password.
 
-Return URL is passed with `back` GET parameter.
-Eg. `https://hiam.hipanel.com/site/login?back=https://my.domain.com/some/page`
+Return URL is passed with `back` GET or POST parameter.
+E.g., `https://hiam.hipanel.com/site/login?back=https://my.domain.com/some/page`
 
 ## OAuth2 entry points
 
@@ -34,7 +34,7 @@ Example Grafana configuration:
 ```ini
 client_id = grafana
 client_secret = ***
-scopes = email
+scopes = email profile
 auth_url = https://hiam.hipanel.com/oauth/authorize
 token_url = https://hiam.hipanel.com/oauth/token
 api_url = https://hiam.hipanel.com/userinfo

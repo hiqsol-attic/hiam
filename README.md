@@ -30,6 +30,8 @@ Based on:
 - [hiqdev/yii2-mfa] - multi-factor authentication
 - [hiqdev/php-confirmator] - confirmation tokens
 
+Also see [usage manual].
+
 [OAuth2]:                       https://oauth.net/2/
 [multi-factor authentication]:  https://en.wikipedia.org/wiki/Multi-factor_authentication
 [TOTP]:                         https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm
@@ -39,6 +41,7 @@ Based on:
 [bshaffer/oauth2-server-php]:   https://github.com/bshaffer/oauth2-server-php
 [hiqdev/yii2-mfa]:              https://github.com/hiqdev/yii2-mfa
 [hiqdev/php-confirmator]:       https://github.com/hiqdev/php-confirmator
+[usage manual]:                 /docs/Usage.md
 
 ## Installation
 
