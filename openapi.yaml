@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: HIAM Authorization Server API
+  description: |
+    Identity and Access Management server providing OAuth2, multi-factor authentication and more
+    Implementation of [OAuth 2.0](https://tools.ietf.org/html/rfc6749)
+  version: 0.1.0
+
+servers:
+  - url: https://hiam.hipanel.com/
+    description: will be available later
+
+paths:
+  /oauth/authorize:
+    get:
+      summary: Authorization code request
+      description: OAuth2 standard
+      parameters:
+        - name: response_type
+          in: query
+          required: true
+          type: string
+          enum:
+            - code
+        - name: client_id
+          in: query
+          required: true
+          type: string
+        - name: redirect_uri
+          in: query
+          required: true
+          type: string
+        - name: scope
+          in: query
+          type: string
+        - name: state
+          in: query
+          type: string
+      produces:
+        - application/json
+      tags:
+        - oauth2
+      responses:
+        '302':
+          description: Redirect back to application with authorization code
+
+  /oauth/token:
+    post:
+      summary: Access Token Request
+      description: |
+        Partner makes a request to the token endpoint by adding the
+        following parameters describerd  below
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: grant_type
+          in: formData
+          description: Value MUST be set to "client_credentials" as per RFC
+          required: true
+          type: string
+          enum: 
+            - client_credentials
+      tags:
+        - oauth2
+      responses:
+        '200':
+          description: Authorisation token (Bearer)
+          schema:
+              $ref: '#/definitions/Token'
+          examples:
+            application/json: |-
+              {
+                 "access_token":"2YotnFZFEjr1zCsicMWpAA",
+                 "token_type":"Bearer",
+                 "expires_in":3600,
+               }
+        '400': 
+          description: As per RFC authorisation server responds with 400 in case of error
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json: |-
+              {
+                "error":"invalid_request"
+              }
+      security:
+        - Basic: []
+    delete:
+      summary: Invalidate Access Token
+      description: To be implemented later
+      tags:
+        - oauth2
+      responses:
+        '200':
+          description: Empty body with 200 code
+        '403':
+          description: Access Token already invalidated or not found
+        '500':
+          description: Internal server error
+      security:
+        - OAuth2: []
+
+paths:
+  /userinfo:
+    get:
+      summary: User Info Request
+      description: Get user information
+      headers:
+        Authentication:
+          schema:
+            type: string
+      responses:
+        '200':
+          description: JSON with user info according to available scope
+        '403':
+          description: Provided invalid token 
+
+definitions:
+  Token:
+    type: object
+    properties:
+      access_token:
+        type: string
+        description: The access token value
+      token_type:
+        type: string
+        enum: 
+          - Bearer
+        description: Type of the token is set to "Bearer"
+      expires_in:
+        type: integer
+        format: int32
+        description: The lifetime in seconds of the access token
+  Error:
+    type: object
+    properties:
+      error:
+        type: string
+        enum:
+          - invalid_request
+          - invalid_client
+          - invalid_grant
+          - unauthorized_client
+          - unsupported_grant_type
+      error_description:
+        type: string
+        description: Human-readable text providing additional information
+      error_uri:
+        type: string
+        description: A URI identifying a human-readable web page with
+         information about the error
