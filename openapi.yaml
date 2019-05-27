@@ -2,13 +2,13 @@ openapi: 3.0.0
 info:
   title: HIAM Authorization Server API
   description: |
-    Identity and Access Management server providing OAuth2, multi-factor authentication and more
+    Identity and Access Management server providing OAuth2, multi-factor authentication and more.<br>
     Implementation of [OAuth 2.0](https://tools.ietf.org/html/rfc6749)
   version: 0.1.0
 
 servers:
   - url: https://hiam.hipanel.com/
-    description: will be available later
+    description: main development server
 
 components:
   securitySchemes:
@@ -111,8 +111,6 @@ paths:
           description: Internal server error
       security:
         - OAuth2: []
-
-paths:
   /userinfo:
     get:
       summary: User Info Request
