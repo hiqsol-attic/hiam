@@ -12,6 +12,7 @@ namespace hiam\actions;
 
 use Yii;
 use yii\base\Action;
+use yii\helpers\Url;
 
 class OpenapiAction extends Action
 {
@@ -22,7 +23,8 @@ class OpenapiAction extends Action
         $headers->add('Content-Type', 'text/x-yaml');
         $headers->add('Access-Control-Allow-Origin', '*');
         $path = dirname(__DIR__, 2) . '/openapi.yaml';
+        $text = file_get_contents($path);
 
-        return file_get_contents($path);
+        return strtr($text, ['https://hiam.hipanel.com' => Url::base(true)]);
     }
 }
