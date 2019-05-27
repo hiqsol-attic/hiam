@@ -36,4 +36,7 @@ return [
 
     'user.authKeySecret'        => '',
     'user.authKeyCipher'        => 'aes-128-gcm',
+
+    'swiftmailer.smtp.host'     => null,
+    'swiftmailer.smtp.port'     => 25,
 ];

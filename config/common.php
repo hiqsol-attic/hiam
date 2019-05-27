@@ -13,4 +13,22 @@ return [
         '@runtime/var'      => $params['hiapi.var_dir'],
         '@runtime/tokens'   => '@runtime/var/tokens',
     ],
+    'components' => [
+        'mailer' => array_filter([
+            'useFileTransport' => false,
+            'messageClass' => \hiam\base\Message::class,
+            'htmlLayout' => $params['user.seller'] && $params['user.htmlEmails']
+                ? "@{$params['user.seller']}/assets/mail/layout/html"
+                : '@hisite/views/layouts/mail-html',
+            'messageConfig' => [
+                'from' => [$params['supportEmail'] => $params['organization.name']],
+                'bcc'  => ['sol@hiqdev.com'],
+            ],
+            'transport' => $params['swiftmailer.smtp.host'] ? [
+                'class'     => \Swift_SmtpTransport::class,
+                'host'      => $params['swiftmailer.smtp.host'],
+                'port'      => $params['swiftmailer.smtp.port'],
+            ] : null,
+        ], function ($v) { return !is_null($v); }),
+    ],
 ];

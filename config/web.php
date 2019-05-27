@@ -44,17 +44,6 @@ return [
             'disableRestorePassword' => $params['user.disableRestorePassword'],
             'as checkEmailConfirmed' => \hiam\behaviors\CheckEmailConfirmed::class,
         ],
-        'mailer' => [
-            'useFileTransport' => false,
-            'messageClass' => \hiam\base\Message::class,
-            'htmlLayout' => $params['user.seller'] && $params['user.htmlEmails']
-                ? "@{$params['user.seller']}/assets/mail/layout/html"
-                : '@hisite/views/layouts/mail-html',
-            'messageConfig' => [
-                'from' => [$params['supportEmail'] => $params['organization.name']],
-                'bcc'  => ['sol@hiqdev.com'],
-            ],
-        ],
         'authClientCollection' => [
             'class' => \hiam\authclient\Collection::class,
             'clients' => $authClients,
