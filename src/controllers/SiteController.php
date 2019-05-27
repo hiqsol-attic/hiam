@@ -11,6 +11,7 @@
 namespace hiam\controllers;
 
 use hiam\actions\ConfirmEmail;
+use hiam\actions\OpenapiAction;
 use hiam\base\User;
 use hiam\forms\ChangeEmailForm;
 use hiam\forms\ConfirmPasswordForm;
@@ -121,6 +122,12 @@ class SiteController extends \hisite\controllers\SiteController
             ],
             'confirm-email' => [
                 'class' => ConfirmEmail::class,
+            ],
+            'openapi.yaml' => [
+                'class' => OpenapiAction::class,
+            ],
+            'openapi.yml' => [
+                'class' => OpenapiAction::class,
             ],
         ]);
     }
