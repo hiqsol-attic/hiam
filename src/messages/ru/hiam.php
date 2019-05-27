@@ -44,7 +44,7 @@ return [
     'Sorry, password restore is disabled.' => 'Извините, восстановления пароля недоступно.',
     'Sorry, signup is disabled.' => 'Извините, регистрация недоступна.',
     'Sorry, we are unable to confirm your email.' => 'Извините, не удалось подтвердить ваш email.',
-    'Sorry, we are unable to reset password the provided username or email. Try to contact support team.' => 'Извините, мы не можем восстановить пароль для указанного имени пользователя или email. Попробуйте связаться со службой поддержки.',
+    'Sorry, we are unable to reset password for the provided username or email. Try to contact support team.' => 'Извините, мы не можем восстановить пароль для указанного имени пользователя или email. Попробуйте связаться со службой поддержки.',
     'The entered value is not an email address.' => 'Введенное значение не является емейл адресом.',
     'This email has already been taken.' => 'Этот адрес уже занят.',
     'Unable to verify your data submission.' => 'Не удалось проверить переданные данные.',

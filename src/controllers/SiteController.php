@@ -285,7 +285,7 @@ class SiteController extends \hisite\controllers\SiteController
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to reset password the provided username or email. Try to contact support team.'));
+                Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to reset password for the provided username or email. Try to contact support team.'));
             }
         }
 
