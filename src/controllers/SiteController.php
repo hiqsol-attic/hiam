@@ -226,7 +226,7 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->redirect(['signup']);
     }
 
-    public function actionSignup($scenario = 'default')
+    public function actionSignup($scenario = SignupForm::SCENARIO_DEFAULT)
     {
         if ($this->user->disableSignup) {
             Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, signup is disabled.'));
