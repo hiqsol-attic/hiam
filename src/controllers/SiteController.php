@@ -234,7 +234,7 @@ class SiteController extends \hisite\controllers\SiteController
             return $this->redirect(['login']);
         }
 
-        if ($scenario === 'social') {
+        if ($scenario === SignupForm::SCENARIO_SOCIAL) {
             return $this->redirect(['site/auth', 'authclient' => 'google']);
         }
 

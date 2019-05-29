@@ -19,6 +19,10 @@ use yii\helpers\Html;
  */
 class SignupForm extends Model
 {
+    const SCENARIO_SHORT = 'short';
+
+    const SCENARIO_SOCIAL = 'social';
+
     public $first_name;
 
     public $last_name;
@@ -57,13 +61,15 @@ class SignupForm extends Model
 
             ['password_retype', 'compare', 'compareAttribute' => 'password', 'message' => Yii::t('hiam', "Passwords don't match.")],
 
-            [['email', 'password'], 'required', 'on' => ['default', 'short']],
-            [['first_name', 'last_name', 'password_retype'], 'required', 'on' => ['default']],
+            [['email', 'password'], 'required', 'on' => [self::SCENARIO_DEFAULT, self::SCENARIO_SHORT]],
+            [['first_name', 'last_name', 'password_retype'], 'required', 'on' => self::SCENARIO_DEFAULT],
 
             [['i_agree', 'i_agree_privacy_policy', 'i_agree_terms_and_privacy', 'send_me_news'], 'boolean'],
-            ['i_agree', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider terms of use.'), 'on' => ['default']],
-            ['i_agree_privacy_policy', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider Privacy Policy.'), 'on' => ['default']],
-            ['i_agree_terms_and_privacy', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider Terms of Use, Privacy Policy and cookies.'), 'on' => ['short', 'social']],
+            ['i_agree', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider terms of use.'), 'on' => self::SCENARIO_DEFAULT],
+            ['i_agree_privacy_policy', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider Privacy Policy.'), 'on' => self::SCENARIO_DEFAULT],
+            ['i_agree_terms_and_privacy', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider Terms of Use, Privacy Policy and cookies.'),
+                'on' => [self::SCENARIO_DEFAULT, self::SCENARIO_SHORT]
+            ],
         ];
     }
 
