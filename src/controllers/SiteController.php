@@ -226,7 +226,7 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->redirect(['signup']);
     }
 
-    public function actionSignup()
+    public function actionSignup($scenario = SignupForm::SCENARIO_DEFAULT)
     {
         if ($this->user->disableSignup) {
             Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, signup is disabled.'));
@@ -234,9 +234,13 @@ class SiteController extends \hisite\controllers\SiteController
             return $this->redirect(['login']);
         }
 
+        if ($scenario === SignupForm::SCENARIO_SOCIAL) {
+            return $this->redirect(['site/auth', 'authclient' => 'google']);
+        }
+
         $client = Yii::$app->authClientCollection->getActiveClient();
 
-        $model = new SignupForm();
+        $model = new SignupForm(compact('scenario'));
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $this->user->signup($model)) {
                 if ($client) {
