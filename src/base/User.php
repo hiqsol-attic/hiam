@@ -52,6 +52,7 @@ class User extends \yii\web\User
 
         if ($user->save()) {
             $this->notifySignup($user);
+            $this->login($user);
 
             return $user;
         }
