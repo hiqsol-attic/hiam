@@ -30,7 +30,7 @@ return [
             'username'  => empty($params['db.user']) ? 'hiam' : $params['db.user'],
             'password'  => empty($params['db.password']) ? '*' : $params['db.password'],
         ],
-        'user' => [
+        'user' => array_filter([
             'class'           => \hiam\base\User::class,
             'identityClass'   => \hiam\models\Identity::class,
             'remoteUserClass' => \hiam\models\RemoteUser::class,
@@ -42,8 +42,8 @@ return [
             'enableAutoLogin' => $params['user.enableAutoLogin'],
             'disableSignup'   => $params['user.disableSignup'],
             'disableRestorePassword' => $params['user.disableRestorePassword'],
-            'as checkEmailConfirmed' => \hiam\behaviors\CheckEmailConfirmed::class,
-        ],
+            'as checkEmailConfirmed' => $params['user.checkEmailConfirmed'] ? \hiam\behaviors\CheckEmailConfirmed::class : null,
+        ]),
         'authClientCollection' => [
             'class' => \hiam\authclient\Collection::class,
             'clients' => $authClients,

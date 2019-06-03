@@ -33,6 +33,7 @@ return [
     'user.disableSignup'            => false,
     'user.disableRestorePassword'   => false,
     'user.htmlEmails'               => false,
+    'user.checkEmailConfirmed'      => true,
 
     'user.authKeySecret'        => '',
     'user.authKeyCipher'        => 'aes-128-gcm',
