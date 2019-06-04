@@ -139,7 +139,7 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->doLogin(new LoginForm(), 'login', $username);
     }
 
-    protected function doLogin(LoginForm $model, $view, $username = null)
+    protected function doLogin($model, $view, $username = null)
     {
         $model->username = $username;
         /** @noinspection NotOptimalIfConditionsInspection */
