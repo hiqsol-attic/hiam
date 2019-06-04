@@ -270,6 +270,9 @@ class SiteController extends \hisite\controllers\SiteController
                 }
                 $model->load([$model->formName() => $data]);
             }
+            if ($username = Yii::$app->request->get('username')) {
+                $model->email = $username;
+            }
         }
 
         return $this->render('signup', compact('model'));
