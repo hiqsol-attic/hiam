@@ -23,7 +23,7 @@ services:
       - "LETSENCRYPT_EMAIL=devteam@hiqdev.com"
 
   php-fpm:
-    image: hiqdev/php:7.2-fpm
+    image: hiqdev/php:7.3-fpm
     volumes:
       - ./:/app
       - ./.docker/php/var/log/php:/var/log/php
@@ -33,6 +33,7 @@ services:
       - pgsql-network
     environment:
       - "ENV=${ENV}"
+      - "PHP_IDE_CONFIG=serverName=${HOSTS}"
 
 networks:
   local-network:
