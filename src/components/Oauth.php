@@ -55,6 +55,19 @@ class Oauth implements OauthInterface
         return $request->request[$name] ?? $request->query($name, $default);
     }
 
+    public function sendResponse()
+    {
+        $oauthResponse = $this->getResponse();
+        $yiiResponse = Yii::$app->response;
+
+        foreach ($oauthResponse->getHttpHeaders() as $name => $value) {
+            $yiiResponse->headers->set($name, $value);
+        }
+        $yiiResponse->setStatusCode($oauthResponse->getStatusCode(), $oauthResponse->getStatusText());
+
+        return $oauthResponse->getResponseBody();
+    }
+
     public function validateAuthorizeRequest()
     {
         return $this->getServer()->validateAuthorizeRequest($this->getRequest(), $this->getResponse());

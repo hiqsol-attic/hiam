@@ -77,19 +77,6 @@ class OauthController extends \yii\web\Controller
         return OauthAccessTokens::findOne($access_token);
     }
 
-    private function sendResponse()
-    {
-        $oauthResponse = $this->oauth->getResponse();
-        $yiiResponse = Yii::$app->response;
-
-        foreach ($oauthResponse->getHttpHeaders() as $name => $value) {
-            $yiiResponse->headers->set($name, $value);
-        }
-        $yiiResponse->setStatusCode($oauthResponse->getStatusCode(), $oauthResponse->getStatusText());
-
-        return $oauthResponse->getResponseBody();
-    }
-
     public function actionToken()
     {
         $response = $this->oauth->handleTokenRequest();
@@ -100,14 +87,14 @@ class OauthController extends \yii\web\Controller
             $response->addParameters(compact('user_attributes'));
         }
 
-        return $this->sendResponse();
+        return $this->oauth->sendResponse();
     }
 
     public function actionResource()
     {
         $ok = $this->oauth->verifyResourceRequest();
         if (!$ok) {
-            return $this->sendResponse();
+            return $this->oauth->sendResponse();
         }
         $access_token = $this->oauth->getRequestValue($this->getTokenParamName());
         $token = $this->findToken($access_token);
@@ -129,13 +116,14 @@ class OauthController extends \yii\web\Controller
 
     public function actionAuthorize()
     {
+        var_dump($this);die;
         if (!$this->oauth->validateAuthorizeRequest()) {
-            return $this->sendResponse();
+            return $this->oauth->sendResponse();
         }
 
         $id = Yii::$app->getUser()->id;
         if (!$id) {
-            //var_dump($this->oauth->getRequest());die;
+            var_dump($this->oauth->getRequest());die;
             return $this->redirect(['/site/login']);
         }
 
@@ -161,7 +149,7 @@ class OauthController extends \yii\web\Controller
 
         $this->oauth->handleAuthorizeRequest($is_authorized, $id);
 
-        return $this->sendResponse();
+        return $this->oauth->sendResponse();
     }
 
     private function canImpersonate()
