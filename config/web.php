@@ -18,7 +18,7 @@ return [
     'bootstrap' => array_filter([
         'language' => 'language',
     ]),
-    'as setReturnUrl' => \hiam\behaviors\SetReturnUrl::class,
+    'as saveAuthorizeRequest' => \hiam\behaviors\SaveAuthorizeRequest::class,
     'components' => [
         'db' => [
             'class'     => \yii\db\Connection::class,

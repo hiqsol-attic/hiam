@@ -10,15 +10,27 @@
 
 namespace hiam\behaviors;
 
+use hiam\components\OauthInterface;
 use Yii;
 use yii\base\Application;
 use yii\base\Event;
 
 /**
- * SetReturnUrl behavior.
+ * SaveAuthorizeRequest behavior.
  */
-class SetReturnUrl extends \yii\base\Behavior
+class SaveAuthorizeRequest extends \yii\base\Behavior
 {
+    /**
+     * @var OauthInterface
+     */
+    private $oauth;
+
+    public function __construct(OAuthInterface $oauth, $config = [])
+    {
+        $this->oauth = $oauth;
+        parent::__construct($config);
+    }
+
     public function events()
     {
         return [
@@ -34,11 +46,9 @@ class SetReturnUrl extends \yii\base\Behavior
             return;
         }
 
-        $back = $request->get('redirect_uri');
-        if (!$back) {
-            return;
+        $back = $this->oauth->saveAuthorizeRequest($request);
+        if ($back) {
+            Yii::$app->user->setReturnUrl($back);
         }
-
-        Yii::$app->user->setReturnUrl($back);
     }
 }

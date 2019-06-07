@@ -30,6 +30,7 @@ use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
 use yii\filters\AccessControl;
 use hiam\forms\ChangePasswordForm;
+use hiam\components\OauthInterface;
 
 /**
  * Site controller.
@@ -45,11 +46,17 @@ class SiteController extends \hisite\controllers\SiteController
      */
     private $confirmator;
 
-    public function __construct($id, $module, ServiceInterface $confirmator, $config = [])
+    /**
+     * @var OauthInterface
+     */
+    private $oauth;
+
+    public function __construct($id, $module, ServiceInterface $confirmator, OauthInterface $oauth, $config = [])
     {
         parent::__construct($id, $module, $config = []);
 
         $this->confirmator = $confirmator;
+        $this->oauth = $oauth;
     }
 
     public function behaviors()
@@ -130,14 +137,6 @@ class SiteController extends \hisite\controllers\SiteController
                 'class' => OpenapiAction::class,
             ],
         ]);
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser()
-    {
-        return Yii::$app->user;
     }
 
     public function actionLogin($username = null)
@@ -400,5 +399,10 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         return $this->render($sender['view'], ['model' => $model]);
+    }
+
+    public function goBack($defaultUrl = null)
+    {
+        return $this->oauth->goBack() ?? parent::goBack($defaultUrl);
     }
 }

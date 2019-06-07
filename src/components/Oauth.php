@@ -10,8 +10,37 @@
 
 namespace hiam\components;
 
+use Yii;
+use yii\web\Request;
+
 class Oauth implements OauthInterface
 {
+    const SESSION_PARAM_NAME = 'oauth.authorize.request.data';
+
+    public function goBack()
+    {
+        if (empty($this->getUser()->id) || !$this->restoreAuthorizeRequest()) {
+            return null;
+        }
+
+        return $this->handleAuthorizeRequest(true, $this->getUser()->id);
+    }
+
+    /**
+     * @return bool true if authorize request was restored (it was saved before)
+     */
+    private function restoreAuthorizeRequest(): bool
+    {
+        $params = $this->getSession()->get(self::SESSION_PARAM_NAME);
+        if (empty($params['redirect_uri'])) {
+            return false;
+        }
+
+        $this->getRequest()->query = $params;
+
+        return true;
+    }
+
     /**
      * @return \filsh\yii2\oauth2server\Module
      */
@@ -26,7 +55,7 @@ class Oauth implements OauthInterface
     }
 
     /**
-     * @return Request
+     * @return \filsh\yii2\oauth2server\Request
      */
     public function getRequest()
     {
@@ -80,7 +109,9 @@ class Oauth implements OauthInterface
 
     public function handleAuthorizeRequest($is_authorized, $id)
     {
-        return $this->getServer()->handleAuthorizeRequest($this->getRequest(), $this->getResponse(), $is_authorized, $id);
+        $this->getServer()->handleAuthorizeRequest($this->getRequest(), $this->getResponse(), $is_authorized, $id);
+
+        return $this->sendResponse();
     }
 
     public function handleTokenRequest()
@@ -90,6 +121,33 @@ class Oauth implements OauthInterface
 
     public function getConfig($name)
     {
-        return $this->getServer->getConfig($name);
+        return $this->getServer()->getConfig($name);
+    }
+
+    /**
+     * @return string|null redirect_uri or null if request is invalid
+     */
+    public function saveAuthorizeRequest(Request $request): ?string
+    {
+        if (!$this->validateAuthorizeRequest()) {
+            return null;
+        }
+
+        $this->getSession()->set(self::SESSION_PARAM_NAME, $request->get());
+
+        return $request->get('request_uri');
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return Yii::$app->user;
+    }
+
+    private function getSession()
+    {
+        return Yii::$app->getSession();
     }
 }

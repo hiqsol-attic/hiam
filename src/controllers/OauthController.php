@@ -116,14 +116,12 @@ class OauthController extends \yii\web\Controller
 
     public function actionAuthorize()
     {
-        var_dump($this);die;
         if (!$this->oauth->validateAuthorizeRequest()) {
             return $this->oauth->sendResponse();
         }
 
         $id = Yii::$app->getUser()->id;
         if (!$id) {
-            var_dump($this->oauth->getRequest());die;
             return $this->redirect(['/site/login']);
         }
 
@@ -147,9 +145,7 @@ class OauthController extends \yii\web\Controller
             $id = $user_id;
         }
 
-        $this->oauth->handleAuthorizeRequest($is_authorized, $id);
-
-        return $this->oauth->sendResponse();
+        return $this->oauth->handleAuthorizeRequest($is_authorized, $id);
     }
 
     private function canImpersonate()
