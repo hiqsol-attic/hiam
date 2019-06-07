@@ -19,16 +19,24 @@ class DemoController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $url = Url::to(['/oauth/authorize',
-            'client_id'     => 'me',
+        return $this->render('index', [
+            'url' => $url,
+        ]);
+    }
+
+    public function actionGo()
+    {
+        return $this->redirect($this->buildAuthorizeUrl());
+    }
+
+    private function buildAuthorizeUrl()
+    {
+        return Url::to(['/oauth/authorize',
+            'client_id'     => 'demo',
             'scopes'        => 'email',
             'state'         => 'x',
             'response_type' => 'code',
             'redirect_uri'  => 'http://localhost/oauth',
         ], true);
-
-        return $this->render('index', [
-            'url' => $url,
-        ]);
     }
 }
