@@ -140,6 +140,9 @@ return [
             \yii\web\User::class => function ($container, $params, $config) {
                 return Yii::$app->getUser();
             },
+            \hiam\components\OauthInterface::class => [
+                'class' => \hiam\components\Oauth::class,
+            ],
         ],
     ],
 ];

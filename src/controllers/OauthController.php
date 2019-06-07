@@ -13,6 +13,7 @@ namespace hiam\controllers;
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use filsh\yii2\oauth2server\Request;
 use hiam\base\User;
+use hiam\components\OauthInterface;
 use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use Yii;
 use yii\filters\ContentNegotiator;
@@ -24,6 +25,18 @@ use yii\web\Response;
 class OauthController extends \yii\web\Controller
 {
     public $enableCsrfValidation = false;
+
+    /**
+     * @var OauthInterface
+     */
+    private $oauth;
+
+    public function __construct($id, $module, OauthInterface $oauth, $config = [])
+    {
+        parent::__construct($id, $module, $config = []);
+
+        $this->oauth = $oauth;
+    }
 
     /**
      * {@inheritdoc}
@@ -45,52 +58,9 @@ class OauthController extends \yii\web\Controller
         ]);
     }
 
-    /**
-     * @return \filsh\yii2\oauth2server\Module
-     */
-    public function getModule()
-    {
-        return Yii::$app->getModule('oauth2');
-    }
-
-    public function getServer()
-    {
-        return $this->getModule()->getServer();
-    }
-
-    /**
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->getModule()->getRequest();
-    }
-
-    /**
-     * @return \filsh\yii2\oauth2server\Response
-     */
-    public function getResponse()
-    {
-        return $this->getModule()->getResponse();
-    }
-
-    /**
-     * Get request parameter from POST then GET.
-     *
-     * @param string $name
-     * @param string $default
-     * @return string
-     */
-    public function getRequestValue($name, $default = null)
-    {
-        $request = $this->getModule()->getRequest();
-
-        return isset($request->request[$name]) ? $request->request[$name] : $request->query($name, $default);
-    }
-
     public function getTokenParamName()
     {
-        return $this->getServer()->getConfig('token_param_name');
+        return $this->oauth->getConfig('token_param_name');
     }
 
     /**
@@ -107,21 +77,22 @@ class OauthController extends \yii\web\Controller
         return OauthAccessTokens::findOne($access_token);
     }
 
-    private function sendResponse($oauthResponse)
+    private function sendResponse()
     {
-        $response = Yii::$app->response;
+        $oauthResponse = $this->oauth->getResponse();
+        $yiiResponse = Yii::$app->response;
 
         foreach ($oauthResponse->getHttpHeaders() as $name => $value) {
-            $response->headers->set($name, $value);
+            $yiiResponse->headers->set($name, $value);
         }
-        $response->setStatusCode($oauthResponse->getStatusCode(), $oauthResponse->getStatusText());
+        $yiiResponse->setStatusCode($oauthResponse->getStatusCode(), $oauthResponse->getStatusText());
 
         return $oauthResponse->getResponseBody();
     }
 
     public function actionToken()
     {
-        $response = $this->getServer()->handleTokenRequest($this->getRequest());
+        $response = $this->oauth->handleTokenRequest();
         $access_token = $response->getParameter($this->getTokenParamName());
         if ($access_token) {
             $token = $this->findToken($access_token);
@@ -129,16 +100,16 @@ class OauthController extends \yii\web\Controller
             $response->addParameters(compact('user_attributes'));
         }
 
-        return $this->sendResponse($response);
+        return $this->sendResponse();
     }
 
     public function actionResource()
     {
-        $ok = $this->getServer()->verifyResourceRequest($this->request);
+        $ok = $this->oauth->verifyResourceRequest();
         if (!$ok) {
-            return $this->sendResponse($this->getServer()->getResponse());
+            return $this->sendResponse();
         }
-        $access_token = $this->getRequestValue($this->getTokenParamName());
+        $access_token = $this->oauth->getRequestValue($this->getTokenParamName());
         $token = $this->findToken($access_token);
         $user = $this->findIdentityByToken($token);
 
@@ -158,22 +129,22 @@ class OauthController extends \yii\web\Controller
 
     public function actionAuthorize()
     {
-        $request = $this->getRequest();
-        $response = $this->getResponse();
-        if (!$this->getServer()->validateAuthorizeRequest($request, $response)) {
-            return $this->sendResponse($response);
+        if (!$this->oauth->validateAuthorizeRequest()) {
+            return $this->sendResponse();
         }
 
         $id = Yii::$app->getUser()->id;
         if (!$id) {
+            //var_dump($this->oauth->getRequest());die;
             return $this->redirect(['/site/login']);
         }
 
-        $is_authorized = $this->isAuthorizedClient($this->getRequestValue('client_id'));
+        $client_id = $this->oauth->getRequestValue('client_id');
+        $is_authorized = $this->isAuthorizedClient($client_id);
         if (!$is_authorized) {
             if (empty($_POST)) {
                 return $this->render('authorizeClient', [
-                    'client_id' => 'THE CLIENT_ID',
+                    'client_id' => $client_id,
                 ]);
             }
 
@@ -183,13 +154,14 @@ class OauthController extends \yii\web\Controller
             $is_authorized = ($_POST['authorized'] === 'yes');
         }
 
-        if ($request->query('user_id') && $this->canImpersonate()) {
-            $id = $request->query('user_id');
+        $user_id = $this->oauth->getRequestValue('user_id');
+        if ($user_id && $this->canImpersonate()) {
+            $id = $user_id;
         }
 
-        $this->getServer()->handleAuthorizeRequest($request, $response, $is_authorized, $id);
+        $this->oauth->handleAuthorizeRequest($is_authorized, $id);
 
-        return $this->sendResponse($response);
+        return $this->sendResponse();
     }
 
     private function canImpersonate()
