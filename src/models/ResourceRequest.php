@@ -25,4 +25,9 @@ class ResourceRequest extends \yii\base\Model
             ['access_token',    'required'],
         ];
     }
+
+    public function formName()
+    {
+        return '';
+    }
 }

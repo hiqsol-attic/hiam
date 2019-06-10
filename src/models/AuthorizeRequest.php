@@ -32,4 +32,9 @@ class AuthorizeRequest extends \yii\base\Model
             ['state',           'string'],
         ];
     }
+
+    public function formName()
+    {
+        return '';
+    }
 }

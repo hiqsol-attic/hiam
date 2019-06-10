@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
     'action' => '/userinfo',
 ]) ?>
 
-<?= $form->field($resourceRequest, 'access_token')->textInput(['name' => 'access_token']) ?>
+<?= $form->field($resourceRequest, 'access_token') ?>
 
 <?= Html::submitButton('userinfo', ['class' => 'btn btn-primary btn-block']) ?>
 

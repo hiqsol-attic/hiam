@@ -38,8 +38,8 @@ class DemoController extends \yii\web\Controller
         return [
             'client_id'     => 'demo',
             'client_secret' => 'pass',
-            'redirect_uri'  => Url::to('/demo/resource', true),
-            'grant_type'    => 'profile',
+            'redirect_uri'  => Url::to('/demo/token', true),
+            'grant_type'    => 'authorization_code',
             'code'          => '',
         ];
     }

@@ -32,4 +32,9 @@ class TokenRequest extends \yii\base\Model
             ['code',            'string'],
         ];
     }
+
+    public function formName()
+    {
+        return '';
+    }
 }

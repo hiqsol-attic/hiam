@@ -11,6 +11,7 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin([
     'id' => 'authorize-form',
     'action' => '/oauth/authorize',
+    'method' => 'get',
 ]) ?>
 
 <?= $form->field($authorizeRequest, 'client_id') ?>
