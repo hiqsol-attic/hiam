@@ -7,9 +7,6 @@ use yii\widgets\ActiveForm;
 /** @var \hiam\models\TokenRequest $tokenRequest */
 
 ?>
-<h5>Access Token Request</h5>
-<br/>
-
 <?php $form = ActiveForm::begin([
     'id' => 'token-form',
     'action' => '/oauth/token',

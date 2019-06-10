@@ -7,8 +7,6 @@ use yii\widgets\ActiveForm;
 /** @var \hiam\models\AuthorizeRequest $authorizeRequest */
 
 ?>
-<h5>Authorization Code Request</h5>
-<br/>
 
 <?php $form = ActiveForm::begin([
     'id' => 'authorize-form',

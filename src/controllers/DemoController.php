@@ -25,7 +25,7 @@ class DemoController extends \yii\web\Controller
     {
         return [
             'client_id'     => 'demo',
-            'redirect_uri'  => Url::to('/demo/index#token-form', true),
+            'redirect_uri'  => Url::to('/demo/token', true),
             'response_type' => 'code',
             'scopes'        => 'email',
             'state'         => 'x',
@@ -37,7 +37,7 @@ class DemoController extends \yii\web\Controller
         return [
             'client_id'     => 'demo',
             'client_secret' => 'pass',
-            'redirect_uri'  => Url::to('/demo/index#resource-form', true),
+            'redirect_uri'  => Url::to('/demo/resource', true),
             'grant_type'    => 'profile',
             'code'          => '',
         ];
@@ -45,8 +45,19 @@ class DemoController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        return $this->render('index', [
+        return $this->redirect('/demo/authorize');
+    }
+
+    public function actionAuthorize()
+    {
+        return $this->render('authorize', [
             'authorizeRequest' => $this->getAuthorizeRequest(),
+        ]);
+    }
+
+    public function actionToken()
+    {
+        return $this->render('token', [
             'tokenRequest' => $this->getTokenRequest(),
         ]);
     }

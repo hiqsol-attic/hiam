@@ -11,12 +11,18 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
 
+    <h5>Authorization Code Request</h5>
+    <br/>
+
     <?= $this->render('authorize-form', compact('authorizeRequest'))?>
 
     <br/>
     <hr/>
     <br/>
 
-    <?= $this->render('token-form', compact('tokenRequest'))?>
+    <ul>
+        <li><?= Html::a('Access Token Request', '/demo/token') ?></li>
+        <li><?= Html::a('Resource Request', '/demo/resource') ?></li>
+    </ul>
 
 </div>
