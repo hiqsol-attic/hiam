@@ -9,6 +9,10 @@
  */
 
 return [
+    'hiam.authorizedClients' => array_filter([
+        'demo' => $_ENV['ENV'] !== 'PROD' ? 'pass' : null,
+    ]),
+
     'hiapi.var_dir'     => dirname(__DIR__, 4) . '/../HIAPI_VAR',
 
     'logoUrl'           => '/site/back',
