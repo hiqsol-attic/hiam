@@ -52,8 +52,9 @@ class UserinfoController extends Controller
         $request = Yii::$app->request;
         $authHeader = $request->getHeaders()->get('Authorization');
         preg_match('/^Bearer\s+(.*?)$/', $authHeader ?? '', $matches);
+        $tokenString = $matches[1] ?? $request->post('access_token') ?? $request->get('access_token');
 
-        $token = OauthAccessTokens::findOne($matches[1]);
+        $token = OauthAccessTokens::findOne($tokenString);
         if ($token === null) {
             throw new ForbiddenHttpException(403);
         }
