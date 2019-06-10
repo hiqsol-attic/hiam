@@ -12,6 +12,7 @@ namespace hiam\controllers;
 
 use hiam\models\AuthorizeRequest;
 use hiam\models\TokenRequest;
+use hiam\models\ResourceRequest;
 use Yii;
 use yii\helpers\Url;
 use yii\base\Model;
@@ -62,6 +63,13 @@ class DemoController extends \yii\web\Controller
         ]);
     }
 
+    public function actionResource()
+    {
+        return $this->render('resource', [
+            'resourceRequest' => $this->getResourceRequest(),
+        ]);
+    }
+
     private function getAuthorizeRequest()
     {
         return $this->loadModel(new AuthorizeRequest($this->getAuthorizeDefaults()));
@@ -70,6 +78,11 @@ class DemoController extends \yii\web\Controller
     private function getTokenRequest()
     {
         return $this->loadModel(new TokenRequest($this->getTokenDefaults()));
+    }
+
+    private function getResourceRequest()
+    {
+        return $this->loadModel(new ResourceRequest());
     }
 
     private function loadModel(Model $model)
