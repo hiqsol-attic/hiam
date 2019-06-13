@@ -89,3 +89,9 @@ The authorization server provides all standard grant types:
 - `refresh_token`
 - `password`
 - `implicit`
+
+## OAuth2 Requests Demo
+
+There is built-in demo where you can try out OAuth2 requests.
+Demo is available at `/demo` page.
+Forms are prefetched with reasonable defaults.
