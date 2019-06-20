@@ -10,7 +10,6 @@
 
 namespace hiam\controllers;
 
-use advancedhosters\themes\advancedhosting\widgets\ActiveForm;
 use hiam\actions\ConfirmEmail;
 use hiam\actions\OpenapiAction;
 use hiam\base\User;
@@ -32,7 +31,6 @@ use yii\authclient\ClientInterface;
 use yii\filters\AccessControl;
 use hiam\forms\ChangePasswordForm;
 use hiam\components\OauthInterface;
-use yii\web\Response;
 
 /**
  * Site controller.
@@ -406,16 +404,5 @@ class SiteController extends \hisite\controllers\SiteController
     public function goBack($defaultUrl = null)
     {
         return $this->oauth->goBack() ?? parent::goBack($defaultUrl);
-    }
-
-    public function actionValidateLoginForm()
-    {
-        $model = Yii::createObject(['class' => LoginForm::class]);
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-
-            return ActiveForm::validate($model);
-            Yii::$app->end();
-        }
     }
 }
