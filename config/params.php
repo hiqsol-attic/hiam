@@ -13,7 +13,8 @@ return [
         'demo' => $_ENV['ENV'] !== 'PROD' ? 'pass' : null,
     ]),
 
-    'hiapi.var_dir'     => dirname(__DIR__, 4) . '/../HIAPI_VAR',
+//    'hiapi.var_dir'     => dirname(__DIR__, 4) . '/../HIAPI_VAR',
+    'hiapi.var_dir'     => dirname(__DIR__, 4) . '/runtime/',
 
     'logoUrl'           => '/site/back',
 
