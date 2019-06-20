@@ -2,10 +2,9 @@
 
 namespace hiam\validators;
 
-interface LoginValidatorInterface
+use yii\validators\InlineValidator;
+use yii\base\Model;
+
+interface LoginValidatorInterface extends InlineableValidatorInterface
 {
-    /**
-     * // TODO: напиши PHPDoc
-     */
-    public function __invoke(string $attribute, array $params, yii\validators\InlineValidator $validator): void;
 }
