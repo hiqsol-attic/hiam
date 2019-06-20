@@ -47,7 +47,7 @@ class LoginForm extends Model
     {
         return [
             ['username', 'filter', 'filter' => 'strtolower'],
-            ['username', get_class($this->loginValidator)],
+            ['username', Closure::fromCallable($this->loginValidator)],
             [['username', 'password'], 'trim'],
             [['username', 'password'], 'required'],
             ['remember_me', 'boolean'],
