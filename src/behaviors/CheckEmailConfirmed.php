@@ -17,6 +17,8 @@ use yii\web\UserEvent;
 
 /**
  * CheckEmailConfirmed behavior.
+ * Prevents login if user email is not confirmed and
+ * sends confirmation email.
  */
 class CheckEmailConfirmed extends \yii\base\Behavior
 {
