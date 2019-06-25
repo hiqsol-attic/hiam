@@ -95,3 +95,17 @@ The authorization server provides all standard grant types:
 There is built-in demo where you can try out OAuth2 requests.
 Demo is available at `/demo` page.
 Forms are prefetched with reasonable defaults.
+
+## Notification callbacks
+
+Applications can register notification callbacks which will be called on
+user change events such as user modified, user deleted, user logged out.
+
+Registered callbacks will be called with HTTP POST request with parameters:
+
+- id - user ID, integer e.g. 1234567
+- action - event name, string:
+    - insert
+    - update
+    - delete
+    - logout
