@@ -2,6 +2,6 @@
 
 namespace hiam\validators;
 
-interface PasswordValidatorInterface
+interface PasswordValidatorInterface extends InlineableValidatorInterface
 {
 }

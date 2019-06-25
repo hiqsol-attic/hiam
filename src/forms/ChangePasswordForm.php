@@ -51,7 +51,7 @@ class ChangePasswordForm extends Model
         return [
             [['login', 'current_password', 'new_password', 'confirm_password'], 'string'],
             [['login', 'current_password', 'new_password', 'confirm_password'], 'required'],
-            ['current_password', get_class($this->passwordValidator)],
+            ['current_password', $this->passwordValidator->inlineFor($this)],
             ['confirm_password', 'compare', 'compareAttribute' => 'new_password'],
         ];
     }

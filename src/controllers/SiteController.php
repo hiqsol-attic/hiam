@@ -146,7 +146,7 @@ class SiteController extends \hisite\controllers\SiteController
             return $this->redirect(['remote-proceed']);
         }
 
-        return $this->doLogin(new LoginForm(), 'login', $username);
+        return $this->doLogin(Yii::createObject(['class' => LoginForm::class]), 'login', $username);
     }
 
     protected function doLogin($model, $view, $username = null)
@@ -159,7 +159,7 @@ class SiteController extends \hisite\controllers\SiteController
                 return $this->goBack();
             }
 
-            $model->addError('password', Yii::t('hiam', 'Incorrect username or password.'));
+            $model->addError('password', Yii::t('hiam', 'Incorrect password.'));
             $model->password = null;
         }
 
