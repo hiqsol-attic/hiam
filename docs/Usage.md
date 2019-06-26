@@ -16,12 +16,17 @@
 
 ## Return URL
 
-Return URL is used to return user back to application (main site)
+Return URL is used to return user back to an application (main site)
 after performing needed actions at authorization server,
 e.g. after logging in or changing password.
 
-Return URL is passed with `back` GET or POST parameter.
-E.g., `https://hiam.hipanel.com/site/login?back=https://my.domain.com/some/page`
+Return URL can be provided in two different ways:
+
+- with `redirect_uri` parameter provided within OAuth2 Authorization Code Request,
+  usually used during login procedure
+- with `back` POST or GET request parameter within any request, usually used for
+  everything besides login, e.g. change email:
+  `https://hiam.hipanel.com/site/change-email?back=https://my.domain.com/some/page`
 
 ## OAuth2 entry points
 
