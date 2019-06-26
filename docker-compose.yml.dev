@@ -8,11 +8,8 @@ services:
     links:
       - php-fpm
     networks:
-      local-network:
-      proxy-network:
-      hiapi-network:
-        aliases:
-          - "${HIAM_SITE}"
+      - local-network
+      - proxy-network
     volumes:
       - ./:/app
       - ./.docker/nginx/etc/nginx/conf.d:/etc/nginx/conf.d
@@ -38,9 +35,6 @@ services:
 networks:
   local-network:
     driver: bridge
-  hiapi-network:
-    external:
-      name: "${HIAPI_SITE}"
   pgsql-network:
     external:
       name: "pgsql-${HIAPI_SITE}"
