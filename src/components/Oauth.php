@@ -138,6 +138,11 @@ class Oauth implements OauthInterface
         return $request->get('request_uri');
     }
 
+    public function cleanAuthorizeRequest(): void
+    {
+        $this->getSession()->remove(self::SESSION_PARAM_NAME);
+    }
+
     /**
      * @return User
      */

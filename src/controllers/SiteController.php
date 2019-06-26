@@ -111,10 +111,6 @@ class SiteController extends \hisite\controllers\SiteController
             'lockscreen' => [
                 'class' => RenderAction::class,
             ],
-            'back' => [
-                'class' => RedirectAction::class,
-                'url' => Yii::$app->params['site_url'],
-            ],
             'terms' => [
                 'class' => RedirectAction::class,
                 'url' => Yii::$app->params['terms_url'],
@@ -399,6 +395,11 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         return $this->render($sender['view'], ['model' => $model]);
+    }
+
+    public function actionBack()
+    {
+        return $this->goBack(Yii::$app->params['site_url']);
     }
 
     public function goBack($defaultUrl = null)
