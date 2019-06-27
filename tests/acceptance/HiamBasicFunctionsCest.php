@@ -44,22 +44,25 @@ class HiamBasicFunctionsCest
     {
         $I->wantTo('signup to hiam');
         $I->amOnPage('/site/signup');
-        $I->see('Signup');
-        $I->fillField(['name' => 'SignupForm[first_name]'], 'Test User First Name');
-        $I->fillField(['name' => 'SignupForm[last_name]'], 'Test User Last Name');
+        $I->see('Sign up to Advanced Hosting');
         $I->fillField(['name' => 'SignupForm[email]'], $this->username);
         $I->fillField(['name' => 'SignupForm[password]'], $this->password);
-        $I->fillField(['name' => 'SignupForm[password_retype]'], $this->password);
-        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree']);
-        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_privacy_policy']);
-        $I->clickWithLeftButton(['css' => '#login-form button']);
-        $I->seeElement('#login-form');
+        $I->clickWithLeftButton(['css' => '#send_me_news-email']);
+        $I->clickWithLeftButton(['css' => '#i_agree_terms_and_privacy-email']);
+        $I->clickWithLeftButton(['css' => 'button[type=submit]']);
+        $I->waitForText('Your account has been successfully created.');
         $token = $this->findLastToken();
         $I->assertNotEmpty($token, 'token exists');
-        $I->waitForText('Your account has been successfully created.');
         $I->amOnPage('/site/confirm-email?token=' . $token);
         $I->waitForText('Your email was confirmed!');
         $I->see($this->username);
+
+
+//        $I->fillField(['name' => 'SignupForm[password_retype]'], $this->password);
+//        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree']);
+//        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_privacy_policy']);
+//        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_terms_and_privacy']);
+
     }
 
     /**
@@ -98,22 +101,21 @@ class HiamBasicFunctionsCest
      */
     public function restorePassword(AcceptanceTester $I)
     {
-        $I->wantTo('Restore passwrod');
+        $I->wantTo('Restore password');
         $I->amOnPage('/site/restore-password');
         $I->fillField(['name' => 'RestorePasswordForm[username]'], $this->username);
-        $I->clickWithLeftButton(['css' => '#login-form button']);
+        $I->clickWithLeftButton(['css' => 'button[type=submit]']);
+        $I->wait(1);
         $message = $I->getLastMessage();
         $I->assertNotEmpty($message, 'make sure that the mail received');
         $resetTokenLink = $I->getResetTokenUrl($message);
         $I->assertNotEmpty($resetTokenLink, 'make sure that reset token link received');
         $I->amOnUrl($resetTokenLink);
-        $I->seeElement('#login-form');
         $this->password = '654321';
         $I->fillField(['name' => 'ResetPasswordForm[password]'], $this->password);
         $I->fillField(['name' => 'ResetPasswordForm[password_retype]'], $this->password);
-        $I->clickWithLeftButton(['css' => '#login-form button']);
-        $I->seeElement('#login-form');
-        $I->clearMessages();
+        $I->clickWithLeftButton(['css' => 'button[type=submit]']);
+        $I->waitForText('New password was saved.');
     }
 
     private function findLastToken(): ?string
