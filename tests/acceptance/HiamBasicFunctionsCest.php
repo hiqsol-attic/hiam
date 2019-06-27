@@ -50,12 +50,19 @@ class HiamBasicFunctionsCest
         $I->clickWithLeftButton(['css' => '#send_me_news-email']);
         $I->clickWithLeftButton(['css' => '#i_agree_terms_and_privacy-email']);
         $I->clickWithLeftButton(['css' => 'button[type=submit]']);
+        $I->waitForText('Your account has been successfully created.');
         $token = $this->findLastToken();
         $I->assertNotEmpty($token, 'token exists');
-        $I->waitForText('Your account has been successfully created.');
         $I->amOnPage('/site/confirm-email?token=' . $token);
         $I->waitForText('Your email was confirmed!');
         $I->see($this->username);
+
+
+//        $I->fillField(['name' => 'SignupForm[password_retype]'], $this->password);
+//        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree']);
+//        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_privacy_policy']);
+//        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_terms_and_privacy']);
+
     }
 
     /**
