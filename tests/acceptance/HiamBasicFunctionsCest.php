@@ -44,25 +44,36 @@ class HiamBasicFunctionsCest
     {
         $I->wantTo('signup to hiam');
         $I->amOnPage('/site/signup');
-        $I->see('Sign up to Advanced Hosting');
+//        $I->see('Sign up to Advanced Hosting');
+        try {
+            $I->fillField(['name' => 'SignupForm[first_name]'], $this->username);
+            $I->fillField(['name' => 'SignupForm[last_name]'], $this->username);
+            $I->fillField(['name' => 'SignupForm[password_retype]'], $this->password);
+        }
+        catch (\Exception $e) {
+
+        }
         $I->fillField(['name' => 'SignupForm[email]'], $this->username);
         $I->fillField(['name' => 'SignupForm[password]'], $this->password);
-        $I->clickWithLeftButton(['css' => '#send_me_news-email']);
-        $I->clickWithLeftButton(['css' => '#i_agree_terms_and_privacy-email']);
+        try {
+            $I->clickWithLeftButton(['css' => '.field-signupform-i_agree']);
+            $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_privacy_policy']);
+        }
+        catch (\Exception $e) {
+
+        }
+        $I->clickWithLeftButton(['css' => 'input[name*=i_agree_terms_and_privacy][type=checkbox]']);
+
+
+//        $I->waitForText('Your account has been successfully created.');
         $I->clickWithLeftButton(['css' => 'button[type=submit]']);
         $I->waitForText('Your account has been successfully created.');
         $token = $this->findLastToken();
         $I->assertNotEmpty($token, 'token exists');
+//        $I->waitForText('Your account has been successfully created.');
         $I->amOnPage('/site/confirm-email?token=' . $token);
         $I->waitForText('Your email was confirmed!');
         $I->see($this->username);
-
-
-//        $I->fillField(['name' => 'SignupForm[password_retype]'], $this->password);
-//        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree']);
-//        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_privacy_policy']);
-//        $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_terms_and_privacy']);
-
     }
 
     /**
