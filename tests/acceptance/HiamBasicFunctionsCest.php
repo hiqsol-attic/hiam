@@ -44,7 +44,6 @@ class HiamBasicFunctionsCest
     {
         $I->wantTo('signup to hiam');
         $I->amOnPage('/site/signup');
-//        $I->see('Sign up to Advanced Hosting');
         try {
             $I->fillField(['name' => 'SignupForm[first_name]'], $this->username);
             $I->fillField(['name' => 'SignupForm[last_name]'], $this->username);
@@ -60,10 +59,8 @@ class HiamBasicFunctionsCest
         }
         catch (\Exception $e) {
         }
-
         $I->clickWithLeftButton(['css' => 'input[name*=i_agree_terms_and_privacy][type=checkbox]']);
         $I->clickWithLeftButton(['css' => 'button[type=submit]']);
-//        $I->waitForText('Your account has been successfully created.');
         $token = $this->findLastToken();
         $I->assertNotEmpty($token, 'token exists');
         $I->amOnPage('/site/confirm-email?token=' . $token);
