@@ -13,8 +13,6 @@ return [
         'demo' => $_ENV['ENV'] !== 'PROD' ? 'pass' : null,
     ]),
 
-    'hiapi.var_dir'     => dirname(__DIR__, 4) . '/../HIAPI_VAR',
-
     'logoUrl'           => '/site/back',
 
     'poweredBy.name'    => 'HIAM',

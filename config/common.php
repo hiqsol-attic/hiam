@@ -9,10 +9,6 @@
  */
 
 return [
-    'aliases' => [
-        '@runtime/var'      => $params['hiapi.var_dir'],
-        '@runtime/tokens'   => '@runtime/var/tokens',
-    ],
     'components' => [
         'mailer' => array_filter([
             'useFileTransport' => false,
