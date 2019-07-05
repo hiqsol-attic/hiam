@@ -28,6 +28,14 @@ Return URL can be provided in two different ways:
   everything besides login, e.g. change email:
   `https://hiam.hipanel.com/site/change-email?back=https://my.domain.com/some/page`
 
+## Swagger/OpenAPI specification
+
+OpenAPI specification is available:
+
+- statically at GitHub: https://github.com/hiqdev/hiam/blob/master/openapi.yaml
+- at every installation by the url: /site/openapi.yaml
+- at Swagger UI: https://any.swagger.hiqdev.com/?url=https://hiam.hipanel.com/site/openapi.yaml
+
 ## OAuth2 entry points
 
 - Authorization code request URL:	`/oauth/authorize`
