@@ -48,7 +48,6 @@ class User extends \yii\web\User
         $user = new $class();
         $user->setAttributes($model->getAttributes());
         $user->username = $model->username ?? $model->email;
-        $ok = $user->save();
 
         if ($user->save()) {
             $this->notifySignup($user);
