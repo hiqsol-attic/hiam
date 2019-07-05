@@ -80,10 +80,17 @@ Example response for `email` scope:
 
 ```json
 {
-  "email": "sol@advancedhosters.com",
+  "email": "sol@hiqdev.com",
+  "email_confirmed": "sol@hiqdev.com",
   "sub": "1000361"
 }
 ```
+
+- `sub` - user identifier (subject)
+- `email` - current user email
+- `email_confirmed` - last confirmed user email
+    - if matches `email` then the email is confirmed
+    - else user has changed his email and has not confirmed it yet
 
 ## Available grant types
 
