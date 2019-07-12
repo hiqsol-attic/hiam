@@ -101,6 +101,12 @@ paths:
     delete:
       summary: Invalidate Access Token
       description: To be implemented later
+      parameters:
+        - name: tokens
+          in: formData
+          description: Comma separated list of access or refresh tokens. Or `all` to remove all
+          schema:
+            type: string
       tags:
         - oauth2
       responses:
