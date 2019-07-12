@@ -65,13 +65,14 @@ paths:
           in: formData
           description: Supports all standard OAuth2 grant types
           required: true
-          type: string
-          enum: 
-            - authorization_code
-            - client_credentials
-            - refresh_token
-            - password
-            - implicit
+          schema:
+            type: string
+            enum: 
+              - authorization_code
+              - client_credentials
+              - refresh_token
+              - password
+              - implicit
       tags:
         - oauth2
       responses:
