@@ -27,7 +27,7 @@ class RestorePasswordForm extends \yii\base\Model
         return [
             ['username', 'trim'],
             ['username', 'string', 'min' => 2, 'max' => 128],
-            ['username', 'required'],
+            ['username', 'required', 'message' => 'Email can\'t be blank'],
         ];
     }
 
