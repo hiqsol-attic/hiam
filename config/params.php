@@ -28,6 +28,9 @@ return [
     'db.user'           => '',
     'db.password'       => '',
 
+    'hiam.access_token.lifetime'    => 3600 * 24,
+    'hiam.refresh_token.lifetime'   => 3600 * 24 * 31,
+
     'user.seller'                   => '',
     'user.loginDuration'            => 3600 * 24 * 31,
     'user.passwordResetTokenExpire' => 3600,

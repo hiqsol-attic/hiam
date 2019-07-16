@@ -74,8 +74,9 @@ return [
                 ],
             ],
             'options' => [
-                'enforce_state'     => true,
-                'access_lifetime'   => 3600 * 24,
+                'enforce_state'             => true,
+                'access_lifetime'           => $params['hiam.access_token.lifetime'],
+                'refresh_token_lifetime'    => $params['hiam.refresh_token.lifetime'],
             ],
             'storageMap' => [
                 'user_credentials'  => \hiam\models\Identity::class,
