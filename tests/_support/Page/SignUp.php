@@ -6,6 +6,7 @@ use hiam\tests\_support\AcceptanceTester;
 
 class SignUp
 {
+    /** @var AcceptanceTester */
     private $tester;
 
     public function __construct(AcceptanceTester $I)
@@ -13,6 +14,10 @@ class SignUp
         $this->tester = $I;
     }
 
+    /**
+     * @param array
+     * @throws \Exception
+     */
     public function tryFillContactInfo(array $info): void
     {
         $I = $this->tester;
@@ -27,6 +32,9 @@ class SignUp
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function tryClickAdditionalCheckboxes(): void
     {
         $I = $this->tester;
@@ -38,6 +46,9 @@ class SignUp
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function tryClickAgreeTermsPrivacy(): void
     {
         $I = $this->tester;

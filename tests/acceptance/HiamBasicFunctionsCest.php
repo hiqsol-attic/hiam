@@ -17,10 +17,13 @@ use Yii;
 
 class HiamBasicFunctionsCest
 {
+    /** @var string */
     private $username;
 
+    /** @var string */
     private $password = '123456';
 
+    /** @var string */
     private $identity;
 
     public function __construct()
@@ -28,7 +31,10 @@ class HiamBasicFunctionsCest
         $this->username = mt_rand(100000, 999999) . '+testuser@example.com';
     }
 
-    public function cleanUp(AcceptanceTester $I)
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function cleanUp(AcceptanceTester $I): void
     {
         try {
             FileHelper::removeDirectory($I->getMailsDir());
@@ -111,6 +117,9 @@ class HiamBasicFunctionsCest
         $I->waitForText('New password was saved.');
     }
 
+    /**
+     * @return array
+     */
     protected function getUserInfo(): array
     {
         return [
@@ -120,6 +129,9 @@ class HiamBasicFunctionsCest
         ];
     }
 
+    /**
+     * @return string|null
+     */
     private function findLastToken(): ?string
     {
         $tokensDir = $this->getTokensDir();
@@ -137,6 +149,9 @@ class HiamBasicFunctionsCest
         return null;
     }
 
+    /**
+     * @return bool|string
+     */
     private function getTokensDir()
     {
         return Yii::getAlias('@runtime/tokens');
