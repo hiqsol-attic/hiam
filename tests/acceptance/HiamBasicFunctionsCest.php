@@ -11,6 +11,7 @@
 namespace hiam\tests\acceptance;
 
 use hiam\tests\_support\AcceptanceTester;
+use hiam\tests\_support\Page\SignUp;
 use yii\helpers\FileHelper;
 use Yii;
 
@@ -42,24 +43,13 @@ class HiamBasicFunctionsCest
      */
     public function signup(AcceptanceTester $I)
     {
+        $signupPage = new SignUp($I);
         $I->wantTo('signup to hiam');
         $I->amOnPage('/site/signup');
-        try {
-            $I->fillField(['name' => 'SignupForm[first_name]'], $this->username);
-            $I->fillField(['name' => 'SignupForm[last_name]'], $this->username);
-            $I->fillField(['name' => 'SignupForm[password_retype]'], $this->password);
-        }
-        catch (\Exception $e) {
-        }
-        $I->fillField(['name' => 'SignupForm[email]'], $this->username);
-        $I->fillField(['name' => 'SignupForm[password]'], $this->password);
-        try {
-            $I->clickWithLeftButton(['css' => '.field-signupform-i_agree']);
-            $I->clickWithLeftButton(['css' => '.field-signupform-i_agree_privacy_policy']);
-        }
-        catch (\Exception $e) {
-        }
-        $I->clickWithLeftButton(['css' => 'input[name*=i_agree_terms_and_privacy][type=checkbox]']);
+        $info = $this->getUserInfo();
+        $signupPage->tryFillContactInfo($info);
+        $signupPage->tryClickAdditionalCheckboxes();
+        $signupPage->tryClickAgreeTermsPrivacy();
         $I->clickWithLeftButton(['css' => 'button[type=submit]']);
         $token = $this->findLastToken();
         $I->assertNotEmpty($token, 'token exists');
@@ -121,12 +111,23 @@ class HiamBasicFunctionsCest
         $I->waitForText('New password was saved.');
     }
 
+    protected function getUserInfo(): array
+    {
+        return [
+            'username' => $this->username,
+            'password' => $this->password,
+            'identity' => $this->identity,
+        ];
+    }
+
     private function findLastToken(): ?string
     {
+        $tokensDir = $this->getTokensDir();
+
         foreach (range(1, 31) as $try) {
-            codecept_debug($try . ' try to get Token by path: ' . $this->getTokensDir());
+            codecept_debug("$try try to get Token by path: $tokensDir");
             sleep(2);
-            $res = exec('find ' . $this->getTokensDir() . '  -type f -cmin -1 -exec basename {} \; | tail -1');
+            $res = exec("find $tokensDir -type f -cmin -1 -exec basename {} \; | tail -1");
 
             if ($res) {
                 return $res;
