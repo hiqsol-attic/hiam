@@ -43,6 +43,13 @@ paths:
           in: query
           schema:
             type: string
+        - name: user_id
+          description: |
+            ID of user, authorization code should be issued for.
+            This parameter will be used only if current authenticated user is allowed to impersonate other users.
+          in: query
+          schema:
+            type: string
       responses:
         302:
           description: Redirect back to application with authorization code
