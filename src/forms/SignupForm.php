@@ -64,7 +64,8 @@ class SignupForm extends Model
             [['email', 'password'], 'required', 'on' => [self::SCENARIO_DEFAULT, self::SCENARIO_SHORT]],
             [['first_name', 'last_name', 'password_retype'], 'required', 'on' => self::SCENARIO_DEFAULT],
 
-            [['i_agree', 'i_agree_privacy_policy', 'i_agree_terms_and_privacy', 'send_me_news'], 'boolean'],
+            [['i_agree', 'i_agree_privacy_policy'], 'boolean'],
+            [['i_agree_terms_and_privacy', 'send_me_news'], 'boolean', 'on' => [self::SCENARIO_SOCIAL, self::SCENARIO_SHORT]],
             ['i_agree', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider terms of use.'), 'on' => self::SCENARIO_DEFAULT],
             ['i_agree_privacy_policy', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider Privacy Policy.'), 'on' => self::SCENARIO_DEFAULT],
             ['i_agree_terms_and_privacy', 'required', 'requiredValue' => 1, 'message' => '',
