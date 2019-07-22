@@ -383,8 +383,10 @@ class SiteController extends \hisite\controllers\SiteController
 
         if ($request->isPost) {
             if ($model->load($request->post()) && $model->validate() && $this->user->{$sender['method']}($model)) {
-                Yii::$app->session->setFlash('success', Yii::t('hiam', '{label} has been successfully changed', ['label' => $sender['label']]));
-
+                $params = Yii::$app->getSession()->get('oauth.authorize.request.data');
+                if (empty($params)) {
+                    Yii::$app->session->setFlash('success', Yii::t('hiam', '{label} has been successfully changed', ['label' => $sender['label']]));
+                }
                 return $this->goBack();
             }
             $errors = implode("; \n", $model->getFirstErrors());
