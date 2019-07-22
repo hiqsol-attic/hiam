@@ -383,10 +383,8 @@ class SiteController extends \hisite\controllers\SiteController
 
         if ($request->isPost) {
             if ($model->load($request->post()) && $model->validate() && $this->user->{$sender['method']}($model)) {
-                $params = Yii::$app->getSession()->get('oauth.authorize.request.data');
-                if (empty($params)) {
-                    Yii::$app->session->setFlash('success', Yii::t('hiam', '{label} has been successfully changed', ['label' => $sender['label']]));
-                }
+                Yii::$app->session->setFlash('success', Yii::t('hiam', '{label} has been successfully changed', ['label' => $sender['label']]));
+
                 return $this->goBack();
             }
             $errors = implode("; \n", $model->getFirstErrors());
@@ -406,6 +404,11 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function goBack($defaultUrl = null)
     {
-        return $this->oauth->goBack() ?? parent::goBack($defaultUrl);
+        $response = $this->oauth->goBack();
+        if (empty($response)) {
+            Yii::$app->session->removeAllFlashes();
+            $response = parent::goBack($defaultUrl);
+        }
+        return $response;
     }
 }
