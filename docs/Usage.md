@@ -8,6 +8,7 @@
 - Restore password:     `/site/restore-password`
 - Change email:         `/site/change-email`
 - Change password:      `/site/change-password`
+- Resend verification email: `/site/resend-verification-email`
 - [TOTP]:
     - Enable:           `/mfa/totp/enable`
     - Disable:          `/mfa/totp/disable`
