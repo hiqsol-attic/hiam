@@ -25,6 +25,7 @@ use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use hisite\actions\RedirectAction;
 use hisite\actions\RenderAction;
 use hisite\actions\ValidateAction;
+use ReflectionClass;
 use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
@@ -83,7 +84,7 @@ class SiteController extends \hisite\controllers\SiteController
                     ],
                     // @ - authenticated
                     [
-                        'actions' => ['lockscreen', 'privacy-policy', 'terms'],
+                        'actions' => ['lockscreen', 'privacy-policy', 'terms', 'resend-verification-email'],
                         'roles' => ['@'],
                         'allow' => true,
                     ],
@@ -241,17 +242,7 @@ class SiteController extends \hisite\controllers\SiteController
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
                 }
-                if ($this->confirmator->mailToken($user, 'confirm-email')) {
-                    Yii::$app->session->setFlash('warning',
-                        Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
-                        Yii::t('hiam',
-                            'An email with confirmation instructions was sent to <b>{email}</b>',
-                            ['email' => $user->email]
-                        )
-                    );
-                } else {
-                    Yii::error('Failed to send email confirmation letter', __METHOD__);
-                }
+                $this->sendConfirmEmail($user);
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
 
                 return $this->goBack();
@@ -337,6 +328,14 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->changeRoutine($model);
     }
 
+    public function actionResendVerificationEmail()
+    {
+        $user = $this->user->getIdentity();
+        $this->sendConfirmEmail($user);
+
+        return $this->goBack();
+    }
+
     public function resetPassword($model, $token)
     {
         $token = $this->confirmator->findToken($token);
@@ -410,5 +409,20 @@ class SiteController extends \hisite\controllers\SiteController
             $response = parent::goBack($defaultUrl);
         }
         return $response;
+    }
+
+    protected function sendConfirmEmail($user)
+    {
+        if ($this->confirmator->mailToken($user, 'confirm-email')) {
+            Yii::$app->session->setFlash('warning',
+                Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
+                Yii::t('hiam',
+                    'An email with confirmation instructions was sent to <b>{email}</b>',
+                    ['email' => $user->email]
+                )
+            );
+        } else {
+            Yii::error('Failed to send email confirmation letter', __METHOD__);
+        }
     }
 }
