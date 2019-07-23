@@ -418,7 +418,7 @@ class SiteController extends \hisite\controllers\SiteController
     private function getHost(string $url): ?string
     {
         $parsedArray = parse_url($url);
-        return empty($parsedArray['host']) ? null : $parsedArray['host'];
+        return $parsedArray['host'] ?? null;
     }
 
     protected function sendConfirmEmail($user)
