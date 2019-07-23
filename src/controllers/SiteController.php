@@ -403,7 +403,22 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function goBack($defaultUrl = null)
     {
-        return $this->oauth->goBack() ?? parent::goBack($defaultUrl);
+        $response = $this->oauth->goBack() ?? parent::goBack($defaultUrl);
+        if (empty($response)) {
+            return $response;
+        }
+        $requestHost = $this->getHost(Yii::$app->request->hostInfo);
+        $responseHost = $this->getHost($response->headers['location']);
+        if (strcmp($requestHost, $responseHost)) {
+            Yii::$app->session->removeAllFlashes();
+        }
+        return $response;
+    }
+
+    private function getHost(string $url): ?string
+    {
+        $parsedArray = parse_url($url);
+        return $parsedArray['host'] ?? null;
     }
 
     protected function sendConfirmEmail($user)
