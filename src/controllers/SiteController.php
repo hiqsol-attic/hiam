@@ -407,12 +407,18 @@ class SiteController extends \hisite\controllers\SiteController
         if (empty($response)) {
             return $response;
         }
-        $requestUrl = parse_url(Yii::$app->request->hostInfo);
-        $responseUrl = parse_url($response->headers['location']);
-        if (strcmp($requestUrl['host'], $responseUrl['host'])) {
+        $requestHost = $this->getHost(Yii::$app->request->hostInfo);
+        $responseHost = $this->getHost($response->headers['location']);
+        if (strcmp($requestHost, $responseHost)) {
             Yii::$app->session->removeAllFlashes();
         }
         return $response;
+    }
+
+    private function getHost(string $url): ?string
+    {
+        $parsedArray = parse_url($url);
+        return empty($parsedArray['host']) ? null : $parsedArray['host'];
     }
 
     protected function sendConfirmEmail($user)
