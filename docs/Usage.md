@@ -2,16 +2,16 @@
 
 ## User pages
 
-- Log in:               `/site/login`
-- Log out:              `/site/logout`
-- Sign up:              `/site/signup`
-- Restore password:     `/site/restore-password`
-- Change email:         `/site/change-email`
-- Change password:      `/site/change-password`
-- Resend verification email: `/site/resend-verification-email`
+- Log in:                       `/site/login`
+- Log out:                      `/site/logout`
+- Sign up:                      `/site/signup`
+- Restore password:             `/site/restore-password`
+- Change email:                 `/site/change-email`
+- Change password:              `/site/change-password`
+- Resend verification email:    `/site/resend-verification-email`
 - [TOTP]:
-    - Enable:           `/mfa/totp/enable`
-    - Disable:          `/mfa/totp/disable`
+    - Enable:                   `/mfa/totp/enable`
+    - Disable:                  `/mfa/totp/disable`
 
 [TOTP]: https://en.wikipedia.org/wiki/Time-based_One-time_Password_algorithm
 
