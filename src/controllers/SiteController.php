@@ -403,10 +403,14 @@ class SiteController extends \hisite\controllers\SiteController
 
     public function goBack($defaultUrl = null)
     {
-        $response = $this->oauth->goBack();
+        $response = $this->oauth->goBack() ?? parent::goBack($defaultUrl);
         if (empty($response)) {
+            return $response;
+        }
+        $requestUrl = parse_url(Yii::$app->request->hostInfo);
+        $responseUrl = parse_url($response->headers['location']);
+        if (strcmp($requestUrl['host'], $responseUrl['host'])) {
             Yii::$app->session->removeAllFlashes();
-            $response = parent::goBack($defaultUrl);
         }
         return $response;
     }
