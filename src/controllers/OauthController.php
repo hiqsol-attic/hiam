@@ -123,18 +123,10 @@ class OauthController extends \yii\web\Controller
         ]);
     }
 
-    public function actionRevoke(): array
+    public function actionRevoke()
     {
-        $token = Yii::$app->request->post('token');
-        if (empty($token)) {
-            return ['error' => 'Token must be set'];
-        }
-        $hint = Yii::$app->request->post('token_type_hint');
-        if ($this->tokenRevoker->__invoke($token, $hint)) {
-            return ['token' => $token];
-        }
-
-        return [];
+        $this->oauth->handleRevokeTokenRequest();
+        return $this->oauth->sendResponse();
     }
 
     public function isAuthorizedClient($client)

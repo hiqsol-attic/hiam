@@ -149,6 +149,11 @@ class Oauth implements OauthInterface
         $this->getSession()->remove(self::SESSION_PARAM_NAME);
     }
 
+    public function handleRevokeTokenRequest()
+    {
+        return $this->getServer()->handleRevokeRequest($this->getRequest(), $this->getResponse());
+    }
+
     /**
      * @return User
      */

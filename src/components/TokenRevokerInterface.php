@@ -10,22 +10,6 @@ namespace hiam\components;
 interface TokenRevokerInterface
 {
     /**
-     * Invalidates a token.
-     *
-     * @see https://tools.ietf.org/html/rfc7009#section-2.1
-     *
-     * @param string $token
-     *
-     * @param string|null $clientId oAuth client_id that is authorized to revoke token.
-     * When `null`, the issuing oAuth will not be checked.
-     *
-     * @param string|null $typeHint MUST be either `access_token`, `refresh_token` or `null`.
-     * When `null`, any matching token will be revoked.
-     * @return bool
-     */
-    public function __invoke(string $token, ?string $clientId = null, ?string $typeHint = null): bool;
-
-    /**
      * Revokes all active tokens that belong to user $userId.
      *
      * @param string $userId
