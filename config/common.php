@@ -27,4 +27,9 @@ return [
             ] : null,
         ], function ($v) { return !is_null($v); }),
     ],
+    'container' => [
+        'singletons' => [
+            \hiam\components\TokenRevokerInterface::class => \hiam\components\ActiveRecordTokenRevoker::class,
+        ]
+    ]
 ];

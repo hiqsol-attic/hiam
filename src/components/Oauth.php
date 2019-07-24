@@ -10,9 +10,15 @@
 
 namespace hiam\components;
 
+use hiam\base\User;
 use Yii;
 use yii\web\Request;
 
+/**
+ * Class Oauth
+ *
+ * // TODO: Refactor. Looks awful.
+ */
 class Oauth implements OauthInterface
 {
     const SESSION_PARAM_NAME = 'oauth.authorize.request.data';
@@ -141,6 +147,11 @@ class Oauth implements OauthInterface
     public function cleanAuthorizeRequest(): void
     {
         $this->getSession()->remove(self::SESSION_PARAM_NAME);
+    }
+
+    public function handleRevokeTokenRequest()
+    {
+        return $this->getServer()->handleRevokeRequest($this->getRequest(), $this->getResponse());
     }
 
     /**
