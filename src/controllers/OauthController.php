@@ -14,9 +14,11 @@ use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use filsh\yii2\oauth2server\Request;
 use hiam\base\User;
 use hiam\components\OauthInterface;
+use hiam\components\TokenRevokerInterface;
 use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use Yii;
 use yii\filters\ContentNegotiator;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\IdentityInterface;
@@ -30,12 +32,17 @@ class OauthController extends \yii\web\Controller
      * @var OauthInterface
      */
     private $oauth;
+    /**
+     * @var TokenRevokerInterface
+     */
+    private $tokenRevoker;
 
-    public function __construct($id, $module, OauthInterface $oauth, $config = [])
+    public function __construct($id, $module, OauthInterface $oauth, TokenRevokerInterface $tokenRevoker, $config = [])
     {
         parent::__construct($id, $module, $config = []);
 
         $this->oauth = $oauth;
+        $this->tokenRevoker = $tokenRevoker;
     }
 
     /**
@@ -46,7 +53,7 @@ class OauthController extends \yii\web\Controller
         return ArrayHelper::merge(parent::behaviors(), [
             'contentNegotiator' => [
                 'class' => ContentNegotiator::className(),
-                'only' => ['resource'],
+                'only' => ['resource', 'revoke'],
                 'formats' => [
                     'application/json' => Response::FORMAT_JSON,
                 ],
@@ -54,6 +61,12 @@ class OauthController extends \yii\web\Controller
             'validateAuthentication' => [
                 'class' => ValidateAuthenticationFilter::class,
                 'only' => ['authorize'],
+            ],
+            'verbFilter' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'revoke' => ['POST'],
+                ],
             ],
         ]);
     }
@@ -72,6 +85,7 @@ class OauthController extends \yii\web\Controller
         return Yii::$app->user->findIdentity($token->user_id);
     }
 
+    /** @return OauthAccessTokens */
     public function findToken($access_token)
     {
         return OauthAccessTokens::findOne($access_token);
@@ -107,6 +121,20 @@ class OauthController extends \yii\web\Controller
         return array_merge(array_filter($user->getAttributes()), [
             'token' => $token,
         ]);
+    }
+
+    public function actionRevoke(): array
+    {
+        $token = Yii::$app->request->post('token');
+        if (empty($token)) {
+            return ['error' => 'Token must be set'];
+        }
+        $hint = Yii::$app->request->post('token_type_hint');
+        if ($this->tokenRevoker->__invoke($token, $hint)) {
+            return ['token' => $token];
+        }
+
+        return [];
     }
 
     public function isAuthorizedClient($client)
