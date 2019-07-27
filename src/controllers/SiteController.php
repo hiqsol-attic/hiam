@@ -114,11 +114,11 @@ class SiteController extends \hisite\controllers\SiteController
             ],
             'terms' => [
                 'class' => RedirectAction::class,
-                'url' => Yii::$app->params['terms_url'],
+                'url' => Yii::$app->params['terms.url'],
             ],
             'privacy-policy' => [
                 'class' => RedirectAction::class,
-                'url' => Yii::$app->params['legals.privacyPolicyUrl'],
+                'url' => Yii::$app->params['privacy.policy.url'],
             ],
             'signup-validate' => [
                 'class' => ValidateAction::class,

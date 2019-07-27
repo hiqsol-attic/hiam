@@ -19,6 +19,9 @@ return [
     'poweredBy.url'     => 'https://github.com/hiqdev/hiam',
 
     'organization.name' => '',
+    'organization.url'  => '',
+    'terms.url'         => '',
+    'privacy.policy.url'=> '',
 
     'supportEmail'      => '',
 
