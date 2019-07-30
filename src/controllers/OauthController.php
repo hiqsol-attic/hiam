@@ -53,7 +53,7 @@ class OauthController extends \yii\web\Controller
         return ArrayHelper::merge(parent::behaviors(), [
             'contentNegotiator' => [
                 'class' => ContentNegotiator::className(),
-                'only' => ['resource', 'revoke'],
+                'only' => ['resource'],
                 'formats' => [
                     'application/json' => Response::FORMAT_JSON,
                 ],
