@@ -18,7 +18,6 @@ return [
                 : '@hisite/views/layouts/mail-html',
             'messageConfig' => [
                 'from' => [$params['supportEmail'] => $params['organization.name']],
-                'bcc'  => ['sol@hiqdev.com'],
             ],
             'transport' => $params['swiftmailer.smtp.host'] ? [
                 'class'     => \Swift_SmtpTransport::class,
