@@ -407,6 +407,9 @@ class SiteController extends \hisite\controllers\SiteController
         if (empty($response)) {
             return $response;
         }
+        if (Yii::$app->session->hasFlash('success')) {
+            $response->headers['location'] .= '?success=true';
+        }
         $requestHost = $this->getHost(Yii::$app->request->hostInfo);
         $responseHost = $this->getHost($response->headers['location']);
         if (strcmp($requestHost, $responseHost)) {
