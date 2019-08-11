@@ -25,6 +25,7 @@ return [
     'I agree to the' => 'Я согласен с',
     'Last Name' => 'Фамилия',
     'Login or Email' => 'Логин или Email',
+    'Incorrect login' => 'Неверный логин',
     'New password was saved.' => 'Новый пароль был сохранён.',
     'Password' => 'Пароль',
     'Passwords don\'t match.' => 'Пароли не совпадают.',
@@ -70,4 +71,5 @@ return [
     'Password' => 'Пароль',
     'Email' => 'Е-мейл',
     'The current password is incorrect' => 'Текущий пароль неверен',
+    'Incorrect password' => 'Неверный пароль',
 ];
