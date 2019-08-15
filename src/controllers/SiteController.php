@@ -367,23 +367,30 @@ class SiteController extends \hisite\controllers\SiteController
     {
         $map = [
             ChangePasswordForm::class => [
+                'field' => 'password',
                 'method' => 'changePassword',
                 'view' => 'change-password',
                 'label' => Yii::t('hiam', 'Password'),
             ],
             ChangeEmailForm::class => [
+                'field' => 'email',
                 'method' => 'changeEmail',
                 'view' => 'change-email',
                 'label' => Yii::t('hiam', 'Email'),
             ],
         ];
         $sender = $map[get_class($model)];
+        $field = $sender['field'];
         $request = Yii::$app->request;
 
         if ($request->isPost) {
             if ($model->load($request->post()) && $model->validate() && $this->user->{$sender['method']}($model)) {
                 Yii::$app->session->setFlash('success', Yii::t('hiam', '{label} has been successfully changed', ['label' => $sender['label']]));
-                $this->sendConfirmEmail($this->user->getIdentity());
+                $identity = $this->user->getIdentity();
+                if (isset($identity->{$field}) && isset($model->{$field})) {
+                    $identity->{$field} = $model->{$field};
+                }
+                $this->sendConfirmEmail($identity);
 
                 return $this->goBack();
             }
@@ -432,7 +439,7 @@ class SiteController extends \hisite\controllers\SiteController
                 Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
                 Yii::t('hiam',
                     'An email with confirmation instructions was sent to <b>{email}</b>',
-                    ['email' => $user->email]
+                    ['email' => $user->email_confirmed ?? $user->email]
                 )
             );
         } else {
