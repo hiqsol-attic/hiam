@@ -85,13 +85,6 @@ class ConfirmEmail extends Action
         return $this->controller->goBack();
     }
 
-    /** @inheritDoc */
-    protected function beforeRun()
-    {
-        Yii::$app->user->logout();
-        return parent::beforeRun();
-    }
-
     /**
      * @return string
      */
