@@ -390,7 +390,9 @@ class SiteController extends \hisite\controllers\SiteController
                 if (isset($identity->{$field}) && isset($model->{$field})) {
                     $identity->{$field} = $model->{$field};
                 }
-                $this->sendConfirmEmail($identity);
+                if ($model instanceof ChangeEmailForm) {
+                    $this->sendConfirmEmail($identity);
+                }
 
                 return $this->goBack();
             }
