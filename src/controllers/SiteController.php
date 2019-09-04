@@ -441,7 +441,7 @@ class SiteController extends \hisite\controllers\SiteController
                 Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
                 Yii::t('hiam',
                     'An email with confirmation instructions was sent to <b>{email}</b>',
-                    ['email' => $user->email_confirmed ?? $user->email]
+                    ['email' => $user->email]
                 )
             );
         } else {
