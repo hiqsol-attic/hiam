@@ -13,6 +13,7 @@ namespace hiam\controllers;
 use hiam\actions\ConfirmEmail;
 use hiam\actions\OpenapiAction;
 use hiam\base\User;
+use hiam\behaviors\RevokeOauthTokens;
 use hiam\forms\ChangeEmailForm;
 use hiam\forms\ConfirmPasswordForm;
 use hiam\forms\LoginForm;
@@ -98,6 +99,10 @@ class SiteController extends \hisite\controllers\SiteController
                 'class' => ValidateAuthenticationFilter::class,
                 'only' => ['lockscreen', 'change-password', 'change-email'],
             ],
+            'token-revoker' => [
+                'class' => RevokeOauthTokens::class,
+                'only' => ['logout'],
+            ]
         ]);
     }
 

@@ -66,6 +66,13 @@ class ConfirmEmail extends Action
         $this->session = $session;
     }
 
+    /** @inheritDoc */
+    protected function beforeRun()
+    {
+        Yii::$app->user->logout();
+        return parent::beforeRun();
+    }
+
     public function run()
     {
         $token = $this->confirmator->findToken(Yii::$app->request->get('token'));
