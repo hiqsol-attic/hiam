@@ -52,6 +52,10 @@ class SiteController extends \hisite\controllers\SiteController
      */
     private $oauth;
 
+    // XXX Disabled CSRF to allow external links to resend confirmation, change email/password...
+    // XXX TO BE FIXED
+    public $enableCsrfValidation = false;
+
     public function __construct($id, $module, ServiceInterface $confirmator, OauthInterface $oauth, $config = [])
     {
         parent::__construct($id, $module, $config = []);
