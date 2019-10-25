@@ -62,6 +62,7 @@
         "hiqdev/yii2-language": "<2.0 || dev-master",
         "hiqdev/yii2-hiam-authclient": "<2.0 || dev-master",
         "hiqdev/yii2-monitoring": "<2.0",
+        "vintage/yii2-invisible-recaptcha": "dev-master",
         "hiqdev/hisite": "<2.0 || dev-master"
     },
     "require-dev": {
