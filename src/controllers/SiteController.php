@@ -13,6 +13,7 @@ namespace hiam\controllers;
 use hiam\actions\ConfirmEmail;
 use hiam\actions\OpenapiAction;
 use hiam\base\User;
+use hiam\components\CaptchaCache;
 use hiam\forms\ChangeEmailForm;
 use hiam\forms\ConfirmPasswordForm;
 use hiam\forms\LoginForm;
@@ -26,6 +27,8 @@ use hisite\actions\RedirectAction;
 use hisite\actions\RenderAction;
 use hisite\actions\ValidateAction;
 use ReflectionClass;
+use vintage\recaptcha\helpers\RecaptchaConfig;
+use vintage\recaptcha\validators\InvisibleRecaptchaValidator;
 use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
@@ -40,6 +43,8 @@ use hiam\components\OauthInterface;
  */
 class SiteController extends \hisite\controllers\SiteController
 {
+    use CaptchaCache;
+
     public $defaultAction = 'lockscreen';
 
     /**
@@ -226,6 +231,19 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->redirect(['signup']);
     }
 
+    private function handleCaptha(): bool
+    {
+        if (empty(Yii::$app->params[RecaptchaConfig::SITE_KEY])) {
+            return true;
+        }
+        if (!$this->getCaptchaCache()) {
+            $this->setCaptchaCache();
+            return true;
+        }
+        $validator = new InvisibleRecaptchaValidator(Yii::$app->getRequest()->post());
+        return (bool)$validator->validate();
+    }
+
     public function actionSignup($scenario = SignupForm::SCENARIO_DEFAULT)
     {
         if ($this->user->disableSignup) {
@@ -241,7 +259,7 @@ class SiteController extends \hisite\controllers\SiteController
         $client = Yii::$app->authClientCollection->getActiveClient();
 
         $model = new SignupForm(compact('scenario'));
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $this->handleCaptha()) {
             if ($user = $this->user->signup($model)) {
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
@@ -264,8 +282,8 @@ class SiteController extends \hisite\controllers\SiteController
                 $model->email = $username;
             }
         }
-
-        return $this->render('signup', compact('model'));
+        $captcha = $this->getCaptchaCache();
+        return $this->render('signup', compact('model', 'captcha'));
     }
 
     public function actionRestorePassword($username = null)
