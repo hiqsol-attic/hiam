@@ -26,8 +26,6 @@ use hiqdev\yii2\mfa\filters\ValidateAuthenticationFilter;
 use hisite\actions\RedirectAction;
 use hisite\actions\RenderAction;
 use hisite\actions\ValidateAction;
-use vintage\recaptcha\helpers\RecaptchaConfig;
-use vintage\recaptcha\validators\InvisibleRecaptchaValidator;
 use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
@@ -228,24 +226,6 @@ class SiteController extends \hisite\controllers\SiteController
         return $this->redirect(['signup']);
     }
 
-    /**
-     * @param string $cacheType
-     * @param int $cacheDuration
-     * @return bool
-     */
-    private function handleCaptcha(string $cacheType, int $cacheDuration): bool
-    {
-        if (empty(Yii::$app->params[RecaptchaConfig::SITE_KEY])) {
-            return true;
-        }
-        if (!CaptchaCache::getCaptchaCache($cacheType)) {
-            CaptchaCache::setCaptchaCache($cacheType, $cacheDuration);
-            return true;
-        }
-        $validator = new InvisibleRecaptchaValidator(Yii::$app->getRequest()->post());
-        return (bool)$validator->validate();
-    }
-
     public function actionSignup($scenario = SignupForm::SCENARIO_DEFAULT)
     {
         if ($this->user->disableSignup) {
@@ -262,7 +242,7 @@ class SiteController extends \hisite\controllers\SiteController
 
         $model = new SignupForm(compact('scenario'));
         if ($model->load(Yii::$app->request->post())
-            && $this->handleCaptcha(CaptchaCache::SIGNUP_CACHE_NAME, CaptchaCache::SIGNUP_CACHE_DURATION)
+            && CaptchaCache::handleCaptcha(CaptchaCache::SIGNUP_CACHE_NAME, CaptchaCache::SIGNUP_CACHE_DURATION)
             && $model->validate()) {
             if ($user = $this->user->signup($model)) {
                 if ($client) {
@@ -286,7 +266,7 @@ class SiteController extends \hisite\controllers\SiteController
                 $model->email = $username;
             }
         }
-        $captcha = CaptchaCache::getCaptchaCache(CaptchaCache::SIGNUP_CACHE_NAME);
+        $captcha = !empty(CaptchaCache::getCaptchaCache(CaptchaCache::SIGNUP_CACHE_NAME));
         return $this->render('signup', compact('model', 'captcha'));
     }
 
@@ -301,7 +281,7 @@ class SiteController extends \hisite\controllers\SiteController
         $model = new RestorePasswordForm();
         $model->username = $username;
         if ($model->load(Yii::$app->request->post())
-            && $this->handleCaptcha(CaptchaCache::RESTORE_PASSWORD_CACHE_NAME, CaptchaCache::RESTORE_PASSWORD_CACHE_DURATION)
+            && CaptchaCache::handleCaptcha(CaptchaCache::RESTORE_PASSWORD_CACHE_NAME, CaptchaCache::RESTORE_PASSWORD_CACHE_DURATION)
             && $model->validate()) {
             $user = $this->user->findIdentityByUsername($model->username);
             if ($this->confirmator->mailToken($user, 'restore-password')) {
@@ -310,14 +290,13 @@ class SiteController extends \hisite\controllers\SiteController
                         'maskedMail' => $model->maskEmail($user->email),
                     ])
                 );
-
-                return $this->goHome();
             } else {
                 Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to reset password for the provided username or email. Try to contact support team.'));
             }
+            return $this->goHome();
         }
 
-        $captcha = CaptchaCache::getCaptchaCache(CaptchaCache::RESTORE_PASSWORD_CACHE_NAME);
+        $captcha = !empty(CaptchaCache::getCaptchaCache(CaptchaCache::RESTORE_PASSWORD_CACHE_NAME));
         return $this->render('restorePassword', compact('model', 'captcha'));
     }
 

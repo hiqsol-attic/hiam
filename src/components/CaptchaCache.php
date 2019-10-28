@@ -4,6 +4,8 @@
 namespace hiam\components;
 
 
+use vintage\recaptcha\helpers\RecaptchaConfig;
+use vintage\recaptcha\validators\InvisibleRecaptchaValidator;
 use Yii;
 
 /**
@@ -48,5 +50,25 @@ final class CaptchaCache
         $requestIp = Yii::$app->request->getUserIP();
 
         return Yii::$app->cache->get($cacheType . $requestIp);
+    }
+
+    /**
+     * Handling captcha enable status
+     *
+     * @param string $cacheType
+     * @param int $cacheDuration
+     * @return bool
+     */
+    public static function handleCaptcha(string $cacheType, int $cacheDuration): bool
+    {
+        if (empty(Yii::$app->params[RecaptchaConfig::SITE_KEY])) {
+            return true;
+        }
+        if (!CaptchaCache::getCaptchaCache($cacheType)) {
+            CaptchaCache::setCaptchaCache($cacheType, $cacheDuration);
+            return true;
+        }
+        $validator = new InvisibleRecaptchaValidator(Yii::$app->getRequest()->post());
+        return (bool)$validator->validate();
     }
 }
