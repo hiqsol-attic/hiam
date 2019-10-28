@@ -7,22 +7,22 @@ namespace hiam\components;
 use Yii;
 
 /**
- * Trait CaptchaCache
+ * Class CaptchaCache
  * @package hiam\components
  */
 final class CaptchaCache
 {
-    const SIGNUP_CACHE_NAME = 'SignUpIpCaptcha';
+    const SIGNUP_CACHE_NAME = 'SignUpCaptcha';
 
-    const SIGNIN_CACHE_NAME = 'SignInIpCaptcha';
+    const SIGNIN_CACHE_NAME = 'SignInCaptcha';
 
-    const PASSWORD_RESET_CACHE_NAME = 'SignInIpCaptcha';
+    const RESTORE_PASSWORD_CACHE_NAME = 'RestorePasswordCaptcha';
 
     const SIGNUP_CACHE_DURATION = 24 * 3600;
 
     const SIGNIN_CACHE_DURATION = 24 * 3600;
 
-    const PASSWORD_RESET_CACHE_DURATION = 24 * 3600;
+    const RESTORE_PASSWORD_CACHE_DURATION = 24 * 3600;
 
     /**
      * Set captcha cache while signin

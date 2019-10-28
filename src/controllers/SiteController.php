@@ -262,7 +262,8 @@ class SiteController extends \hisite\controllers\SiteController
 
         $model = new SignupForm(compact('scenario'));
         if ($model->load(Yii::$app->request->post())
-            && $this->handleCaptcha(CaptchaCache::SIGNUP_CACHE_NAME, CaptchaCache::SIGNUP_CACHE_DURATION)) {
+            && $this->handleCaptcha(CaptchaCache::SIGNUP_CACHE_NAME, CaptchaCache::SIGNUP_CACHE_DURATION)
+            && $model->validate()) {
             if ($user = $this->user->signup($model)) {
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
@@ -299,7 +300,9 @@ class SiteController extends \hisite\controllers\SiteController
 
         $model = new RestorePasswordForm();
         $model->username = $username;
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())
+            && $this->handleCaptcha(CaptchaCache::RESTORE_PASSWORD_CACHE_NAME, CaptchaCache::RESTORE_PASSWORD_CACHE_DURATION)
+            && $model->validate()) {
             $user = $this->user->findIdentityByUsername($model->username);
             if ($this->confirmator->mailToken($user, 'restore-password')) {
                 Yii::$app->session->setFlash('success',
@@ -314,7 +317,8 @@ class SiteController extends \hisite\controllers\SiteController
             }
         }
 
-        return $this->render('restorePassword', compact('model'));
+        $captcha = CaptchaCache::getCaptchaCache(CaptchaCache::RESTORE_PASSWORD_CACHE_NAME);
+        return $this->render('restorePassword', compact('model', 'captcha'));
     }
 
     public function actionResetPassword($token = null)
