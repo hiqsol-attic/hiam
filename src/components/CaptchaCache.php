@@ -10,25 +10,43 @@ use Yii;
  * Trait CaptchaCache
  * @package hiam\components
  */
-trait CaptchaCache
+final class CaptchaCache
 {
+    const SIGNUP_CACHE_NAME = 'SignUpIpCaptcha';
+
+    const SIGNIN_CACHE_NAME = 'SignInIpCaptcha';
+
+    const PASSWORD_RESET_CACHE_NAME = 'SignInIpCaptcha';
+
+    const SIGNUP_CACHE_DURATION = 24 * 3600;
+
+    const SIGNIN_CACHE_DURATION = 24 * 3600;
+
+    const PASSWORD_RESET_CACHE_DURATION = 24 * 3600;
+
     /**
      * Set captcha cache while signin
+     *
+     * @param string $cacheType
+     * @param int $cacheDuration
      */
-    public function setCaptchaCache(): void
+    public static function setCaptchaCache(string $cacheType, int $cacheDuration): void
     {
         $requestIp = Yii::$app->request->getUserIP();
 
-        Yii::$app->cache->set('SignupIpCaptcha' . $requestIp, $requestIp, 60 * 60);
+        Yii::$app->cache->set($cacheType . $requestIp, $requestIp, $cacheDuration);
     }
 
     /**
      * Get captcha cache while signin
+     *
+     * @param string $cacheType
+     * @return string|null
      */
-    public function getCaptchaCache(): string
+    public static function getCaptchaCache(string $cacheType): ?string
     {
         $requestIp = Yii::$app->request->getUserIP();
 
-        return Yii::$app->cache->get('SignupIpCaptcha' . $requestIp);
+        return Yii::$app->cache->get($cacheType . $requestIp);
     }
 }
