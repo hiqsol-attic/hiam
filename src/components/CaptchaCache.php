@@ -64,8 +64,8 @@ final class CaptchaCache
         if (empty(Yii::$app->params[RecaptchaConfig::SITE_KEY])) {
             return true;
         }
-        if (!CaptchaCache::getCaptchaCache($cacheType)) {
-            CaptchaCache::setCaptchaCache($cacheType, $cacheDuration);
+        if (!static::getCaptchaCache($cacheType)) {
+            static::setCaptchaCache($cacheType, $cacheDuration);
             return true;
         }
         $validator = new InvisibleRecaptchaValidator(Yii::$app->getRequest()->post());

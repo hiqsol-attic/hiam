@@ -4,7 +4,7 @@ use hiqdev\thememanager\widgets\LoginForm;
 
 /** @var yii\web\View $this */
 /** @var \hiam\forms\SignupForm $model */
-/** @var bool $captcha title */
+/** @var bool $captcha */
 $this->title = Yii::t('hiam', 'Signup');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -13,6 +13,7 @@ namespace hiam\controllers;
 use hiam\actions\ConfirmEmail;
 use hiam\actions\OpenapiAction;
 use hiam\base\User;
+use hiam\components\CaptchaBehavior;
 use hiam\components\CaptchaCache;
 use hiam\forms\ChangeEmailForm;
 use hiam\forms\ConfirmPasswordForm;
@@ -40,6 +41,8 @@ use hiam\components\OauthInterface;
  */
 class SiteController extends \hisite\controllers\SiteController
 {
+    const EVENT_BEFORE_ACTION = 'SignUpCaptcha';
+
     public $defaultAction = 'lockscreen';
 
     /**
@@ -98,6 +101,18 @@ class SiteController extends \hisite\controllers\SiteController
                 'class' => ValidateAuthenticationFilter::class,
                 'only' => ['lockscreen', 'change-password', 'change-email'],
             ],
+//            'captchaBeforeLogin' => [
+//                'class' => CaptchaBehavior::class,
+//            ],
+//            'captchaBeforeSignUp' => [
+//                'class' => CaptchaBehavior::class,
+//                'only' => ['signup'],
+//            ],
+            'beforeRestorePassword' => [
+                'class' => CaptchaBehavior::class,
+//                'owner' => 'restore-password',
+//                'only' => 'restorePassword'
+            ],
         ]);
     }
 
@@ -154,7 +169,9 @@ class SiteController extends \hisite\controllers\SiteController
     {
         $model->username = $username;
         /** @noinspection NotOptimalIfConditionsInspection */
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())
+            && CaptchaCache::handleCaptcha(CaptchaCache::SIGNIN_CACHE_NAME, CaptchaCache::SIGNIN_CACHE_DURATION)
+            && $model->validate()) {
             $identity = $this->user->findIdentity($model->username, $model->password);
             if ($identity && $this->login($identity, $model->remember_me)) {
                 return $this->goBack();
@@ -164,7 +181,8 @@ class SiteController extends \hisite\controllers\SiteController
             $model->password = null;
         }
 
-        return $this->render($view, compact('model'));
+        $captcha = !empty(CaptchaCache::getCaptchaCache(CaptchaCache::SIGNIN_CACHE_NAME));
+        return $this->render($view, compact('model', 'captcha'));
     }
 
     /**
