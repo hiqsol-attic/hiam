@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= LoginForm::widget([
     'model' => $model,
-    'captcha' => $isCaptchaRequired,
+    'isCaptchaRequired' => $isCaptchaRequired,
     'texts' => [
         'header' => '',
         'message' => Yii::t('hiam', 'Please fill out your username or email. We will send a password reset link.'),

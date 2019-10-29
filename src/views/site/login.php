@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= LoginForm::widget([
     'model' => $model,
-    'captcha' => $isCaptchaRequired,
+    'isCaptchaRequired' => $isCaptchaRequired,
     'shows' => [
         'social-login' => true,
         'signup' => true,
