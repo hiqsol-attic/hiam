@@ -13,8 +13,7 @@ namespace hiam\controllers;
 use hiam\actions\ConfirmEmail;
 use hiam\actions\OpenapiAction;
 use hiam\base\User;
-use hiam\components\CaptchaBehavior;
-use hiam\components\CaptchaCache;
+use hiam\behaviors\CaptchaBehavior;
 use hiam\forms\ChangeEmailForm;
 use hiam\forms\ConfirmPasswordForm;
 use hiam\forms\LoginForm;
@@ -41,8 +40,6 @@ use hiam\components\OauthInterface;
  */
 class SiteController extends \hisite\controllers\SiteController
 {
-    const EVENT_BEFORE_ACTION = 'SignUpCaptcha';
-
     public $defaultAction = 'lockscreen';
 
     /**
@@ -58,6 +55,11 @@ class SiteController extends \hisite\controllers\SiteController
     // XXX Disabled CSRF to allow external links to resend confirmation, change email/password...
     // XXX TO BE FIXED
     public $enableCsrfValidation = false;
+
+    /**
+     * @var bool // TODO: phpdoc explain how used
+     */
+    private $actionSubmitOccurred;
 
     public function __construct($id, $module, ServiceInterface $confirmator, OauthInterface $oauth, $config = [])
     {
@@ -101,18 +103,23 @@ class SiteController extends \hisite\controllers\SiteController
                 'class' => ValidateAuthenticationFilter::class,
                 'only' => ['lockscreen', 'change-password', 'change-email'],
             ],
-//            'captchaBeforeLogin' => [
-//                'class' => CaptchaBehavior::class,
-//            ],
-//            'captchaBeforeSignUp' => [
-//                'class' => CaptchaBehavior::class,
-//                'only' => ['signup'],
-//            ],
-            'beforeRestorePassword' => [
+            'captchaFilter' => [
                 'class' => CaptchaBehavior::class,
-//                'owner' => 'restore-password',
-//                'only' => 'restorePassword'
-            ],
+                'only' => ['signup', 'login', 'restore-password'],
+                'limitPerAction' => [
+                    'signup' => [1, CaptchaBehavior::PER_DAY],
+                    'restore-password' => [2, CaptchaBehavior::PER_DAY],
+                    'login' => [2, CaptchaBehavior::PER_DAY],
+                ],
+                'conditionalIncrement' => [
+                    'login' => function (): bool {
+                        return Yii::$app->request->getIsPost() && $this->actionSubmitOccurred;
+                    },
+                    'restore-password' => function (): bool {
+                        return Yii::$app->request->getIsPost();
+                    },
+                ],
+            ]
         ]);
     }
 
@@ -169,19 +176,18 @@ class SiteController extends \hisite\controllers\SiteController
     {
         $model->username = $username;
         /** @noinspection NotOptimalIfConditionsInspection */
-        if ($model->load(Yii::$app->request->post())
-            && CaptchaCache::handleCaptcha(CaptchaCache::SIGNIN_CACHE_NAME, CaptchaCache::SIGNIN_CACHE_DURATION)
-            && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $identity = $this->user->findIdentity($model->username, $model->password);
             if ($identity && $this->login($identity, $model->remember_me)) {
                 return $this->goBack();
             }
+            $this->actionSubmitOccurred = true;
 
             $model->addError('password', Yii::t('hiam', 'Incorrect password.'));
             $model->password = null;
         }
 
-        $captcha = !empty(CaptchaCache::getCaptchaCache(CaptchaCache::SIGNIN_CACHE_NAME));
+        $captcha = Yii::$app->request->getBodyParams()['captchaIsRequired'] ?? false;
         return $this->render($view, compact('model', 'captcha'));
     }
 
@@ -259,9 +265,9 @@ class SiteController extends \hisite\controllers\SiteController
         $client = Yii::$app->authClientCollection->getActiveClient();
 
         $model = new SignupForm(compact('scenario'));
-        if ($model->load(Yii::$app->request->post())
-            && CaptchaCache::handleCaptcha(CaptchaCache::SIGNUP_CACHE_NAME, CaptchaCache::SIGNUP_CACHE_DURATION)
-            && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            \Yii::$app->request->setBodyParams(array_merge(\Yii::$app->request->getBodyParams(), ['signupCaptcha' => true]));
+
             if ($user = $this->user->signup($model)) {
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
@@ -284,7 +290,7 @@ class SiteController extends \hisite\controllers\SiteController
                 $model->email = $username;
             }
         }
-        $captcha = !empty(CaptchaCache::getCaptchaCache(CaptchaCache::SIGNUP_CACHE_NAME));
+        $captcha = Yii::$app->request->getBodyParams()['captchaIsRequired'] ?? false;
         return $this->render('signup', compact('model', 'captcha'));
     }
 
@@ -298,9 +304,8 @@ class SiteController extends \hisite\controllers\SiteController
 
         $model = new RestorePasswordForm();
         $model->username = $username;
-        if ($model->load(Yii::$app->request->post())
-            && CaptchaCache::handleCaptcha(CaptchaCache::RESTORE_PASSWORD_CACHE_NAME, CaptchaCache::RESTORE_PASSWORD_CACHE_DURATION)
-            && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $this->actionSubmitOccurred = true;
             $user = $this->user->findIdentityByUsername($model->username);
             if ($this->confirmator->mailToken($user, 'restore-password')) {
                 Yii::$app->session->setFlash('success',
@@ -314,7 +319,7 @@ class SiteController extends \hisite\controllers\SiteController
             return $this->goHome();
         }
 
-        $captcha = !empty(CaptchaCache::getCaptchaCache(CaptchaCache::RESTORE_PASSWORD_CACHE_NAME));
+        $captcha = Yii::$app->request->getBodyParams()['captchaIsRequired'] ?? false;
         return $this->render('restorePassword', compact('model', 'captcha'));
     }
 
