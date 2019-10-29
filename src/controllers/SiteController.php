@@ -189,7 +189,7 @@ class SiteController extends \hisite\controllers\SiteController
             $model->password = null;
         }
 
-        $captcha = Yii::$app->request->getBodyParams()['captchaIsRequired'] ?? false;
+        $captcha = $this->isCaptchaRequired();
         return $this->render($view, compact('model', 'captcha'));
     }
 
@@ -292,7 +292,7 @@ class SiteController extends \hisite\controllers\SiteController
                 $model->email = $username;
             }
         }
-        $captcha = Yii::$app->request->getBodyParams()['captchaIsRequired'] ?? false;
+        $captcha = $this->isCaptchaRequired();
         return $this->render('signup', compact('model', 'captcha'));
     }
 
@@ -320,7 +320,7 @@ class SiteController extends \hisite\controllers\SiteController
             return $this->goHome();
         }
 
-        $captcha = Yii::$app->request->getBodyParams()['captchaIsRequired'] ?? false;
+        $captcha = $this->isCaptchaRequired();
         return $this->render('restorePassword', compact('model', 'captcha'));
     }
 
@@ -390,6 +390,15 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         return null;
+    }
+
+    /**
+     * @return bool
+     * @throws \yii\base\InvalidConfigException
+     */
+    private function isCaptchaRequired(): bool
+    {
+        return Yii::$app->request->getBodyParams()['captchaIsRequired'] ?? false;
     }
 
     /**
