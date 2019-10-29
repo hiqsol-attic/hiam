@@ -189,8 +189,8 @@ class SiteController extends \hisite\controllers\SiteController
             $model->password = null;
         }
 
-        $captcha = $this->isCaptchaRequired();
-        return $this->render($view, compact('model', 'captcha'));
+        $isCaptchaRequired = $this->isCaptchaRequired();
+        return $this->render($view, compact('model', 'isCaptchaRequired'));
     }
 
     /**
@@ -290,8 +290,8 @@ class SiteController extends \hisite\controllers\SiteController
                 $model->email = $username;
             }
         }
-        $captcha = $this->isCaptchaRequired();
-        return $this->render('signup', compact('model', 'captcha'));
+        $isCaptchaRequired = $this->isCaptchaRequired();
+        return $this->render('signup', compact('model', 'isCaptchaRequired'));
     }
 
     public function actionRestorePassword($username = null)
@@ -318,8 +318,8 @@ class SiteController extends \hisite\controllers\SiteController
             return $this->goHome();
         }
 
-        $captcha = $this->isCaptchaRequired();
-        return $this->render('restorePassword', compact('model', 'captcha'));
+        $isCaptchaRequired = $this->isCaptchaRequired();
+        return $this->render('restorePassword', compact('model', 'isCaptchaRequired'));
     }
 
     public function actionResetPassword($token = null)
