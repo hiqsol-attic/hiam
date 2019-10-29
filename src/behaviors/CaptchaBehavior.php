@@ -40,6 +40,10 @@ class CaptchaBehavior extends ActionFilter
      * ```
      */
     public $conditionalIncrement = [];
+    /**
+     * @var \Closure|null
+     */
+    private $incrementClosure;
 
     /**
      * @inheritDoc
@@ -59,9 +63,12 @@ class CaptchaBehavior extends ActionFilter
             $action->controller->actionParams['captchaIsRequired'] = true;
         }
 
-        \Yii::$app->on(Application::EVENT_AFTER_REQUEST, function (Event $afterRequestEvent) use ($actionId) {
-            $this->increment($actionId);
-        });
+        if ($this->incrementClosure === null) {
+            $this->incrementClosure = function (Event $afterRequestEvent) use ($actionId) {
+                $this->increment($actionId);
+            };
+            \Yii::$app->on(Application::EVENT_AFTER_REQUEST, $this->incrementClosure);
+        }
 
         return true;
     }
@@ -71,7 +78,9 @@ class CaptchaBehavior extends ActionFilter
      */
     public function afterAction($action, $result)
     {
-        \Yii::$app->off(Application::EVENT_AFTER_REQUEST);
+        if ($this->incrementClosure !== null) {
+            \Yii::$app->off(Application::EVENT_AFTER_REQUEST, $this->incrementClosure);
+        }
         $counterShouldIncrement = $this->conditionalIncrement[$action->id]
             ?? function () {
                 return true;
@@ -102,7 +111,7 @@ class CaptchaBehavior extends ActionFilter
     {
         $key = $this->getCacheKey($actionId);
         $counter = \Yii::$app->cache->get($key) ?: 0;
-        \Yii::$app->cache->set($key, ++$counter, $this->limitPerAction[1]);
+        \Yii::$app->cache->set($key, ++$counter, $this->limitPerAction[$actionId][1]);
     }
 
     /**

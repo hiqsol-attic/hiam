@@ -61,7 +61,7 @@ class SiteController extends \hisite\controllers\SiteController
      *
      * @var bool $actionSubmitOccurred
      */
-    private $actionSubmitOccurred;
+    private $actionSubmitOccurred = false;
 
     public function __construct($id, $module, ServiceInterface $confirmator, OauthInterface $oauth, $config = [])
     {
