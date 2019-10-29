@@ -4,7 +4,7 @@ use hiqdev\thememanager\widgets\LoginForm;
 
 /** @var yii\web\View $this */
 /** @var hiam\forms\RestorePasswordForm $model */
-/** @var bool $captcha */
+/** @var bool $isCaptchaRequired */
 $this->title = Yii::t('hiam', 'Request password reset');
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= LoginForm::widget([
     'model' => $model,
-    'captcha' => $captcha,
+    'captcha' => $isCaptchaRequired,
     'texts' => [
         'header' => '',
         'message' => Yii::t('hiam', 'Please fill out your username or email. We will send a password reset link.'),

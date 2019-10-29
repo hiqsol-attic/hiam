@@ -4,14 +4,14 @@ use hiqdev\thememanager\widgets\LoginForm;
 
 /** @var yii\web\View $this */
 /** @var \hiam\forms\SignupForm $model */
-/** @var bool $captcha */
+/** @var bool $isCaptchaRequired */
 $this->title = Yii::t('hiam', 'Signup');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= LoginForm::widget([
     'model' => $model,
-    'captcha' => $captcha,
+    'captcha' => $isCaptchaRequired,
     'options' => [
         'validationUrl' => '/site/signup-validate',
     ],
