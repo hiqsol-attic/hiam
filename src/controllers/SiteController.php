@@ -57,7 +57,9 @@ class SiteController extends \hisite\controllers\SiteController
     public $enableCsrfValidation = false;
 
     /**
-     * @var bool // TODO: phpdoc explain how used
+     * Identifier which shows success login state to be used in CaptchaBehavior
+     *
+     * @var bool $actionSubmitOccurred
      */
     private $actionSubmitOccurred;
 
@@ -305,7 +307,6 @@ class SiteController extends \hisite\controllers\SiteController
         $model = new RestorePasswordForm();
         $model->username = $username;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $this->actionSubmitOccurred = true;
             $user = $this->user->findIdentityByUsername($model->username);
             if ($this->confirmator->mailToken($user, 'restore-password')) {
                 Yii::$app->session->setFlash('success',

@@ -64,6 +64,10 @@ class CaptchaBehavior extends ActionFilter
         return true;
     }
 
+    /**
+     * @param Event $event
+     * @throws \yii\base\InvalidConfigException
+     */
     public function afterRequest(Event $event)
     {
         if (\Yii::$app->request->getBodyParams()['signupCaptcha']) {
@@ -94,8 +98,7 @@ class CaptchaBehavior extends ActionFilter
      */
     private function getCountForAction(string $actionId): int
     {
-        $userIp = \Yii::$app->request->getUserIP();
-        $key = [__CLASS__, $actionId, $userIp]; // todo: un-copy-paste
+        $key = $this->getCacheKey($actionId);
 
         return \Yii::$app->cache->get($key) ?: 0;
     }
@@ -105,9 +108,19 @@ class CaptchaBehavior extends ActionFilter
      */
     private function increment(string $actionId): void
     {
-        $userIp = \Yii::$app->request->getUserIP();
-        $key = [__CLASS__, $actionId, $userIp];
+        $key = $this->getCacheKey($actionId);
         $counter = \Yii::$app->cache->get($key) ?: 0;
-        \Yii::$app->cache->set($key, ++$counter, $this->limitPerAction[1]); // todo: use time window limit
+        \Yii::$app->cache->set($key, ++$counter, $this->limitPerAction[1]);
+    }
+
+    /**
+     * @param string $actionId
+     * @return string[]
+     */
+    private function getCacheKey(string $actionId): array
+    {
+        $userIp = \Yii::$app->request->getUserIP();
+
+        return [__CLASS__, $actionId, $userIp];
     }
 }
