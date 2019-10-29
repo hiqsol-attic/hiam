@@ -59,20 +59,11 @@ class CaptchaBehavior extends ActionFilter
             $action->controller->actionParams['captchaIsRequired'] = true;
         }
 
-        \Yii::$app->on(Application::EVENT_AFTER_REQUEST, [$this, 'afterRequest']);
+        \Yii::$app->on(Application::EVENT_AFTER_REQUEST, function (Event $afterRequestEvent) use ($actionId) {
+            $this->increment($actionId);
+        });
 
         return true;
-    }
-
-    /**
-     * @param Event $event
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function afterRequest(Event $event)
-    {
-        if (\Yii::$app->request->getBodyParams()['signupCaptcha']) {
-            $this->increment('signup');
-        }
     }
 
     /**
@@ -80,6 +71,7 @@ class CaptchaBehavior extends ActionFilter
      */
     public function afterAction($action, $result)
     {
+        \Yii::$app->off(Application::EVENT_AFTER_REQUEST);
         $counterShouldIncrement = $this->conditionalIncrement[$action->id]
             ?? function () {
                 return true;

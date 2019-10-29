@@ -268,8 +268,6 @@ class SiteController extends \hisite\controllers\SiteController
 
         $model = new SignupForm(compact('scenario'));
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            \Yii::$app->request->setBodyParams(array_merge(\Yii::$app->request->getBodyParams(), ['signupCaptcha' => true]));
-
             if ($user = $this->user->signup($model)) {
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
