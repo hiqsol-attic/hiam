@@ -396,7 +396,7 @@ class SiteController extends \hisite\controllers\SiteController
      */
     private function isCaptchaRequired(): bool
     {
-        return Yii::$app->request->getBodyParams()['captchaIsRequired'] ?? false;
+        return (Yii::$app->request->getBodyParams()['captchaIsRequired'] ?? false) && (YII_ENV !== 'test');
     }
 
     /**

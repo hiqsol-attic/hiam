@@ -33,7 +33,7 @@ class CaptchaBehavior extends ActionFilter
      *
      * ```
      * [
-     *    'action-id' => function (Action $action, $result, CaptchaBehavior $behavior): bool {
+     *    'action-id' => function (): bool {
      *       return (bool)random(0,1);
      *    }
      * ]
