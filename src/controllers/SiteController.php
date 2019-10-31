@@ -14,6 +14,7 @@ use hiam\actions\ConfirmEmail;
 use hiam\actions\OpenapiAction;
 use hiam\base\User;
 use hiam\behaviors\CaptchaBehavior;
+use hiam\behaviors\RevokeOauthTokens;
 use hiam\forms\ChangeEmailForm;
 use hiam\forms\ConfirmPasswordForm;
 use hiam\forms\LoginForm;
@@ -121,6 +122,9 @@ class SiteController extends \hisite\controllers\SiteController
                         return Yii::$app->request->getIsPost();
                     },
                 ],
+            'token-revoker' => [
+                'class' => RevokeOauthTokens::class,
+                'only' => ['logout'],
             ]
         ]);
     }

@@ -16,7 +16,7 @@ use Yii;
 use yii\web\UserEvent;
 
 /**
- * CheckEmailConfirmed behavior.
+ * CheckEmailConfirmed behavior for the [\yii\web\User] component
  * Prevents login if user email is not confirmed and
  * sends confirmation email.
  */
