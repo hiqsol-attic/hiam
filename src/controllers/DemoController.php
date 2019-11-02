@@ -30,6 +30,7 @@ class DemoController extends \yii\web\Controller
             'response_type' => 'code',
             'scopes'        => 'email',
             'state'         => 'x',
+            'prefer_signup' => '',
         ];
     }
 

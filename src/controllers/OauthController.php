@@ -142,7 +142,8 @@ class OauthController extends \yii\web\Controller
 
         $id = Yii::$app->getUser()->id;
         if (!$id) {
-            return $this->redirect(['/site/login']);
+            $dest = $_REQUEST['prefer_signup'] ? 'signup' : 'login';
+            return $this->redirect(["/site/$dest"]);
         }
 
         $client_id = $this->oauth->getRequestValue('client_id');

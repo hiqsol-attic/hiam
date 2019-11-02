@@ -21,6 +21,7 @@ class AuthorizeRequest extends \yii\base\Model
     public $response_type;
     public $scopes;
     public $state;
+    public $prefer_signup;
 
     public function rules()
     {
@@ -30,6 +31,7 @@ class AuthorizeRequest extends \yii\base\Model
             ['response_type',   'string'],
             ['scopes',          'string'],
             ['state',           'string'],
+            ['prefer_signup',   'string'],
         ];
     }
 

@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
 <?= $form->field($authorizeRequest, 'response_type') ?>
 <?= $form->field($authorizeRequest, 'scopes') ?>
 <?= $form->field($authorizeRequest, 'state') ?>
+<?= $form->field($authorizeRequest, 'prefer_signup') ?>
 
 <?= Html::submitButton('oauth/authorize', ['class' => 'btn btn-primary btn-block']) ?>
 
