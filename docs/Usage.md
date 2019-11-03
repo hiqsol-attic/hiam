@@ -62,13 +62,16 @@ Authorization code request uses standard OAuth2 parameters:
 - `redirect_uri`
 - `response_type`
 - `state`
-- `scope` (available scopes: email, profile, roles)
+- `scope`, available scopes:
+    - `email`
+    - `profile`
+    - `roles`
 
 ### Prefer signup
 
 When it is known that users to be sent to authorization are new then
 nonempty `prefer_signup` GET parameter can be added to authorization code request.
-Then not authorized users will be redirected to signup page instead of login.
+Then nonauthorized users will be redirected to signup page instead of login.
 
 ## Access token request
 
