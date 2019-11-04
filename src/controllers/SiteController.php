@@ -122,6 +122,7 @@ class SiteController extends \hisite\controllers\SiteController
                         return Yii::$app->request->getIsPost();
                     },
                 ],
+            ],
             'token-revoker' => [
                 'class' => RevokeOauthTokens::class,
                 'only' => ['logout'],
