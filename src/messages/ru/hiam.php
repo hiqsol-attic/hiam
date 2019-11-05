@@ -72,4 +72,8 @@ return [
     'Email' => 'Е-мейл',
     'The current password is incorrect' => 'Текущий пароль неверен',
     'Incorrect password' => 'Неверный пароль',
+    'Login: {login}' => 'Логин: {login}',
+    'First name: {first_name}' => 'Имя: {first_name}',
+    'Last name: {last_name}' => 'Фамилия: {last_name}',
+     'IP: {ip}' =>  'IP: {ip}',
 ];
