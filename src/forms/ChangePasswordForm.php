@@ -2,6 +2,7 @@
 
 namespace hiam\forms;
 
+use hiam\models\Identity;
 use hiam\validators\PasswordValidatorInterface;
 use Yii;
 use yii\base\Model;
@@ -66,5 +67,10 @@ class ChangePasswordForm extends Model
             'new_password' => Yii::t('hiam', 'New password'),
             'confirm_password' => Yii::t('hiam', 'Confirm password'),
         ];
+    }
+
+    public function applyTo(Identity $identity): bool
+    {
+        return $identity->changePassword($this->new_password);
     }
 }

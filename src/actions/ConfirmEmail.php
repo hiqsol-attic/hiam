@@ -11,6 +11,7 @@
 namespace hiam\actions;
 
 use hiqdev\php\confirmator\ServiceInterface;
+use hiqdev\php\confirmator\Token;
 use Yii;
 use yii\base\Action;
 use yii\web\Session;
@@ -49,7 +50,7 @@ class ConfirmEmail extends Action
     private $confirmator;
 
     /**
-     * @var User
+     * @var User|\hiam\base\User
      */
     private $user;
 
@@ -75,14 +76,15 @@ class ConfirmEmail extends Action
 
     public function run()
     {
+        /** @var Token $token */
         $token = $this->confirmator->findToken(Yii::$app->request->get('token'));
         if ($token && $token->check([$this->actionAttributeName => $this->actionAttributeValue])) {
             $user = $this->user->findIdentity($token->get($this->usernameAttributeName));
         }
-        if (empty($user)) {
+        if (!isset($user)) {
             $this->session->addFlash('error', $this->getErrorMessage());
         } else {
-            $user->setEmailConfirmed($token->get('email'));
+            $user->setConfirmedEmail($token->get('email'));
             $this->session->addFlash('success', $this->getSuccessMessage());
             if ($this->user->login($user)) {
                 $token->remove();

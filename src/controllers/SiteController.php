@@ -411,41 +411,40 @@ class SiteController extends \hisite\controllers\SiteController
     {
         $map = [
             ChangePasswordForm::class => [
-                'field' => 'password',
-                'method' => 'changePassword',
                 'view' => 'change-password',
                 'label' => Yii::t('hiam', 'Password'),
             ],
             ChangeEmailForm::class => [
-                'field' => 'email',
-                'method' => 'changeEmail',
                 'view' => 'change-email',
                 'label' => Yii::t('hiam', 'Email'),
             ],
         ];
         $sender = $map[get_class($model)];
-        $field = $sender['field'];
         $request = Yii::$app->request;
 
-        if ($request->isPost) {
-            if ($model->load($request->post()) && $model->validate() && $this->user->{$sender['method']}($model)) {
+        if (!$request->isPost) {
+            return $this->render($sender['view'], ['model' => $model]);
+        }
+
+        if ($model->load($request->post()) && $model->validate()) {
+            if (($identity = $this->user->findIdentityByUsername($model->login)) !== null
+                && $model->applyTo($identity)
+                && $identity->save()
+            ) {
                 Yii::$app->session->setFlash('success', Yii::t('hiam', '{label} has been successfully changed', ['label' => $sender['label']]));
-                $identity = $this->user->getIdentity();
-                if (isset($identity->{$field}) && isset($model->{$field})) {
-                    $identity->{$field} = $model->{$field};
-                }
                 if ($model instanceof ChangeEmailForm) {
-                    $this->sendConfirmEmail($identity);
+                    $this->sendConfirmEmail($identity, $model->email);
                 }
 
                 return $this->goBack();
             }
-            $errors = implode("; \n", $model->getFirstErrors());
-            if (!$errors) {
-                $errors = Yii::t('hiam', "{label} has not been changed", ['label' => $sender['label']]);
-            }
-            Yii::$app->session->setFlash('error', $errors);
         }
+
+        $errors = implode("; \n", $model->getFirstErrors());
+        if (!$errors) {
+            $errors = Yii::t('hiam', '{label} has not been changed', ['label' => $sender['label']]);
+        }
+        Yii::$app->session->setFlash('error', $errors);
 
         return $this->render($sender['view'], ['model' => $model]);
     }
@@ -479,9 +478,9 @@ class SiteController extends \hisite\controllers\SiteController
         return $parsedArray['host'] ?? null;
     }
 
-    protected function sendConfirmEmail($user)
+    protected function sendConfirmEmail($user, $newEmail = null)
     {
-        if ($this->confirmator->mailToken($user, 'confirm-email')) {
+        if ($this->confirmator->mailToken($user, 'confirm-email', ['email' => $newEmail ?? $user->email])) {
             Yii::$app->session->setFlash('warning',
                 Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
                 Yii::t('hiam',

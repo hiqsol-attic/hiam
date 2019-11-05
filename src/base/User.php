@@ -69,6 +69,9 @@ class User extends \yii\web\User
             ->send();
     }
 
+    /**
+     * @return null|Identity
+     */
     public function findIdentity($id, $password = null)
     {
         $class = $this->identityClass;
@@ -76,6 +79,9 @@ class User extends \yii\web\User
         return $class::findIdentity($id, $password);
     }
 
+    /**
+     * @return null|Identity
+     */
     public function findIdentityByEmail($email)
     {
         $class = $this->identityClass;
@@ -83,6 +89,9 @@ class User extends \yii\web\User
         return $class::findIdentityByEmail($email);
     }
 
+    /**
+     * @return null|Identity
+     */
     public function findIdentityByUsername($username)
     {
         $class = $this->identityClass;
@@ -92,7 +101,7 @@ class User extends \yii\web\User
 
     /**
      * Finds user through RemoteUser.
-     * @return IdentityInterface
+     * @return Identity
      */
     public function findIdentityByAuthClient(ClientInterface $client)
     {

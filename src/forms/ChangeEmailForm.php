@@ -2,6 +2,7 @@
 
 namespace hiam\forms;
 
+use hiam\models\Identity;
 use Yii;
 use yii\base\Model;
 
@@ -52,5 +53,10 @@ class ChangeEmailForm extends Model
         return [
             'email' => Yii::t('hiam', 'Email'),
         ];
+    }
+
+    public function applyTo(Identity $identity): bool
+    {
+        return $identity->setNewUnconfirmedEmail($this->email);
     }
 }
