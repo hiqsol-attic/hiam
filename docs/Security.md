@@ -1,13 +1,14 @@
 # Security
 
-## Session security
-
-
 ## User revalidation
 
-### Token theft detection:
+Client can ask authorization server to revalidate user session for
+token is not stolen.
 
-## Increase privileges aka manual token request
+
+## Manual token request
+
+Can be used to increase privileges.
 
 
 ## Global logout
