@@ -17,6 +17,7 @@
     - IP address
     - Browser fingerprint
 - Additional:
+    - Security questions
     - PIN-code
     - Person identification documents:
         - ID card
