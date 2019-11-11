@@ -5,11 +5,9 @@
 Client can ask authorization server to revalidate user session for
 token is not stolen.
 
+## Additional token request
 
-## Manual token request
-
-Can be used to increase privileges.
-
+Can be used to increase privileges e.g. for dangerous actions.
 
 ## Global logout
 
