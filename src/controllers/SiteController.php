@@ -277,7 +277,7 @@ class SiteController extends \hisite\controllers\SiteController
                 if ($client) {
                     $this->user->setRemoteUser($client, $user);
                 }
-                $this->sendConfirmEmail($user);
+                $this->sendConfirmEmail($user, 'confirm-sign-up-email');
                 Yii::$app->session->setFlash('success', Yii::t('hiam', 'Your account has been successfully created.'));
 
                 return $this->goBack();
@@ -366,7 +366,7 @@ class SiteController extends \hisite\controllers\SiteController
     public function actionResendVerificationEmail()
     {
         $user = $this->user->getIdentity();
-        $this->sendConfirmEmail($user);
+        $this->sendConfirmEmail($user, 'confirm-sign-up-email');
 
         return $this->goBack();
     }
@@ -433,7 +433,7 @@ class SiteController extends \hisite\controllers\SiteController
             ) {
                 Yii::$app->session->setFlash('success', Yii::t('hiam', '{label} has been successfully changed', ['label' => $sender['label']]));
                 if ($model instanceof ChangeEmailForm) {
-                    $this->sendConfirmEmail($identity, $model->email);
+                    $this->sendConfirmEmail($identity, 'confirm-email', $model->email);
                 }
 
                 return $this->goBack();
@@ -478,9 +478,9 @@ class SiteController extends \hisite\controllers\SiteController
         return $parsedArray['host'] ?? null;
     }
 
-    protected function sendConfirmEmail($user, $newEmail = null)
+    protected function sendConfirmEmail($user, $action, $newEmail = null)
     {
-        if ($this->confirmator->mailToken($user, 'confirm-email', ['email' => $newEmail ?? $user->email])) {
+        if ($this->confirmator->mailToken($user, $action, ['email' => $newEmail ?? $user->email])) {
             Yii::$app->session->setFlash('warning',
                 Yii::t('hiam', 'Please confirm your email address!') . '<br/>' .
                 Yii::t('hiam',
