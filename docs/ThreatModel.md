@@ -4,12 +4,13 @@
     - don't allow intruder change email
     - user will be able to change password and 2FA
 - stolen access to email
-    - intruder can restore password but cannot login
-      because of second factor
+    - password restore is protected with security questions
+    - if intruder can restore password he still cannot login
+      because of second factor (more factors)
 - stolen session token
-    - binding session with IP and browser fingerprint
+    - binding and rechecking session with IP and browser fingerprint
 - password bruteforcing
-    - rate limiting
+    - rate limiting both by login and IP
 - social engineering
     - pretending user to steal access to account
 
