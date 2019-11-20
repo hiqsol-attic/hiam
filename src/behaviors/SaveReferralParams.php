@@ -10,7 +10,6 @@
 
 namespace hiam\behaviors;
 
-use hiam\components\OauthInterface;
 use Yii;
 use yii\base\Application;
 use yii\base\Event;
@@ -22,22 +21,35 @@ use yii\base\Event;
  */
 class SaveReferralParams extends \yii\base\Behavior
 {
-    public function events()
+    /**
+     * @inheritDoc
+     */
+    public function events(): array
     {
         return [
             Application::EVENT_BEFORE_REQUEST => 'beforeRequest',
         ];
     }
 
-    public function beforeRequest(Event $event)
+    /**
+     * @param Event $event
+     */
+    public function beforeRequest(Event $event): void
     {
-        $session = Yii::$app->session;
         $params = Yii::$app->request->getQueryParams();
-
+        if (empty($params['atid'])) {
+            return;
+        }
+        $session = Yii::$app->session;
+        $utmParams = [];
         foreach ($params as $name => $value) {
             if (strstr($name, 'utm_')) {
-                $session->set($name, $value);
+                $utmParams[$name] = $value;
             }
         }
+        $session->set('utm_params', [
+            'atid' => $params['atid'],
+            'params' => \yii\helpers\Json::htmlEncode($utmParams),
+        ]);
     }
 }
