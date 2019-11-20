@@ -19,7 +19,7 @@ return [
         'language' => 'language',
     ]),
     'as saveReturnUrl' => \hiam\behaviors\SaveReturnUrl::class,
-    'as GoogleAnalytics' => \hiam\behaviors\SaveReferralParams::class,
+    'as saveReferralParams' => \hiam\behaviors\SaveReferralParams::class,
     'components' => [
         'db' => [
             'class'     => \yii\db\Connection::class,
