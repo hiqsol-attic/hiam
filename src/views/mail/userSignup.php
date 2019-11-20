@@ -18,10 +18,10 @@ $message->renderTextBody(basename(__FILE__, '.php') . '-text', compact('user'));
     <p><?= Yii::t('hiam', 'New user signup:') ?></p>
 
     <p>
-        login: <b><?= $user->username ?></b><br>
-        email: <?= $user->email ?><br>
-        first name: <?= $user->first_name ?><br>
-        last name: <?= $user->last_name ?><br>
-        ip: <?= Yii::$app->request->getRemoteIP() ?><br>
+        <?= Yii::t('hiam', 'Login') ?>: <b><?= $user->username ?></b><br>
+        <?= Yii::t('hiam', 'Email') ?>: <?= $user->email ?><br>
+        <?= Yii::t('hiam', 'First name') ?>: <?= $user->first_name ?><br>
+        <?= Yii::t('hiam', 'Last name') ?>: <?= $user->last_name ?><br>
+        <?= Yii::t('hiam', 'IP') ?>:  <?= Yii::$app->request->getRemoteIP() ?><br>
     </p>
 </div>
