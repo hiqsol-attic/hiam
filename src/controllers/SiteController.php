@@ -160,6 +160,10 @@ class SiteController extends \hisite\controllers\SiteController
             'confirm-email' => [
                 'class' => ConfirmEmail::class,
             ],
+            'confirm-sign-up-email' => [
+                'class' => ConfirmEmail::class,
+                'actionAttributeValue' => 'confirm-sign-up-email',
+            ],
             'openapi.yaml' => [
                 'class' => OpenapiAction::class,
             ],
