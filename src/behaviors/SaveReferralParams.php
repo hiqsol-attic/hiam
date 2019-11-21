@@ -10,9 +10,11 @@
 
 namespace hiam\behaviors;
 
+use hiam\mrdp\models\Identity;
 use Yii;
 use yii\base\Application;
 use yii\base\Event;
+use yii\helpers\Json;
 
 /**
  * SaveReturnUrl behavior.
@@ -28,6 +30,7 @@ class SaveReferralParams extends \yii\base\Behavior
     {
         return [
             Application::EVENT_BEFORE_REQUEST => 'beforeRequest',
+            Identity::EVENT_BEFORE_SAVE => 'beforeSave',
         ];
     }
 
@@ -37,19 +40,23 @@ class SaveReferralParams extends \yii\base\Behavior
     public function beforeRequest(Event $event): void
     {
         $params = Yii::$app->request->getQueryParams();
-        if (empty($params['atid'])) {
-            return;
-        }
         $session = Yii::$app->session;
-        $utmParams = [];
+        $utmTags = [];
         foreach ($params as $name => $value) {
             if (strstr($name, 'utm_')) {
-                $utmParams[$name] = $value;
+                $utmTags[$name] = $value;
             }
         }
-        $session->set('utm_params', [
-            'atid' => $params['atid'],
-            'params' => \yii\helpers\Json::htmlEncode($utmParams),
+        $utm_tags = empty($utmTags) ? null : Json::htmlEncode($utmTags);
+        $session->set('referralParams', [
+            'referer' => $params['atid'],
+            'utm_tags' => $utm_tags,
         ]);
+    }
+
+
+    public function beforeSave()
+    {
+        $this->owner->referralParams = \Yii::$app->session->get('referralParams');
     }
 }

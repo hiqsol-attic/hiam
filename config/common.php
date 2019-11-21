@@ -11,7 +11,7 @@
 return [
     'components' => [
         'mailer' => array_filter([
-            'useFileTransport' => false,
+            'useFileTransport' => true,
             'messageClass' => \hiam\base\Message::class,
             'htmlLayout' => $params['user.seller'] && $params['user.htmlEmails']
                 ? "@{$params['user.seller']}/assets/mail/layout/html"
