@@ -19,7 +19,6 @@ return [
         'language' => 'language',
     ]),
     'as saveReturnUrl' => \hiam\behaviors\SaveReturnUrl::class,
-    'as saveReferralParams' => \hiam\behaviors\SaveReferralParams::class,
     'components' => [
         'db' => [
             'class'     => \yii\db\Connection::class,
