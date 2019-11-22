@@ -28,7 +28,7 @@ abstract class ProxyModel extends \yii\base\Model
         }
 
         $attributes = [];
-        $model = new static();
+        $model = Yii::createObject(static::class);
         foreach ($model->attributes() as $attribute) {
             $attributes[$attribute] = $store->$attribute;
         }
