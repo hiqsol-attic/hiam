@@ -45,10 +45,13 @@ class SaveReferralParams extends \yii\base\Behavior
                 $utmTags[$name] = $value;
             }
         }
-        Yii::$app->session->set('referralParams', array_filter([
+        $referalParams = array_filter([
             'referer' => $params['atid'],
             'utmTags' => $utmTags,
-        ]));
+        ]);
+        if (!empty($referalParams)) {
+            Yii::$app->session->set('referralParams', $referalParams);
+        }
     }
 
 
