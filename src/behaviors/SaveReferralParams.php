@@ -14,7 +14,6 @@ use hiam\mrdp\models\Identity;
 use Yii;
 use yii\base\Application;
 use yii\base\Event;
-use yii\helpers\Json;
 
 /**
  * SaveReturnUrl behavior.
@@ -40,18 +39,16 @@ class SaveReferralParams extends \yii\base\Behavior
     public function beforeRequest(Event $event): void
     {
         $params = Yii::$app->request->getQueryParams();
-        $session = Yii::$app->session;
         $utmTags = [];
         foreach ($params as $name => $value) {
             if (strstr($name, 'utm_')) {
                 $utmTags[$name] = $value;
             }
         }
-        $utm_tags = empty($utmTags) ? null : Json::htmlEncode($utmTags);
-        $session->set('referralParams', [
+        Yii::$app->session->set('referralParams', array_filter([
             'referer' => $params['atid'],
-            'utm_tags' => $utm_tags,
-        ]);
+            'utmTags' => $utmTags,
+        ]));
     }
 
 
