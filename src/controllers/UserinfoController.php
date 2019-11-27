@@ -4,12 +4,8 @@
 namespace hiam\controllers;
 
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
-use filsh\yii2\oauth2server\Module;
-use hiam\base\User;
 use hiam\providers\ClaimsProviderInterface;
-use OAuth2\OpenID\Storage\UserClaimsInterface;
 use Yii;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
