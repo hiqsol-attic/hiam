@@ -14,6 +14,8 @@ use Yii;
 
 abstract class ProxyModel extends \yii\base\Model
 {
+    const EVENT_BEFORE_SAVE = 'beforeSave';
+
     abstract public static function primaryKey();
 
     public static function findOne($cond)
@@ -26,7 +28,7 @@ abstract class ProxyModel extends \yii\base\Model
         }
 
         $attributes = [];
-        $model = new static();
+        $model = Yii::createObject(static::class);
         foreach ($model->attributes() as $attribute) {
             $attributes[$attribute] = $store->$attribute;
         }
@@ -37,6 +39,7 @@ abstract class ProxyModel extends \yii\base\Model
 
     public function save()
     {
+        $this->trigger(static::EVENT_BEFORE_SAVE);
         $class = static::getStorageClass();
         $cond = $this->getAttributes(static::primaryKey());
         $store = $class::findOne($cond) ?: Yii::createObject($class);

@@ -45,7 +45,7 @@ class User extends \yii\web\User
             return null;
         }
         $class = $this->identityClass;
-        $user = new $class();
+        $user = Yii::createObject($class);
         $user->setAttributes($model->getAttributes());
         $user->username = $model->username ?? $model->email;
 
