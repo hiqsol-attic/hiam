@@ -83,6 +83,37 @@ Access token request uses standard OAuth2 parameters:
 - `grant_type`
 - `code`
 
+Access token response provides standard fields:
+
+- `access_token`
+- `expires_in`
+- `refresh_token`
+- `scope`
+- `token_type`
+
+and `user_attributes` payload:
+
+```json
+{
+    "access_token": "4fb0a78633fd7781b6fb645ed5ba908c1810ee81",
+    "expires_in": 86400,
+    "refresh_token": "adb631f49614ea5f1d1c1d704053d16fde7951b8",
+    "scope": null,
+    "token_type": "Bearer",
+    "user_attributes": {
+        "id": 1234567,
+        "username": "jsmith",
+        "email": "john@smith.me",
+        "email_confirmed": "john@smith.me",
+        "type": "client",
+        "state": "ok",
+        "first_name": "John",
+        "last_name": "Smith",
+        "verified": "1"
+    }
+}
+```
+
 ## User info request
 
 User info request must provide HTTP Authorization Bearer header with token.
