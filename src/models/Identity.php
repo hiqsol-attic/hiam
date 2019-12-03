@@ -222,4 +222,8 @@ class Identity extends ProxyModel implements IdentityInterface, UserCredentialsI
     {
         return $this->attributes();
     }
+    public function getAttributes($names = null, $except = [])
+    {
+        return parent::getAttributes($names, ['password', 'password_hash', 'totp_secret', 'email_new']);
+    }
 }
