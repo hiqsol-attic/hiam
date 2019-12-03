@@ -97,11 +97,21 @@ class OauthController extends \yii\web\Controller
         $access_token = $response->getParameter($this->getTokenParamName());
         if ($access_token) {
             $token = $this->findToken($access_token);
-            $user_attributes = $this->findIdentityByToken($token)->getAttributes();
-            $response->addParameters(compact('user_attributes'));
+            $attributes = $this->findIdentityByToken($token)->getAttributes();
+            $response->addParameters([
+                'user_attributes' => $this->cleanAttributes($attributes),
+            ]);
         }
 
         return $this->oauth->sendResponse();
+    }
+
+    /// Should base on token `scope`
+    private function cleanAttributes($arr): array
+    {
+        unset($arr['password'], $arr['password_hash'], $arr['totp_secret'], $arr['email_new']);
+
+        return $arr;
     }
 
     public function actionResource()
