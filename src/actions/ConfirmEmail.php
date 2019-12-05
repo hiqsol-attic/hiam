@@ -19,6 +19,8 @@ use yii\web\User;
 
 class ConfirmEmail extends Action
 {
+    const SESSION_VAR_NAME = 'confirming_email';
+
     /**
      * @var string
      */
@@ -70,7 +72,12 @@ class ConfirmEmail extends Action
     /** @inheritDoc */
     protected function beforeRun()
     {
-        Yii::$app->user->logout();
+        $identity = $this->user->identity ?? null;
+        if ($identity) {
+            if ($identity->email !== $this->session->get(static::SESSION_VAR_NAME)) {
+                $this->user->logout();
+            }
+        }
         return parent::beforeRun();
     }
 
@@ -85,9 +92,10 @@ class ConfirmEmail extends Action
             $this->session->addFlash('error', $this->getErrorMessage());
         } else {
             $user->setConfirmedEmail($token->get('email'));
+            $token->remove();
             $this->session->addFlash('success', $this->getSuccessMessage());
-            if ($this->user->login($user)) {
-                $token->remove();
+            if ($user->email === $this->session->get(static::SESSION_VAR_NAME)) {
+                $this->user->login($user);
             }
         }
 
