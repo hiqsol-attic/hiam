@@ -11,9 +11,13 @@
 namespace hiam\tests\acceptance;
 
 use hiam\tests\_support\AcceptanceTester;
+use hiam\tests\_support\Helper\TokenHelper;
+use hiam\tests\_support\Page\Lockscreen;
+use hiam\tests\_support\Page\Login;
+use hiam\tests\_support\Page\ResetPassword;
+use hiam\tests\_support\Page\RestorePassword;
 use hiam\tests\_support\Page\SignUp;
 use yii\helpers\FileHelper;
-use Yii;
 
 class HiamBasicFunctionsCest
 {
@@ -38,7 +42,7 @@ class HiamBasicFunctionsCest
     {
         try {
             FileHelper::removeDirectory($I->getMailsDir());
-            FileHelper::removeDirectory($this->getTokensDir());
+            FileHelper::removeDirectory(TokenHelper::getTokensDir());
         } catch (\Throwable $exception) {
             // seems to be already removed. it's fine
         }
@@ -46,74 +50,72 @@ class HiamBasicFunctionsCest
 
     /**
      * @before cleanUp
+     * @param AcceptanceTester $I
+     * @throws \Exception
      */
-    public function signup(AcceptanceTester $I)
+    public function signup(AcceptanceTester $I): void
     {
-        $signupPage = new SignUp($I);
         $I->wantTo('signup to hiam');
-        $I->amOnPage('/site/signup');
+        $signupPage = new SignUp($I);
         $info = $this->getUserInfo();
         $signupPage->tryFillContactInfo($info);
         $signupPage->tryClickAdditionalCheckboxes();
         $signupPage->tryClickAgreeTermsPrivacy();
-        $I->clickWithLeftButton(['css' => 'button[type=submit]']);
-        $token = $this->findLastToken();
-        $I->assertNotEmpty($token, 'token exists');
-        $I->amOnPage('/site/confirm-email?token=' . $token);
-        $I->waitForText('Your email was confirmed!');
-        $I->see($this->username);
+        $signupPage->tryClickSubmitButton();
+        $I->waitForText($info['username']);
     }
 
     /**
      * @before cleanUp
      * @depends signup
+     * @param AcceptanceTester $I
+     * @throws \Exception
      */
-    public function login(AcceptanceTester $I)
+    public function login(AcceptanceTester $I): void
     {
         $I->wantTo('login to hiam');
-        $I->amOnPage('/site/login');
-        $I->fillField(['name' => 'LoginForm[username]'], $this->username);
-        $I->fillField(['name' => 'LoginForm[password]'], $this->password);
-        $I->click(['css' => '#login-form button']);
-        $I->waitForText($this->username);
-        $I->see($this->username);
+        $loginPage = new Login($I);
+        $info = $this->getUserInfo();
+        $loginPage->tryFillContactInfo($info);
+        $loginPage->tryClickSubmitButton();
+        $I->waitForText($info['username']);
         $this->identity = $I->grabCookie('_identity');
         $I->assertNotEmpty($this->identity, 'cookie grabbed');
     }
 
     /**
      * @depends login
+     * @param AcceptanceTester $I
+     * @throws \Exception
      */
-    public function logout(AcceptanceTester $I)
+    public function logout(AcceptanceTester $I): void
     {
         $I->wantTo('Logout from hiam');
         $I->setCookie('_identity', $this->identity);
-        $I->amOnPage('/site/lockscreen');
+        $lockscreenPage = new Lockscreen($I);
         $I->see($this->username);
-        $I->click('a[href="/site/logout"]');
+        $lockscreenPage->tryLogout();
         $I->see('Sign in');
     }
 
     /**
      * @depends logout
      * @before cleanUp
+     * @param AcceptanceTester $I
+     * @throws \Exception
      */
-    public function restorePassword(AcceptanceTester $I)
+    public function restorePassword(AcceptanceTester $I): void
     {
         $I->wantTo('Restore password');
-        $I->amOnPage('/site/restore-password');
-        $I->fillField(['name' => 'RestorePasswordForm[username]'], $this->username);
-        $I->clickWithLeftButton(['css' => 'button[type=submit]']);
+        $restorePasswordPage = new RestorePassword($I);
+        $info = $this->getUserInfo();
+        $restorePasswordPage->tryFillContactInfo($info);
+        $restorePasswordPage->tryClickSubmitButton();
         $I->wait(1);
-        $message = $I->getLastMessage();
-        $I->assertNotEmpty($message, 'make sure that the mail received');
-        $resetTokenLink = $I->getResetTokenUrl($message);
-        $I->assertNotEmpty($resetTokenLink, 'make sure that reset token link received');
-        $I->amOnUrl($resetTokenLink);
-        $this->password = '654321';
-        $I->fillField(['name' => 'ResetPasswordForm[password]'], $this->password);
-        $I->fillField(['name' => 'ResetPasswordForm[password_retype]'], $this->password);
-        $I->clickWithLeftButton(['css' => 'button[type=submit]']);
+        $resetTokenLink = TokenHelper::getTokenUrl($I);
+        $resetPasswordPage = new ResetPassword($I, $resetTokenLink);
+        $resetPasswordPage->tryFillContactInfo($info);
+        $resetPasswordPage->tryClickSubmitButton();
         $I->waitForText('New password was saved.');
     }
 
@@ -125,35 +127,6 @@ class HiamBasicFunctionsCest
         return [
             'username' => $this->username,
             'password' => $this->password,
-            'identity' => $this->identity,
         ];
-    }
-
-    /**
-     * @return string|null
-     */
-    private function findLastToken(): ?string
-    {
-        $tokensDir = $this->getTokensDir();
-
-        foreach (range(1, 31) as $try) {
-            codecept_debug("$try try to get Token by path: $tokensDir");
-            sleep(2);
-            $res = exec("find $tokensDir -type f -cmin -1 -exec basename {} \; | tail -1");
-
-            if ($res) {
-                return $res;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @return bool|string
-     */
-    private function getTokensDir()
-    {
-        return Yii::getAlias('@runtime/tokens');
     }
 }
