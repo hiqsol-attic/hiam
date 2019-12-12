@@ -492,6 +492,7 @@ class SiteController extends \hisite\controllers\SiteController
                     ['email' => $user->email_confirmed ?? $user->email]
                 )
             );
+            Yii::$app->session->set(ConfirmEmail::SESSION_VAR_NAME, $user->email);
         } else {
             Yii::error('Failed to send email confirmation letter', __METHOD__);
         }

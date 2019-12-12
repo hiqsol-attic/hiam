@@ -4,19 +4,24 @@ namespace hiam\tests\_support\Page;
 
 use hiam\tests\_support\AcceptanceTester;
 
-class SignUp
+/**
+ * Class SignUp
+ * @package hiam\tests\_support\Page
+ */
+class SignUp extends AbstractHiamPage
 {
-    /** @var AcceptanceTester */
-    private $tester;
-
+    /**
+     * SignUp constructor.
+     * @param AcceptanceTester $I
+     */
     public function __construct(AcceptanceTester $I)
     {
-        $this->tester = $I;
+        parent::__construct($I);
+        $I->amOnPage('/site/signup');
     }
 
     /**
-     * @param array
-     * @throws \Exception
+     * @inheritDoc
      */
     public function tryFillContactInfo(array $info): void
     {
