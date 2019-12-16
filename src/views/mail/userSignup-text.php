@@ -1,6 +1,5 @@
 <?php
 
-
 /** @var yii\web\View $this */
 /** @var yii\web\IdentityInterface $user */
 /** @var yii\mail\MessageInterface $message */
@@ -17,7 +16,7 @@
 
 <?= Yii::t('hiam', 'First name: {first_name}', ['first_name' => $user->first_name]) ?>
 
-<?= Yii::t('hiam', 'Last name: {last_name}', ['last_name' => $user->last_name ]) ?>
+<?= Yii::t('hiam', 'Last name: {last_name}', ['last_name' => $user->last_name]) ?>
 
 <?= Yii::t('hiam', 'IP: {ip}', ['ip' => Yii::$app->request->getRemoteIP()]) ?>
 

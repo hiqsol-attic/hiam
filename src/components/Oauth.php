@@ -4,8 +4,8 @@
  *
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
- * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\components;
@@ -15,7 +15,7 @@ use Yii;
 use yii\web\Request;
 
 /**
- * Class Oauth
+ * Class Oauth.
  *
  * // TODO: Refactor. Looks awful.
  */

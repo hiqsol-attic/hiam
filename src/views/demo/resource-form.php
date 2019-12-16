@@ -5,7 +5,6 @@ use yii\widgets\ActiveForm;
 
 /** @var \yii\web\View $this */
 /** @var \hiam\models\ResourceRequest $resourceRequest */
-
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'userinfo-form',

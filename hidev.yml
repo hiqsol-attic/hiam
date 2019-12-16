@@ -2,6 +2,7 @@ package:
     type:           yii2-extension
     name:           hiam
     title:          Identity and Access Management server providing OAuth2, multi-factor authentication and more
+    license:        proprietary
     headline:       HIAM
     keywords:       iam, oauth2, rbac, multi-factor, two-factor, authentication, authorization, audit, yii2
     namespace:      hiam

@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
+ *
+ * @link      https://github.com/hiqdev/hiam
+ * @package   hiam
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hiam\behaviors;
 
@@ -8,8 +15,7 @@ use yii\base\Application;
 use yii\base\Event;
 
 /**
- * Class CaptchaBehavior
- * @package hiam\components
+ * Class CaptchaBehavior.
  */
 class CaptchaBehavior extends ActionFilter
 {
@@ -46,7 +52,7 @@ class CaptchaBehavior extends ActionFilter
     private $incrementClosure;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function beforeAction($action)
     {
@@ -74,7 +80,7 @@ class CaptchaBehavior extends ActionFilter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function afterAction($action, $result)
     {
@@ -93,10 +99,6 @@ class CaptchaBehavior extends ActionFilter
         return $result;
     }
 
-    /**
-     * @param string $actionId
-     * @return int
-     */
     private function getCountForAction(string $actionId): int
     {
         $key = $this->getCacheKey($actionId);
@@ -104,9 +106,6 @@ class CaptchaBehavior extends ActionFilter
         return \Yii::$app->cache->get($key) ?: 0;
     }
 
-    /**
-     * @param string $actionId
-     */
     private function increment(string $actionId): void
     {
         $key = $this->getCacheKey($actionId);
@@ -115,7 +114,6 @@ class CaptchaBehavior extends ActionFilter
     }
 
     /**
-     * @param string $actionId
      * @return string[]
      */
     private function getCacheKey(string $actionId): array

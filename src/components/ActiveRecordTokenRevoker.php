@@ -1,4 +1,12 @@
 <?php
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
+ *
+ * @link      https://github.com/hiqdev/hiam
+ * @package   hiam
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hiam\components;
 
@@ -8,13 +16,13 @@ use filsh\yii2\oauth2server\models\OauthRefreshTokens;
 use yii\db\ActiveQueryInterface;
 
 /**
- * Class ActiveRecordTokenRevoker
+ * Class ActiveRecordTokenRevoker.
  *
  * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
  */
 final class ActiveRecordTokenRevoker implements TokenRevokerInterface
 {
-    /** {@inheritDoc} */
+    /** {@inheritdoc} */
     public function revokeAllUserTokens(string $userId, ?string $clientId, ?string $typeHint = null): bool
     {
         $accessTokens = $this->buildQuery(OauthAccessTokens::find(), $userId, $clientId)->all();

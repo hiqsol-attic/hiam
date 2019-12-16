@@ -4,7 +4,6 @@ use yii\helpers\Html;
 
 /** @var \yii\web\View $this */
 /** @var string $url */
-
 $this->title = Yii::t('hiam', 'Demo OAUTH2');
 $this->params['breadcrumbs'][] = $this->title;
 

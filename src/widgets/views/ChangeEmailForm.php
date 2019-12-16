@@ -1,7 +1,6 @@
 <?php
 
 /** @var \hiam\forms\ChangeEmailForm $model */
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 

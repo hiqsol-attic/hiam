@@ -4,14 +4,13 @@
  *
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
- * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\controllers;
 
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
-use filsh\yii2\oauth2server\Request;
 use hiam\base\User;
 use hiam\components\OauthInterface;
 use hiam\components\TokenRevokerInterface;
@@ -77,7 +76,6 @@ class OauthController extends \yii\web\Controller
     }
 
     /**
-     * @param OauthAccessTokens $token
      * @return IdentityInterface|User
      */
     public function findIdentityByToken(OauthAccessTokens $token)
@@ -136,6 +134,7 @@ class OauthController extends \yii\web\Controller
     public function actionRevoke()
     {
         $this->oauth->handleRevokeTokenRequest();
+
         return $this->oauth->sendResponse();
     }
 
@@ -153,6 +152,7 @@ class OauthController extends \yii\web\Controller
         $id = Yii::$app->getUser()->id;
         if (!$id) {
             $dest = $_REQUEST['prefer_signup'] ? 'signup' : 'login';
+
             return $this->redirect(["/site/$dest"]);
         }
 

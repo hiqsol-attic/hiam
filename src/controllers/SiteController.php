@@ -4,8 +4,8 @@
  *
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
- * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\controllers;
@@ -15,7 +15,9 @@ use hiam\actions\OpenapiAction;
 use hiam\base\User;
 use hiam\behaviors\CaptchaBehavior;
 use hiam\behaviors\RevokeOauthTokens;
+use hiam\components\OauthInterface;
 use hiam\forms\ChangeEmailForm;
+use hiam\forms\ChangePasswordForm;
 use hiam\forms\ConfirmPasswordForm;
 use hiam\forms\LoginForm;
 use hiam\forms\ResetPasswordForm;
@@ -31,8 +33,6 @@ use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
 use yii\filters\AccessControl;
-use hiam\forms\ChangePasswordForm;
-use hiam\components\OauthInterface;
 
 /**
  * Site controller.
@@ -58,7 +58,7 @@ class SiteController extends \hisite\controllers\SiteController
     public $enableCsrfValidation = false;
 
     /**
-     * Identifier which shows success login state to be used in CaptchaBehavior
+     * Identifier which shows success login state to be used in CaptchaBehavior.
      *
      * @var bool $actionSubmitOccurred
      */
@@ -126,7 +126,7 @@ class SiteController extends \hisite\controllers\SiteController
             'token-revoker' => [
                 'class' => RevokeOauthTokens::class,
                 'only' => ['logout'],
-            ]
+            ],
         ]);
     }
 
@@ -199,6 +199,7 @@ class SiteController extends \hisite\controllers\SiteController
         }
 
         $isCaptchaRequired = $this->isCaptchaRequired();
+
         return $this->render($view, compact('model', 'isCaptchaRequired'));
     }
 
@@ -300,6 +301,7 @@ class SiteController extends \hisite\controllers\SiteController
             }
         }
         $isCaptchaRequired = $this->isCaptchaRequired();
+
         return $this->render('signup', compact('model', 'isCaptchaRequired'));
     }
 
@@ -324,10 +326,12 @@ class SiteController extends \hisite\controllers\SiteController
             } else {
                 Yii::$app->session->setFlash('error', Yii::t('hiam', 'Sorry, we are unable to reset password for the provided username or email. Try to contact support team.'));
             }
+
             return $this->goHome();
         }
 
         $isCaptchaRequired = $this->isCaptchaRequired();
+
         return $this->render('restorePassword', compact('model', 'isCaptchaRequired'));
     }
 
@@ -400,7 +404,6 @@ class SiteController extends \hisite\controllers\SiteController
     }
 
     /**
-     * @return bool
      * @throws \yii\base\InvalidConfigException
      */
     private function isCaptchaRequired(): bool
@@ -473,12 +476,14 @@ class SiteController extends \hisite\controllers\SiteController
         if (strcmp($requestHost, $responseHost)) {
             Yii::$app->session->removeAllFlashes();
         }
+
         return $response;
     }
 
     private function getHost(string $url): ?string
     {
         $parsedArray = parse_url($url);
+
         return $parsedArray['host'] ?? null;
     }
 

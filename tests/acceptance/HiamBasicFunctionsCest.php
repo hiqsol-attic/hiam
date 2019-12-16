@@ -4,16 +4,16 @@
  *
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
- * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\tests\acceptance;
 
 use hiam\tests\_support\AcceptanceTester;
 use hiam\tests\_support\Page\SignUp;
-use yii\helpers\FileHelper;
 use Yii;
+use yii\helpers\FileHelper;
 
 class HiamBasicFunctionsCest
 {
@@ -31,9 +31,6 @@ class HiamBasicFunctionsCest
         $this->username = mt_rand(100000, 999999) . '+testuser@example.com';
     }
 
-    /**
-     * @param AcceptanceTester $I
-     */
     public function cleanUp(AcceptanceTester $I): void
     {
         try {
@@ -117,9 +114,6 @@ class HiamBasicFunctionsCest
         $I->waitForText('New password was saved.');
     }
 
-    /**
-     * @return array
-     */
     protected function getUserInfo(): array
     {
         return [
@@ -129,9 +123,6 @@ class HiamBasicFunctionsCest
         ];
     }
 
-    /**
-     * @return string|null
-     */
     private function findLastToken(): ?string
     {
         $tokensDir = $this->getTokensDir();

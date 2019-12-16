@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
+ *
+ * @link      https://github.com/hiqdev/hiam
+ * @package   hiam
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hiam\controllers;
 
@@ -60,7 +67,7 @@ class UserinfoController extends Controller
         $user = $identityClass::findIdentity($token->user_id);
 
         $result = $this->claimsProvider->getClaims($user, $token->scope ?? 'email');
-        $result->sub = (string)$token->user_id;
+        $result->sub = (string) $token->user_id;
 
         return $result;
     }

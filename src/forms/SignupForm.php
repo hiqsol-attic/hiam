@@ -4,8 +4,8 @@
  *
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
- * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\forms;
@@ -69,7 +69,7 @@ class SignupForm extends Model
             ['i_agree', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider terms of use.'), 'on' => self::SCENARIO_DEFAULT],
             ['i_agree_privacy_policy', 'required', 'requiredValue' => 1, 'message' => Yii::t('hiam', 'Please consider Privacy Policy.'), 'on' => self::SCENARIO_DEFAULT],
             ['i_agree_terms_and_privacy', 'required', 'requiredValue' => 1, 'message' => '',
-                'on' => [self::SCENARIO_SOCIAL, self::SCENARIO_SHORT]
+                'on' => [self::SCENARIO_SOCIAL, self::SCENARIO_SHORT],
             ],
         ];
     }

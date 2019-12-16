@@ -4,8 +4,8 @@
  *
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
- * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\base;
@@ -16,7 +16,6 @@ use hiam\models\Identity;
 use Yii;
 use yii\authclient\ClientInterface;
 use yii\web\IdentityInterface;
-use \yii\db\Exception;
 
 class User extends \yii\web\User
 {
@@ -70,7 +69,7 @@ class User extends \yii\web\User
     }
 
     /**
-     * @return null|Identity
+     * @return Identity|null
      */
     public function findIdentity($id, $password = null)
     {
@@ -80,7 +79,7 @@ class User extends \yii\web\User
     }
 
     /**
-     * @return null|Identity
+     * @return Identity|null
      */
     public function findIdentityByEmail($email)
     {
@@ -90,7 +89,7 @@ class User extends \yii\web\User
     }
 
     /**
-     * @return null|Identity
+     * @return Identity|null
      */
     public function findIdentityByUsername($username)
     {

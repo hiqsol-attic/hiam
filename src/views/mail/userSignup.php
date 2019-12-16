@@ -1,6 +1,5 @@
 <?php
 
-
 /** @var yii\web\View $this */
 /** @var yii\web\IdentityInterface $user */
 /** @var yii\mail\MessageInterface $message */

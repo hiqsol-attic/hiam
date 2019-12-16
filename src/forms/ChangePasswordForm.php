@@ -1,4 +1,12 @@
 <?php
+/**
+ * Identity and Access Management server providing OAuth2, multi-factor authentication and more
+ *
+ * @link      https://github.com/hiqdev/hiam
+ * @package   hiam
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
+ */
 
 namespace hiam\forms;
 
@@ -35,7 +43,6 @@ class ChangePasswordForm extends Model
     private $passwordValidator;
 
     /**
-     * @param PasswordValidatorInterface $passwordValidator
      * @param array $config
      */
     public function __construct(PasswordValidatorInterface $passwordValidator, $config = [])

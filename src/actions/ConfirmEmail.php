@@ -4,8 +4,8 @@
  *
  * @link      https://github.com/hiqdev/hiam
  * @package   hiam
- * @license   BSD-3-Clause
- * @copyright Copyright (c) 2014-2018, HiQDev (http://hiqdev.com/)
+ * @license   proprietary
+ * @copyright Copyright (c) 2014-2019, HiQDev (http://hiqdev.com/)
  */
 
 namespace hiam\actions;
@@ -67,10 +67,11 @@ class ConfirmEmail extends Action
         $this->session = $session;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     protected function beforeRun()
     {
         Yii::$app->user->logout();
+
         return parent::beforeRun();
     }
 
@@ -94,17 +95,11 @@ class ConfirmEmail extends Action
         return $this->controller->goBack();
     }
 
-    /**
-     * @return string
-     */
     private function getSuccessMessage(): string
     {
         return $this->successMessage ?: Yii::t('hiam', 'Your email was confirmed!');
     }
 
-    /**
-     * @return string
-     */
     private function getErrorMessage(): string
     {
         return $this->errorMessage ?: Yii::t('hiam', 'Failed confirm email. Please start over.');
